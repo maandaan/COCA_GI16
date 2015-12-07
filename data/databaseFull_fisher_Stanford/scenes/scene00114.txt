@@ -1,0 +1,69 @@
+StanfordSceneDatabase
+version 1.0
+modelCount 6
+newModel 0 room00
+parentIndex -1
+children 1
+parentMaterialGroupIndex -1
+parentTriangleIndex -1
+parentUV 0 0
+parentContactPosition 0 0 0
+parentContactNormal 0 0 0
+parentOffset 0 0 0
+scale 1
+transform 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
+newModel 1 2168308786e7e2ddf1783a44a88d6274
+parentIndex 0
+children 2 3 4 5
+parentMaterialGroupIndex 8
+parentTriangleIndex 0
+parentUV 0.402922 0.574913
+parentContactPosition 228.378 140.276 3
+parentContactNormal -0 0 1
+parentOffset 0 0 0
+scale 1.48024
+transform 0 -1.48024 0 0 1.48024 0 0 0 0 0 1.48024 0 212.835 155.819 3.25 1
+newModel 2 81dec5a50d26f1dff04bb0474a98ba2b
+parentIndex 1
+children
+parentMaterialGroupIndex 10
+parentTriangleIndex 20
+parentUV 0.755831 0.010004
+parentContactPosition 220.425 132.013 41.1812
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 2.07875
+transform -0.432196 -2.03332 0 0 2.03332 -0.432196 0 0 0 0 2.07875 0 219.218 137.582 41.4312 1
+newModel 3 d378c508566d68cb48d2aef7552b65e3
+parentIndex 1
+children
+parentMaterialGroupIndex 10
+parentTriangleIndex 21
+parentUV 0.647616 0.169292
+parentContactPosition 232.967 150.127 41.1812
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 1.66507
+transform 1.17738 -1.17738 0 0 1.17738 1.17738 0 0 0 0 1.66507 0 235.364 147.73 41.4312 1
+newModel 4 ab54d97d4677d537bb4fd842f8631c2b
+parentIndex 1
+children
+parentMaterialGroupIndex 10
+parentTriangleIndex 21
+parentUV 0.213628 0.555798
+parentContactPosition 219.476 148.651 41.1812
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 0.624597
+transform 0.55652 0.283561 0 0 -0.283561 0.55652 0 0 0 0 0.624597 0 209.355 149.041 41.4312 1
+newModel 5 fc035f7d732166b97b6fd5468f603b31
+parentIndex 1
+children
+parentMaterialGroupIndex 10
+parentTriangleIndex 20
+parentUV 0.302305 0.489273
+parentContactPosition 234.523 131.213 41.1812
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 0.0382196
+transform 0.0382196 0 0 0 0 0.0382196 0 0 0 0 0.0382196 0 227.842 127.604 41.4312 1

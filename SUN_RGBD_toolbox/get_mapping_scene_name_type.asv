@@ -1,0 +1,11 @@
+% This script is to generate a mapping from the name of the scene file and
+% its type, all in a matrix. (by Zeinab Sadeghipour)
+
+sunrgbdmeta_file = '../SUNRGBD/code/SUNRGBDtoolbox/Metadata/SUNRGBDMeta.mat';
+sunrgbdmeta_mat = matfile(sunrgbdmeta_file);
+data_size = size(sunrgbdmeta_mat.SUNRGBDMeta,2);
+
+%the size is large, for efficiency load part by part
+for did = 1:100:data_size
+   gt_ 
+end

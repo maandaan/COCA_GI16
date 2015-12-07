@@ -1,0 +1,25 @@
+StanfordSceneDatabase
+version 1.0
+modelCount 2
+newModel 0 room08
+parentIndex -1
+children 1
+parentMaterialGroupIndex -1
+parentTriangleIndex -1
+parentUV 0 0
+parentContactPosition 0 0 0
+parentContactNormal 0 0 0
+parentOffset 0 0 0
+scale 1
+transform 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
+newModel 1 f2518339da2a64ea5e87e18e0a88e78f
+parentIndex 0
+children
+parentMaterialGroupIndex 40
+parentTriangleIndex 3
+parentUV 0.233253 0.392823
+parentContactPosition 168.066 180.818 3
+parentContactNormal -0 0 1
+parentOffset 0 0 0
+scale 1.00616
+transform 0 -1.00616 0 0 1.00616 0 0 0 0 0 1.00616 0 82.029 292.834 3.25 1

@@ -1,0 +1,49 @@
+﻿Build started 11/23/2015 8:23:16 PM.
+     1>Project "C:\Users\zsadeghi\Documents\Master_SFU\Thesis\Code\Enriching 3D scenes_GI2016\scene_viewer_fisher\windows\vs2010\modelViewer.vcxproj" on node 3 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "modelViewerDebug\modelViewer.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../include /I../../common /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"modelViewerDebug\\" /Fd"modelViewerDebug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\common\Assets.cpp ..\..\common\Camera.cpp ..\..\common\Matrix4.cpp ..\..\common\Mesh.cpp ..\..\common\Model.cpp ..\..\common\ModelDatabase.cpp ..\..\common\ModelInstance.cpp ..\..\common\Parameters.cpp ..\..\common\Scene.cpp ..\..\common\Utility.cpp ..\..\modelViewer\main.cpp ..\..\modelViewer\modelViewer.cpp
+         modelViewer.cpp
+         main.cpp
+         Utility.cpp
+         Scene.cpp
+         Parameters.cpp
+         ModelInstance.cpp
+         ModelDatabase.cpp
+         Model.cpp
+         Mesh.cpp
+         Matrix4.cpp
+         Camera.cpp
+         Assets.cpp
+         Generating Code...
+       ManifestResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"modelViewerDebug\modelViewer.exe.embed.manifest.res" modelViewerDebug\modelViewer_manifest.rc 
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../bin/modelViewer.exe" /INCREMENTAL /NOLOGO /LIBPATH:../lib FreeImage.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"modelViewerDebug\modelViewer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\zsadeghi\Documents\Master_SFU\Thesis\Code\Enriching 3D scenes_GI2016\scene_viewer_fisher\bin\modelViewer.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../../bin/modelViewer.lib" /MACHINE:X86 modelViewerDebug\modelViewer.exe.embed.manifest.res
+         modelViewerDebug\Assets.obj
+         modelViewerDebug\Camera.obj
+         modelViewerDebug\Matrix4.obj
+         modelViewerDebug\Mesh.obj
+         modelViewerDebug\Model.obj
+         modelViewerDebug\ModelDatabase.obj
+         modelViewerDebug\ModelInstance.obj
+         modelViewerDebug\Parameters.obj
+         modelViewerDebug\Scene.obj
+         modelViewerDebug\Utility.obj
+         modelViewerDebug\main.obj
+         modelViewerDebug\modelViewer.obj
+       Manifest:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"modelViewerDebug\modelViewer.exe.embed.manifest" /manifest modelViewerDebug\modelViewer.exe.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         modelViewer.vcxproj -> C:\Users\zsadeghi\Documents\Master_SFU\Thesis\Code\Enriching 3D scenes_GI2016\scene_viewer_fisher\windows\vs2010\../../bin/modelViewer.exe
+       FinalizeBuildStatus:
+         Deleting file "modelViewerDebug\modelViewer.unsuccessfulbuild".
+         Touching "modelViewerDebug\modelViewer.lastbuildstate".
+     1>Done Building Project "C:\Users\zsadeghi\Documents\Master_SFU\Thesis\Code\Enriching 3D scenes_GI2016\scene_viewer_fisher\windows\vs2010\modelViewer.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:09.59

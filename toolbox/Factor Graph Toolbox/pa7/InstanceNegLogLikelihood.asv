@@ -1,0 +1,191 @@
+% function [nll, grad] = InstanceNegLogLikelihood(X, y, theta, modelParams)
+% returns the negative log-likelihood and its gradient, given a CRF with parameters theta,
+% on data (X, y). 
+%
+% Inputs:
+% X            Data.                           (numCharacters x numImageFeatures matrix)
+%              X(:,1) is all ones, i.e., it encodes the intercept/bias term.
+% y            Data labels.                    (numCharacters x 1 vector)
+% theta        CRF weights/parameters.         (numParams x 1 vector)
+%              These are shared among the various singleton / pairwise features.
+% modelParams  Struct with three fields:
+%   .numHiddenStates     in our case, set to 26 (26 possible characters)
+%   .numObservedStates   in our case, set to 2  (each pixel is either on or off)
+%   .lambda              the regularization parameter lambda
+%
+% Outputs:
+% nll          Negative log-likelihood of the data.    (scalar)
+% grad         Gradient of nll with respect to theta   (numParams x 1 vector)
+%
+% Copyright (C) Daphne Koller, Stanford Univerity, 2012
+
+function [nll, grad] = InstanceNegLogLikelihood(X, y, theta, modelParams)
+
+    % featureSet is a struct with two fields:
+    %    .numParams - the number of parameters in the CRF (this is not numImageFeatures
+    %                 nor numFeatures, because of parameter sharing)
+    %    .features  - an array comprising the features in the CRF.
+    %
+    % Each feature is a binary indicator variable, represented by a struct 
+    % with three fields:
+    %    .var          - a vector containing the variables in the scope of this feature
+    %    .assignment   - the assignment that this indicator variable corresponds to
+    %    .paramIdx     - the index in theta that this feature corresponds to
+    %
+    % For example, if we have:
+    %   
+    %   feature = struct('var', [2 3], 'assignment', [5 6], 'paramIdx', 8);
+    %
+    % then feature is an indicator function over X_2 and X_3, which takes on a value of 1
+    % if X_2 = 5 and X_3 = 6 (which would be 'e' and 'f'), and 0 otherwise. 
+    % Its contribution to the log-likelihood would be theta(8) if it's 1, and 0 otherwise.
+    %
+    % If you're interested in the implementation details of CRFs, 
+    % feel free to read through GenerateAllFeatures.m and the functions it calls!
+    % For the purposes of this assignment, though, you don't
+    % have to understand how this code works. (It's complicated.)
+    
+    featureSet = GenerateAllFeatures(X, modelParams);
+
+    % Use the featureSet to calculate nll and grad.
+    % This is the main part of the assignment, and it is very tricky - be careful!
+    % You might want to code up your own numerical gradient checker to make sure
+    % your answers are correct.
+    %
+    % Hint: you can use CliqueTreeCalibrate to calculate logZ effectively. 
+    %       We have halfway-modified CliqueTreeCalibrate; complete our implementation 
+    %       if you want to use it to compute logZ.
+    
+%     nll = 0;
+    grad = zeros(size(theta));
+    %%%
+    % Your code here:
+    numFtrs = length(featureSet.features);
+    numCharacters = length(y);
+    
+    P = CreateMyCliqueTree(theta, featureSet, modelParams, numFtrs, numCharacters);
+    [P, logZ] = CliqueTreeCalibrate(P, false);
+    [featureCounts, weightedFeaturCounts] = getWeightedFeaturCounts2(y, theta, featureSet, numFtrs);
+    regularizationCost = (modelParams.lambda / 2) * sum(theta.^2);
+    
+    nll = logZ - sum(weightedFeaturCounts) + regularizationCost;
+    
+%     marginalizedFactors = getMarginalizedFactors(P, numCharacters);
+%     
+%     modelFeatureCounts = getModelFeatureCounts(theta, featureSet, marginalizedFactors, numFtrs, numCharacters);
+%     
+%     ddd=1;         
+
+end
+
+
+
+function modelFeatureCounts = getModelFeatureCounts(theta, featureSet, marginalizedFactors, numFtrs, numCharacters)
+    modelFeatureCounts = zeros(size(theta));
+    for i = 1:numFtrs
+        if(featureSet.features(i).var == 1)
+            factorNum = featureSet.features(i).var;
+            param = featureSet.features(i).paramIdx;
+            modelFeatureCounts(param) = modelFeatureCounts(param) + GetValueOfAssignment(marginalizedFactors(factorNum), featureSet.features(i).assignment);
+                        
+        elseif(featureSet.features(i).var == 2)
+            factorNum = numCharacters + featureSet.features(i).var(1);
+            param = featureSet.features(i).paramIdx;
+            modelFeatureCounts(param) = modelFeatureCounts(param) + GetValueOfAssignment(marginalizedFactors(factorNum), featureSet.features(i).assignment);
+        end
+    end
+end
+
+function marginalizedFactors = getMarginalizedFactors(P, numCharacters)
+
+    numCliques = length(P.cliqueList);
+    marginalizedFactors = repmat(struct('var', [], 'card', [], 'val', []), 1, 2 * numCharacters-1);
+    for k = 1: numCharacters
+        for i = 1:numCliques
+            if(ismember(k, P.cliqueList(i).var))
+                marginalizedFactors(k) = FactorMarginalization(P.cliqueList(i), setdiff(P.cliqueList(i).var, k));
+                if any(marginalizedFactors(k).val ~= 0)
+                    % Normalize
+                    marginalizedFactors(k).val = marginalizedFactors(k).val/sum(marginalizedFactors(k).val);
+                end
+                break;
+            end
+        end
+    end
+    
+    for k = 1: (numCharacters-1)
+        for i = 1:numCliques
+            if(all([k, k+1] == P.cliqueList(i).var))
+%             if(all(ismember([k, k+1], P.cliqueList(i).var)))
+                marginalizedFactors(numCharacters + k) = FactorMarginalization(P.cliqueList(i), setdiff(P.cliqueList(i).var, [k, k+1]));
+                if any(marginalizedFactors(k).val ~= 0)
+                    % Normalize
+                    marginalizedFactors(k).val = marginalizedFactors(k).val/sum(marginalizedFactors(k).val);
+                end
+                break;
+            end
+        end
+    end
+    
+    
+end
+
+    
+    
+    
+function [featureCounts, weightedFeaturCounts] = getWeightedFeaturCounts(y, theta, featureSet, numFtrs)
+    featureCounts = zeros(1, numFtrs);
+    weightedFeaturCounts = zeros(1, numFtrs);
+    for n = 1:numFtrs
+        featureCounts(n) = all(y(featureSet.features(n).var) == featureSet.features(n).assignment);
+        weightedFeaturCounts(n) = theta(featureSet.features(n).paramIdx) * featureCounts(n);
+    end
+end
+
+
+function [featureCounts, weightedFeaturCounts] = getWeightedFeaturCounts2(y, theta, featureSet, numFtrs)
+    featureCounts = zeros(size(theta));
+    weightedFeaturCounts = zeros(size(theta));
+    for n = 1:numFtrs
+        paramIdx = featureSet.features(n).paramIdx;
+        currentFtrCount = all(y(featureSet.features(n).var) == featureSet.features(n).assignment);
+        featureCounts(paramIdx) = featureCounts(paramIdx) + currentFtrCount;
+        weightedFeaturCounts(paramIdx) = weightedFeaturCounts(paramIdx) + theta(featureSet.features(n).paramIdx) * featureCounts(n);
+    end
+end
+
+
+function P = CreateMyCliqueTree(theta, featureSet, modelParams, numFtrs, numCharacters)
+    factorList = repmat(struct('var', [], 'card', [], 'val', []), 1, 2 * numCharacters-1);
+    
+    for k = 1:numCharacters
+        factorList(k).var = k;
+        factorList(k).card = modelParams.numHiddenStates;
+        factorList(k).val = zeros(1, modelParams.numHiddenStates);
+    end
+    for k = 1:numCharacters-1
+        factorList(numCharacters + k).var = [k, k+1];
+        factorList(numCharacters + k).card = modelParams.numHiddenStates * ones(1, 2); %26
+        factorList(numCharacters + k).val = zeros(1, prod(factorList(numCharacters + k).card));
+    end
+    
+    for n = 1:numFtrs
+        if(length(featureSet.features(n).var) == 1)
+            factorNum = featureSet.features(n).var;
+            I = AssignmentToIndex(featureSet.features(n).assignment,...
+                factorList(factorNum).card);
+            factorList(factorNum).val(I) = factorList(factorNum).val(I) + theta(featureSet.features(n).paramIdx);
+        elseif((length(featureSet.features(n).var) == 2))
+            factorNum = numCharacters + featureSet.features(n).var(1);
+            I = AssignmentToIndex(featureSet.features(n).assignment,...
+                factorList(factorNum).card);
+            factorList(factorNum).val(I) = factorList(factorNum).val(I) + theta(featureSet.features(n).paramIdx);
+        end
+    end
+    
+    for k = 1:2*numCharacters-1
+        factorList(k).val = exp(factorList(k).val);
+    end
+    
+    P = CreateCliqueTree(factorList);
+end

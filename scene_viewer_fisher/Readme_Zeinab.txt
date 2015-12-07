@@ -1,0 +1,1 @@
+To run the code, you can direct to bin folder and run either sceneViewer.exe (to view a scene specified in parameters.txt) or modelViewer.exe (to view models used in their scenes, you can switch between models with left and right arrow keys).

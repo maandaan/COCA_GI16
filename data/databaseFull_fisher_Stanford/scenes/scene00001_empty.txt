@@ -1,0 +1,14 @@
+StanfordSceneDatabase
+version 1.0
+modelCount 1
+newModel 0 room07
+parentIndex -1
+children
+parentMaterialGroupIndex -1
+parentTriangleIndex -1
+parentUV 0 0
+parentContactPosition 0 0 0
+parentContactNormal 0 0 0
+parentOffset 0 0 0
+scale 1
+transform 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1

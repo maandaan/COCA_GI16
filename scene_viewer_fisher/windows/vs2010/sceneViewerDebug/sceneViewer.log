@@ -1,0 +1,35 @@
+﻿Build started 11/23/2015 9:24:44 PM.
+     1>Project "C:\Users\zsadeghi\Documents\Master_SFU\Thesis\Code\Enriching 3D scenes_GI2016\scene_viewer_fisher\windows\vs2010\sceneViewer.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "sceneViewerDebug\sceneViewer.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../bin/sceneViewer.exe" /INCREMENTAL /NOLOGO /LIBPATH:../lib FreeImage.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"sceneViewerDebug\sceneViewer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\zsadeghi\Documents\Master_SFU\Thesis\Code\Enriching 3D scenes_GI2016\scene_viewer_fisher\bin\sceneViewer.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../../bin/sceneViewer.lib" /MACHINE:X86 sceneViewerDebug\sceneViewer.exe.embed.manifest.res
+         sceneViewerDebug\Assets.obj
+         sceneViewerDebug\Camera.obj
+         sceneViewerDebug\Matrix4.obj
+         sceneViewerDebug\Mesh.obj
+         sceneViewerDebug\Model.obj
+         sceneViewerDebug\ModelInstance.obj
+         sceneViewerDebug\Parameters.obj
+         sceneViewerDebug\Scene.obj
+         sceneViewerDebug\Utility.obj
+         sceneViewerDebug\main.obj
+         sceneViewerDebug\sceneViewer.obj
+       Manifest:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"sceneViewerDebug\sceneViewer.exe.embed.manifest" /manifest sceneViewerDebug\sceneViewer.exe.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         sceneViewer.vcxproj -> C:\Users\zsadeghi\Documents\Master_SFU\Thesis\Code\Enriching 3D scenes_GI2016\scene_viewer_fisher\windows\vs2010\../../bin/sceneViewer.exe
+       FinalizeBuildStatus:
+         Deleting file "sceneViewerDebug\sceneViewer.unsuccessfulbuild".
+         Touching "sceneViewerDebug\sceneViewer.lastbuildstate".
+     1>Done Building Project "C:\Users\zsadeghi\Documents\Master_SFU\Thesis\Code\Enriching 3D scenes_GI2016\scene_viewer_fisher\windows\vs2010\sceneViewer.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.63

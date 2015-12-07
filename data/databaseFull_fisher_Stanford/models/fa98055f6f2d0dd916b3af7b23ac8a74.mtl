@@ -1,0 +1,124 @@
+newmtl m0
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m1
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/e02813a7c31cb8de.jpg
+map_Kd ../textures/e02813a7c31cb8de.jpg
+newmtl m2
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m3
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/6aa35f3602ed39ef.jpg
+map_Kd ../textures/6aa35f3602ed39ef.jpg
+newmtl m4
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/7e5c787a75cefac5.jpg
+map_Kd ../textures/7e5c787a75cefac5.jpg
+newmtl m5
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/1b73afed0fa33c81.jpg
+map_Kd ../textures/1b73afed0fa33c81.jpg
+newmtl m6
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/8358d92846727456.jpg
+map_Kd ../textures/8358d92846727456.jpg
+newmtl m7
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/445cfcac8ca0fcf8.jpg
+map_Kd ../textures/445cfcac8ca0fcf8.jpg
+newmtl m8
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/e643e3f90adf3b7e.jpg
+map_Kd ../textures/e643e3f90adf3b7e.jpg
+newmtl m9
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/088554a601743e2e.jpg
+map_Kd ../textures/088554a601743e2e.jpg
+newmtl m10
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/b7ce0cca31c9dfa7.jpg
+map_Kd ../textures/b7ce0cca31c9dfa7.jpg
+newmtl m11
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/ca9bee29746f936a.jpg
+map_Kd ../textures/ca9bee29746f936a.jpg
+newmtl m12
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/35bf38aa56740f73.jpg
+map_Kd ../textures/35bf38aa56740f73.jpg
+newmtl m13
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/ba5bcbbd702adb9a.jpg
+map_Kd ../textures/ba5bcbbd702adb9a.jpg
+newmtl m14
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/c833b76f2929aa18.jpg
+map_Kd ../textures/c833b76f2929aa18.jpg
+newmtl m15
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/af3d03eccef3a5e8.jpg
+map_Kd ../textures/af3d03eccef3a5e8.jpg

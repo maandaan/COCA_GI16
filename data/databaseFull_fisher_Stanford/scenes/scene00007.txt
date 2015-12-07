@@ -1,0 +1,91 @@
+StanfordSceneDatabase
+version 1.0
+modelCount 8
+newModel 0 room05
+parentIndex -1
+children 1 7
+parentMaterialGroupIndex -1
+parentTriangleIndex -1
+parentUV 0 0
+parentContactPosition 0 0 0
+parentContactNormal 0 0 0
+parentOffset 0 0 0
+scale 1
+transform 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
+newModel 1 c0b76f006237ccd3e0e89fd83955713c
+parentIndex 0
+children 2 3 4 5 6
+parentMaterialGroupIndex 1
+parentTriangleIndex 192
+parentUV 0.244861 0.562902
+parentContactPosition 328.397 178.968 3
+parentContactNormal -0 0 1
+parentOffset 0 0 0
+scale 1.2682
+transform -1.2682 -1.10869e-007 0 0 1.10869e-007 -1.2682 0 0 0 0 1.2682 0 1043.77 203.955 3.25 1
+newModel 2 619b826ae3a67982c29c815a1efdca3
+parentIndex 1
+children
+parentMaterialGroupIndex 11
+parentTriangleIndex 6
+parentUV 0.203037 0.594668
+parentContactPosition 314.321 146.411 34.1042
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 1.28221
+transform 0.906657 0.906657 0 0 0 0 -1.28221 0 -0.906657 0.906657 0 0 319.437 130.415 34.3542 1
+newModel 3 62b25a5e3119b8409023147b38c03c9f
+parentIndex 1
+children
+parentMaterialGroupIndex 11
+parentTriangleIndex 7
+parentUV 0.643001 0.00437455
+parentContactPosition 335.55 157.547 34.1042
+parentContactNormal -0 0 1
+parentOffset 0 0 0
+scale 1.33349
+transform 0 -1.33349 0 0 1.33349 0 0 0 0 0 1.33349 0 326.049 608.732 -130.097 1
+newModel 4 bb720e7949efc9abe4406b3bf37e6ffe
+parentIndex 1
+children
+parentMaterialGroupIndex 4
+parentTriangleIndex 169
+parentUV 0.531361 0.449711
+parentContactPosition 325.862 206.028 38.2835
+parentContactNormal 1.35558e-007 -0.278313 0.96049
+parentOffset 0 0 0
+scale 1.44231
+transform 1.01987 -0.979571 -0.283842 0 1.01987 0.979571 0.283842 0 4.08349e-007 -0.401413 1.38532 0 275.837 244.634 49.2153 1
+newModel 5 a4c14d2008146b61bcab7dd7c7b222d8
+parentIndex 1
+children
+parentMaterialGroupIndex 11
+parentTriangleIndex 7
+parentUV 0.311187 0.434315
+parentContactPosition 340.23 181.547 34.1042
+parentContactNormal -0 0 1
+parentOffset 0 0 0
+scale 0.0875026
+transform -0.0875026 7.64972e-009 0 0 0 0 -0.0875026 0 -7.64972e-009 -0.0875026 0 0 357.417 182.415 40.4709 1
+newModel 6 75788b0b4a5f4499a5d9e352dbc57182
+parentIndex 1
+children
+parentMaterialGroupIndex 11
+parentTriangleIndex 6
+parentUV 0.616378 0.21817
+parentContactPosition 312.563 176.308 34.1042
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 0.740443
+transform 0.740443 0 0 0 0 0 -0.740443 0 0 0.740443 0 0 273.954 139.934 56.6969 1
+newModel 7 2b94a026f1eb8efea156590b19c3013b
+parentIndex 0
+children
+parentMaterialGroupIndex 4
+parentTriangleIndex 32
+parentUV 0.5983 0.158804
+parentContactPosition 363 178.835 81.9756
+parentContactNormal -1 0 0
+parentOffset 0 0 0
+scale 0.832897
+transform 0 -0.832897 0 0 0.832897 0 0 0 0 0 0.832897 0 349.497 226.681 52.5382 1

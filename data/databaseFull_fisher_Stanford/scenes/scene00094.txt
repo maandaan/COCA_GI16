@@ -1,0 +1,168 @@
+StanfordSceneDatabase
+version 1.0
+modelCount 15
+newModel 0 room15
+parentIndex -1
+children 1 2 14
+parentMaterialGroupIndex -1
+parentTriangleIndex -1
+parentUV 0 0
+parentContactPosition 0 0 0
+parentContactNormal 0 0 0
+parentOffset 0 0 0
+scale 1
+transform 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
+newModel 1 3fc6ab5d3c52c128d810b14a81e12eca
+parentIndex 0
+children
+parentMaterialGroupIndex 24
+parentTriangleIndex 0
+parentUV 0.393797 0.262806
+parentContactPosition 189.36 175.8 7.87402
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 1.28221
+transform 0.167361 1.27124 0 0 -1.27124 0.167361 0 0 0 0 1.28221 0 191.925 172.417 11.4263 1
+newModel 2 a40d48f4f5e559938bf87660c484ac16
+parentIndex 0
+children 3 4 5 6 8 9 10 11 12 13
+parentMaterialGroupIndex 24
+parentTriangleIndex 0
+parentUV 0.119431 0.543904
+parentContactPosition 241.206 173.203 7.87402
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 1.82498
+transform 1.82498 0 0 0 0 1.82498 0 0 0 0 1.82498 0 158.049 108.613 4.86146 1
+newModel 3 755b328c69569ed95a28dd75e68785d3
+parentIndex 2
+children
+parentMaterialGroupIndex 3
+parentTriangleIndex 11
+parentUV 0.301793 0.45303
+parentContactPosition 230.221 156.114 47.785
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 0.0218752
+transform 0 0 -0.0218752 0 0 0.0218752 0 0 0.0218752 0 0 0 221.372 153.629 50.5039 1
+newModel 4 51731636209cfef6c7dfd0abdac98748
+parentIndex 2
+children
+parentMaterialGroupIndex 3
+parentTriangleIndex 11
+parentUV 0.199729 0.729112
+parentContactPosition 222.719 147.314 47.785
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 0.0979206
+transform 0.0979206 0 0 0 0 0.0979206 0 0 0 0 0.0979206 0 221.128 145.723 48.035 1
+newModel 5 3a8f598d614f760832e1bdd20e622f6d
+parentIndex 2
+children
+parentMaterialGroupIndex 3
+parentTriangleIndex 10
+parentUV 0.597876 0.0709516
+parentContactPosition 248.484 164.764 47.785
+parentContactNormal -0 0 1
+parentOffset 0 0 0
+scale 0.0264176
+transform 0.0149631 0.0217714 0 0 -0.0217714 0.0149631 0 0 0 0 0.0264176 0 242.215 161.372 47.8501 1
+newModel 6 1d493a57a21833f2d92c7cdc3939488b
+parentIndex 2
+children 7
+parentMaterialGroupIndex 3
+parentTriangleIndex 11
+parentUV 0.502998 0.319215
+parentContactPosition 227.316 173.462 47.785
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 1.82498
+transform 1.82498 0 0 0 0 1.82498 0 0 0 0 1.82498 0 225.624 168.231 48.0918 1
+newModel 7 f234b3f39edb7f1d8ef19a48ac4fcfdf
+parentIndex 6
+children
+parentMaterialGroupIndex 1
+parentTriangleIndex 33
+parentUV 0.238763 0.397974
+parentContactPosition 224.973 177.541 50.9098
+parentContactNormal -0.00753484 0.131074 0.991344
+parentOffset 0 0 0
+scale 0.277752
+transform 0.277744 0.000137752 0.00209281 0 0.000137752 0.275356 -0.0364059 0 -0.00209281 0.0364059 0.275348 0 224.382 169.346 52.2964 1
+newModel 8 51731636209cfef6c7dfd0abdac98748
+parentIndex 2
+children
+parentMaterialGroupIndex 3
+parentTriangleIndex 11
+parentUV 0.168004 0.24183
+parentContactPosition 245.093 144.579 47.785
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 0.0979206
+transform 0.0979206 0 0 0 0 0.0979206 0 0 0 0 0.0979206 0 243.503 142.988 48.035 1
+newModel 9 51731636209cfef6c7dfd0abdac98748
+parentIndex 2
+children
+parentMaterialGroupIndex 3
+parentTriangleIndex 11
+parentUV 0.218724 0.507831
+parentContactPosition 231.439 148.952 47.785
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 0.0979206
+transform 0.0979206 0 0 0 0 0.0979206 0 0 0 0 0.0979206 0 229.849 147.361 48.035 1
+newModel 10 c4729e522fd3d750def51fa1c8b9ff22
+parentIndex 2
+children
+parentMaterialGroupIndex 3
+parentTriangleIndex 10
+parentUV 0.298756 0.36304
+parentContactPosition 248.181 190.554 47.785
+parentContactNormal -0 0 1
+parentOffset 0 0 0
+scale 2.57409
+transform 2.57409 0 0 0 0 2.57409 0 0 0 0 2.57409 0 242.037 184.411 48.035 1
+newModel 11 d8f2359692e8a8d720efab7988749bc4
+parentIndex 2
+children
+parentMaterialGroupIndex 3
+parentTriangleIndex 10
+parentUV 0.0727569 0.707653
+parentContactPosition 253.294 210.04 47.785
+parentContactNormal -0 0 1
+parentOffset 0 0 0
+scale 0.139418
+transform 0.0985836 0.0985836 0 0 -0.0985836 0.0985836 0 0 0 0 0.139418 0 252.455 209.2 48.035 1
+newModel 12 74fba9d6c2914d172d9fe390e23fd20f
+parentIndex 2
+children
+parentMaterialGroupIndex 3
+parentTriangleIndex 10
+parentUV 0.156822 0.0841461
+parentContactPosition 230.039 202.792 47.785
+parentContactNormal -0 0 1
+parentOffset 0 0 0
+scale 0.0409504
+transform 0.0324881 0.024929 0 0 -0.024929 0.0324881 0 0 0 0 0.0409504 0 233.165 190.634 48.035 1
+newModel 13 adaa3ae43dd8532c818bcb4c173462ba
+parentIndex 2
+children
+parentMaterialGroupIndex 3
+parentTriangleIndex 11
+parentUV 0.0718523 0.574004
+parentContactPosition 234.918 136.288 47.785
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 1.33349
+transform 0 1.33349 0 0 -1.33349 0 0 0 0 0 1.33349 0 242.405 128.938 48.035 1
+newModel 14 ecf192b5e49e1b111191025061735ea3
+parentIndex 0
+children
+parentMaterialGroupIndex 24
+parentTriangleIndex 0
+parentUV 0.123799 0.435769
+parentContactPosition 240.381 213.238 7.87402
+parentContactNormal 0 0 1
+parentOffset 0 0 0
+scale 1.75479
+transform -1.75479 1.53408e-007 0 0 -1.53408e-007 -1.75479 0 0 0 0 1.75479 0 256.533 211.812 -3.95243 1
