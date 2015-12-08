@@ -32,7 +32,11 @@ for i = 1:size(support_matrix,1)
             support_prob(k) = 0;
         else
 %             support_prob(k) = support_matrix(i,supporter,r) / support_rels_count;
-            support_prob(k) = support_matrix(i,supporter,r) / sum(support_matrix(:,supporter,r));
+            if supporter == 55 || supporter == 56 %room generally
+                support_prob(k) = support_matrix(i,supporter,r) / ( sum(sum(support_matrix(:,55,:))) + sum(sum(support_matrix(:,56,:))) );
+            else
+                support_prob(k) = support_matrix(i,supporter,r) / sum(sum(support_matrix(:,supporter,:)));
+            end
         end
     end
     

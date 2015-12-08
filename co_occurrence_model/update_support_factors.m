@@ -45,7 +45,12 @@ for fid = 1:length(singlevar_factors)
         r = 1;
     end
 %     supp_prob = top_support(1) / support_rels_count;
-    supp_prob = top_support(1) / sum(support_matrix(:,supporter,r));
+    if supporter == 55 || supporter == 56
+        supp_prob = top_support(1) / ( sum(sum(support_matrix(:,55,:))) + sum(sum(support_matrix(:,56,:))) );
+    else
+        supp_prob = top_support(1) / sum(sum(support_matrix(:,supporter,:)));
+    end
+    
     f.var = [supporter, objtype];
     f.card = [2,2];
     f.factor_type = r + 1;

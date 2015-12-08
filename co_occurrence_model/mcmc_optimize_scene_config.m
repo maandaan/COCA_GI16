@@ -67,8 +67,8 @@ prob_add = 0.35;
 prob_del = 0.35;
 prob_swap = 0.3;
 
-numobj_lb = 5;
-numobj_ub = 5;
+numobj_lb = 7;
+numobj_ub = 7;
 
 iter = 2;
 while iter < num_iter
