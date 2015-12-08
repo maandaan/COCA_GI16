@@ -1,5 +1,5 @@
 function [ final_config, final_score, final_scene ] = mcmc_optimize_scene_config( ...
-    input_scene, num_iter, epsilon, num_prev_iter )
+    input_scene, num_iter, epsilon, num_prev_iter, use_log )
 %MCMC_OPTIMIZE_SCENE_CONFIG implements MCMC with Metropolis-Hastings
 %algorithm to find the set of objects which optimize the scene
 %configuration.
@@ -37,13 +37,14 @@ constraint_nodes = find_constrained_nodes( input_scene, all_vars, mapping_nodes_
 constraint_nodes_ind = find(constraint_nodes);
 
 % factors = global_scene_graph.factors;
-factors = factors(64:96);
+% factors = factors(64:96);
 num_factors = length(factors);
 supp_rows = [structfind(factors, 'factor_type', suppedge_below), structfind(factors, 'factor_type', suppedge_behind)];
 
 curr_config = constraint_nodes;
-% active_factors = union(randi(num_factors, 1, 5), 20);
-active_factors = randi(23, 1, 5);
+rng('shuffle');
+active_factors = union(randi(num_factors, 1, 5), 20);
+% active_factors = unique(randi(23, 1, 5));
 inactive_factors = setdiff(1:num_factors, active_factors);
 for fid = 1:length(active_factors)
     factor = factors(active_factors(fid));
@@ -60,14 +61,14 @@ inter_config = zeros(num_iter, length(all_vars));
 all_score = zeros(num_iter, 1);
 all_config(1,:) = curr_config;
 inter_config(1,:) = curr_config;
-all_score(1) = compute_config_score(factors, all_vars(constraint_nodes_ind));
+all_score(1) = compute_config_score(factors, all_vars(find(curr_config)), use_log);
 
 prob_add = 0.35;
 prob_del = 0.35;
 prob_swap = 0.3;
 
-numobj_lb = 10;
-numobj_ub = 10;
+numobj_lb = 5;
+numobj_ub = 5;
 
 iter = 2;
 while iter < num_iter
@@ -135,35 +136,45 @@ while iter < num_iter
     end
     
     % check that the support for all the objects are present
-%     break_flag = 1;
-%     for nid = 1:length(next_present_nodes)
-%         n = all_vars(next_present_nodes(nid));
-%         if n == 55 || n == 56 
-%             continue
-%         end
-%         valid_node = 0;
-%         for rid = 1:length(supp_rows)
-%             vars = factors(supp_rows(rid)).var;
-%             if vars(2) == n && ismember(vars(1), all_vars(next_present_nodes))
-%                 valid_node = 1;
-%                 break
-%             end
-%         end
-%         if ~valid_node
-%             break_flag = 1;
-%             break
-%         end
-%     end
-%     if break_flag
-%         continue
-%     end
+% %     break_flag = 1;
+    for nid = 1:length(next_present_nodes)
+        n = all_vars(next_present_nodes(nid));
+        if n == 55 || n == 56 
+            continue
+        end
+        valid_node = 0;
+        for rid = 1:length(supp_rows)
+            vars = factors(supp_rows(rid)).var;
+            if vars(2) == n && ismember(vars(1), all_vars(next_present_nodes))
+                valid_node = 1;
+                break
+            end
+        end
+        if ~valid_node
+            break_flag = 1;
+            break
+        end
+    end
+    if break_flag
+        continue
+    end
     
     inter_config(iter,:) = next_config; 
     
     %mcmc sampling, independent metropolis-hastings sampling
-    curr_config_score = compute_config_score(factors, all_vars(curr_present_nodes));
-    next_config_score = compute_config_score(factors, all_vars(next_present_nodes));
-    alpha = min(1, next_config_score / curr_config_score);
+    curr_config_score = compute_config_score(factors, all_vars(curr_present_nodes), use_log);
+    next_config_score = compute_config_score(factors, all_vars(next_present_nodes), use_log);
+    
+    ratio_score = compute_relative_config_score(factors, ...
+        all_vars(curr_present_nodes)', all_vars(next_present_nodes)');
+    
+%     if use_log
+%         alpha = min(1, exp(next_config_score) / exp(curr_config_score));
+%     else
+%         alpha = min(1, next_config_score / curr_config_score);
+%     end
+    
+    alpha = min(1, ratio_score);
     u = rand;
     if alpha > u
         curr_config = next_config;
@@ -195,6 +206,8 @@ while iter < num_iter
         end
     end
     
+    fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
+        iter, curr_config_score, next_config_score, alpha, u);
     iter = iter + 1;
 end
 
@@ -208,17 +221,17 @@ for i = 1:iter
 end
 
 figure
-plot(10:iter, all_score(10:iter));
+plot(10:iter-1, all_score(10:iter-1));
 
-final_config = curr_config;
-all_nodes = find(final_config);
-final_score = compute_config_score(global_scene_graph, all_nodes);
-nodes = setdiff(all_nodes, constraint_nodes_ind);
-objects_with_support = assign_support_surfaces(nodes, all_nodes, input_scene, factors, mapping_nodes_names);
-objects_with_symmetry = assign_symmetry_groups(objects_with_support, factors);
-objects_with_orientation = assign_special_orientation(objects_with_symmetry, factors);
-
-final_scene = objects_with_orientation;
+% final_config = curr_config;
+% all_nodes = find(final_config);
+% final_score = compute_config_score(global_scene_graph, all_nodes, use_log);
+% nodes = setdiff(all_nodes, constraint_nodes_ind);
+% objects_with_support = assign_support_surfaces(nodes, all_nodes, input_scene, factors, mapping_nodes_names);
+% objects_with_symmetry = assign_symmetry_groups(objects_with_support, factors);
+% objects_with_orientation = assign_special_orientation(objects_with_symmetry, factors);
+% 
+% final_scene = objects_with_orientation;
 
 end
 

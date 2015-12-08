@@ -9,7 +9,7 @@ function [ symmetry_groups ] = gather_symmetric_relations( scene_type, mapping_f
 load(mapping_file, 'map_scene_name_type');
 total_size = size(map_scene_name_type, 1);
 
-sunrgbdmeta_file = '../SUNRGBD/code/SUNRGBDtoolbox/Metadata/SUNRGBDMeta.mat';
+sunrgbdmeta_file = 'SUNRGBDMeta.mat';
 load(sunrgbdmeta_file);
 
 symm_group_count = 1;

@@ -9,7 +9,7 @@ scene_counts = 0;
 obj_counts = 0;
 load(mapping_file, 'map_scene_name_type');
 total_size = size(map_scene_name_type, 1);
-sunrgbdmeta_file = '../SUNRGBD/code/SUNRGBDtoolbox/Metadata/SUNRGBDMeta.mat';
+sunrgbdmeta_file = 'SUNRGBDMeta.mat';
 load(sunrgbdmeta_file);
 
 for mid = 1:total_size

@@ -6,7 +6,7 @@ function [ symmetry_relations ] = construct_symmetric_matrix
 % mapping_file = 'data/training/SUNRGBD/scene_name_type.mat';
 
 Consts;
-sunrgbdmeta_file = '../SUNRGBD/code/SUNRGBDtoolbox/Metadata/SUNRGBDMeta.mat';
+sunrgbdmeta_file = 'SUNRGBDMeta.mat';
 load(sunrgbdmeta_file, 'SUNRGBDMeta');
 
 symmetry_groups = gather_symmetric_relations( scene_type, mapping_file );

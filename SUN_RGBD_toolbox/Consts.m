@@ -14,7 +14,8 @@ same_dir = 8; %two objects with same orientation vectors
 occurrence = 9;
 
 % filenames
-sunrgbdmeta_file = '../SUNRGBD/code/SUNRGBDtoolbox/Metadata/SUNRGBDMeta.mat';
+% sunrgbdmeta_file = '../SUNRGBD/code/SUNRGBDtoolbox/Metadata/SUNRGBDMeta.mat';
+sunrgbdmeta_file = 'SUNRGBDMeta.mat';
 valid_scene_indices = 'data/training/SUNRGBD/bedroom_valid_scenes.mat';
 mapping_file = 'data/training/SUNRGBD/scene_name_type.mat';
 mapping_nodes_names_file = 'data/training/SUNRGBD/bedroom_mapping_nodes_names_BN.mat';

@@ -6,6 +6,7 @@ function factors = add_support_factors( support_matrix )
 Consts;
 support_thresh = 0.1 * bedroom_support_scene_size;
 factors = [];
+support_rels_count = sum(sum(sum(support_matrix)));
 
 for i = 1:size(support_matrix,1)
        
@@ -30,6 +31,7 @@ for i = 1:size(support_matrix,1)
         if sum( sum(support_matrix(:,supporter,r))) == 0 || sum(support_matrix(:,supporter,r)) < support_thresh
             support_prob(k) = 0;
         else
+%             support_prob(k) = support_matrix(i,supporter,r) / support_rels_count;
             support_prob(k) = support_matrix(i,supporter,r) / sum(support_matrix(:,supporter,r));
         end
     end

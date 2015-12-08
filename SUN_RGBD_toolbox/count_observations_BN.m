@@ -9,7 +9,7 @@ function [ mapping_nodes_names, variable_obs ] = count_observations_BN( scene_ty
 load(mapping_file, 'map_scene_name_type');
 total_size = size(map_scene_name_type, 1);
 
-sunrgbdmeta_file = '../SUNRGBD/code/SUNRGBDtoolbox/Metadata/SUNRGBDMeta.mat';
+sunrgbdmeta_file = 'SUNRGBDMeta.mat';
 load(sunrgbdmeta_file);
 
 nodes_count = 54; %from get_object_type_bedroom.m

@@ -6,6 +6,7 @@ Consts;
 factors = supp_factors;
 
 cat_count = size(support_matrix, 1);
+support_rels_count = sum(sum(sum(support_matrix)));
 
 for fid = 1:length(singlevar_factors)
     var = singlevar_factors(fid).var;
@@ -43,6 +44,7 @@ for fid = 1:length(singlevar_factors)
         supporter = top_ind(1);
         r = 1;
     end
+%     supp_prob = top_support(1) / support_rels_count;
     supp_prob = top_support(1) / sum(support_matrix(:,supporter,r));
     f.var = [supporter, objtype];
     f.card = [2,2];
@@ -52,6 +54,7 @@ for fid = 1:length(singlevar_factors)
     f = SetValueOfAssignment(f,[2,2], supp_prob);
     f = SetValueOfAssignment(f,[2,1], 1 - supp_prob);
     f = SetValueOfAssignment(f,[1,2], sum(top_support(2:end)) / sum(top_support));
+%     f = SetValueOfAssignment(f,[1,2], sum(top_support(2:end)) / support_rels_count);
     f = SetValueOfAssignment(f,[1,1], 1 - GetValueOfAssignment(f, [1,2]));
     
 %     CPT = ones(2,2);

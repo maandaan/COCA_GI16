@@ -7,7 +7,7 @@ function [ map_object_category_id ] = get_mapping_object_category_id( scene_type
 load(scene_mapping_file, 'map_scene_name_type');
 total_size = size(map_scene_name_type, 1);
 
-sunrgbdmeta_file = '../SUNRGBD/code/SUNRGBDtoolbox/Metadata/SUNRGBDMeta.mat';
+sunrgbdmeta_file = 'SUNRGBDMeta.mat';
 load(sunrgbdmeta_file);
 
 map_object_category_id = struct('category_name',[], 'category_id',[]);
