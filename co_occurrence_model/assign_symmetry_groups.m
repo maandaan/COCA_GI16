@@ -8,7 +8,7 @@ scene(1).symm_group_id = {};
 scene(1).symm_ref_id = [];
 
 %factors symmetry groups
-symm_rows = [structfind(factors, 'factor_type', symm_g); ...
+symm_rows = [structfind(factors, 'factor_type', symm_g), ...
     structfind(factors, 'factor_type', symm_resp)];
 
 for oid = 1:length(scene)
@@ -26,7 +26,7 @@ for oid = 1:length(scene)
     %check if there's a symmetry factor for this category
     symm_factor_rows = [];
     for rid = 1:length(symm_rows)
-        vars = factors(symm_rows(rid)).variables;
+        vars = factors(symm_rows(rid)).var;
         if vars(1) == obj_type
             symm_factor_rows = [symm_factor_rows; symm_rows(rid)];
         end
@@ -46,13 +46,15 @@ for oid = 1:length(scene)
     max_prob = 0;
     max_factor_row = 0;
     for rid = 1:length(symm_factor_rows)
-        pf = factors(symm_factor_rows(rid)).potential_func.PF;
-        if pf(end) > max_prob
-            max_prob = pf(end);
+        factor = factors(symm_factor_rows(rid));
+        v = GetValueOfAssignment(factor, factor.card);
+%         pf = factors(symm_factor_rows(rid)).potential_func.PF;
+        if v > max_prob
+            max_prob = v;
             max_factor_row = symm_factor_rows(rid);
         end
     end
-    vars = factors(max_factor_row).variables;
+    vars = factors(max_factor_row).var;
     if vars(end) > 56
         continue
     end

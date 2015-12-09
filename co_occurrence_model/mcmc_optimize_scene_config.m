@@ -1,5 +1,5 @@
-function [ final_config, final_score, final_scene ] = mcmc_optimize_scene_config( ...
-    input_scene, num_iter, epsilon, num_prev_iter, use_log )
+function [ all_config, all_score, nodes_sets ] = mcmc_optimize_scene_config( ...
+    input_scene, num_iter, numobj_lb, numobj_ub, use_log )
 %MCMC_OPTIMIZE_SCENE_CONFIG implements MCMC with Metropolis-Hastings
 %algorithm to find the set of objects which optimize the scene
 %configuration.
@@ -67,8 +67,8 @@ prob_add = 0.35;
 prob_del = 0.35;
 prob_swap = 0.3;
 
-numobj_lb = 7;
-numobj_ub = 7;
+numobj_lb = numobj_lb + 2; %considering floor and wall always present
+numobj_ub = numobj_ub + 2; 
 
 iter = 2;
 while iter < num_iter
@@ -188,23 +188,23 @@ while iter < num_iter
     end
     
     %check for convergence
-    if iter > num_prev_iter
-%         stable = true;
-        sum_change = 0;
-        count = 0;
-        for piter = iter - num_prev_iter+1:iter-1
-            if all_score(piter) == 0
-                continue
-            end
-            sum_change = sum_change + abs(all_score(piter+1) - all_score(piter));
-            count = count + 1;
-        end
-        avg = sum_change / count;
-        
-        if avg < epsilon %it converged
-            break
-        end
-    end
+%     if iter > num_prev_iter
+% %         stable = true;
+%         sum_change = 0;
+%         count = 0;
+%         for piter = iter - num_prev_iter+1:iter-1
+%             if all_score(piter) == 0
+%                 continue
+%             end
+%             sum_change = sum_change + abs(all_score(piter+1) - all_score(piter));
+%             count = count + 1;
+%         end
+%         avg = sum_change / count;
+%         
+%         if avg < epsilon %it converged
+%             break
+%         end
+%     end
     
     fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
         iter, curr_config_score, next_config_score, alpha, u);
@@ -215,7 +215,7 @@ nodes_sets = repmat(struct('nodes',[]), iter, 1);
 inter_nodes_sets = repmat(struct('nodes',[]), iter, 1);
 for i = 1:iter
     nodes = find(all_config(i,:));
-    nodes_sets(i).nodes = nodes;
+    nodes_sets(i).nodes = all_vars(nodes);
     nodes = find(inter_config(i,:));
     inter_nodes_sets(i).nodes = all_vars(nodes);
 end

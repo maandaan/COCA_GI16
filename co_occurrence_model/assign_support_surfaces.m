@@ -18,9 +18,9 @@ for oid = 1:length(sampled_objects)
     name = mapping_nodes_names{obj};
     name_split = strsplit(name, '_');
     category = name_split{1};
-    if obj > 56
-        parent = get_object_type_bedroom({category});
-    end
+%     if obj > 56
+%         parent = get_object_type_bedroom({category});
+%     end
     
     for sid = 1:length(all_nodes)
         if all_nodes(sid) == obj
@@ -28,19 +28,21 @@ for oid = 1:length(sampled_objects)
         end
         % if n-th instance of a category, the same support as one instace
         % of that category
-        if parent == 0
-            vars = [all_nodes(sid), obj];
-        else
-            vars = [all_nodes(sid), parent];
-        end
+%         if parent == 0
+%             vars = [all_nodes(sid), obj];
+%         else
+%             vars = [all_nodes(sid), parent];
+%         end
         
-        row = structfind(factors, 'variables', vars);
-        supp_row = [structfind(factors, 'factor_type', suppedge_below); structfind(factors, 'factor_type', suppedge_behind)];
+        vars = [all_nodes(sid), obj];
+        row = structfind(factors, 'var', vars);
+        supp_row = [structfind(factors, 'factor_type', suppedge_below), structfind(factors, 'factor_type', suppedge_behind)];
         row = intersect(row, supp_row);
         if isempty(row)
             continue
         end
-        prob = factors(row).potential_func.CPT(4);
+        prob = GetValueOfAssignment(factors(row), [2 2]);
+%         prob = factors(row).potential_func.CPT(4);
         if prob > max_prob
             max_prob = prob;
             support = all_nodes(sid);

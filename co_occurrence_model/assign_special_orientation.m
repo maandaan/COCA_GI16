@@ -7,7 +7,7 @@ scene = objects_with_symmetry;
 scene(1).orientation_rels = [];
 
 %factors symmetry groups
-orient_rows = [structfind(factors, 'factor_type', perpendicular); ...
+orient_rows = [structfind(factors, 'factor_type', perpendicular), ...
     structfind(factors, 'factor_type', facing)];
 
 for oid = 1:length(scene)
@@ -24,7 +24,7 @@ for oid = 1:length(scene)
         end
         
         vars = [min(obj_type, scene(pid).obj_type), max(obj_type, scene(pid).obj_type)];
-        pair_factor_row = structfind(factors, 'variables', vars);
+        pair_factor_row = structfind(factors, 'var', vars);
         pair_orient_factor_row = intersect(pair_factor_row, orient_rows);
         if isempty(pair_orient_factor_row)
             continue
@@ -35,9 +35,11 @@ for oid = 1:length(scene)
         max_prob = 0;
         max_factor_row = 0;
         for rid = 1:length(pair_orient_factor_row)
-            pf = factors(pair_orient_factor_row(rid)).potential_func.PF;
-            if pf(end) > max_prob
-                max_prob = pf(end);
+            factor = factors(pair_orient_factor_row(rid));
+            v = GetValueOfAssignment(factor, factor.card);
+%             pf = factors(pair_orient_factor_row(rid)).potential_func.PF;
+            if v > max_prob
+                max_prob = v;
                 max_factor_row = pair_orient_factor_row(rid);
             end
         end
