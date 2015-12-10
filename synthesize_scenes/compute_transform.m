@@ -4,7 +4,7 @@ function [ final_scene ] = compute_transform( final_scene )
 for oid = 1:length(final_scene)
     if final_scene(oid).obj_type == 29
         scale = final_scene(oid).scale;
-        trans = [scale 0 0 0; 0 scale 0 0; 0 0 scale 0; 0 0 0 1];
+        trans = [scale(1) 0 0 0; 0 scale(2) 0 0; 0 0 scale(3) 0; 0 0 0 1];
         final_scene(oid).transform = trans;
         continue
     end
@@ -28,9 +28,9 @@ for oid = 1:length(final_scene)
     orient = final_scene(oid).orientation;
     cos_theta = orient(2) / norm(orient);
     sin_theta = orient(1) / norm(orient);
-    r = [s*cos_theta s*sin_theta 0;...
-        -s*sin_theta s*cos_theta 0;...
-        0 0 s];
+    r = [s(1)*cos_theta s(1)*sin_theta 0;...
+        -s(2)*sin_theta s(2)*cos_theta 0;...
+        0 0 s(3)];
     t = curr_points(1:3,1) - r * orig_points(1:3,1);
     t = [t; 1];
     rotation = [r; 0 0 0];

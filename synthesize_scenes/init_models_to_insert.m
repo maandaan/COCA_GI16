@@ -11,7 +11,7 @@ align_ind = [1 2 3; 4 2 3; 4 5 3; 1 5 3; 1 2 6; 4 2 6; 4 5 6; 1 5 6];
 
 %assumption: room is always the first object in the scene
 room = scene(1);
-room_dims_scaled = room.dims * room.scale;
+room_dims_scaled = room.dims .* room.scale;
 room_corners_bnd = [0 0 0 room_dims_scaled];
 scene(1).corners = room_corners_bnd(align_ind);
 scene(1).orientation = [1,0,0];
@@ -19,7 +19,7 @@ room_center = (min(scene(1).corners) + max(scene(1).corners)) / 2;
 
 for mid = 2:models_num
     model = scene(mid);
-    dims_scaled = model.dims * model.scale;
+    dims_scaled = model.dims .* model.scale;
 %     rand_bias = rand(1,2) .* (room_dims_scaled(1:2)/4); 
 %     corners_bnd = [room_center(1:2) - dims_scaled(1:2)/2 + rand_bias, 0, ...
 %         room_center(1:2) + dims_scaled(1:2)/2 + rand_bias, dims_scaled(3)];

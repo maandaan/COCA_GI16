@@ -1,4 +1,4 @@
-function new_coordinates = convert_coordinates(new_center, new_orient, point)
+function new_coordinates = convert_coordinates(new_center, cos_theta, sin_theta, point)
 
 % if this_orient(1) * this_orient(2) > 0
 %     e_u = [this_orient(2); -this_orient(1); 0] ./ norm(this_orient);
@@ -17,8 +17,8 @@ function new_coordinates = convert_coordinates(new_center, new_orient, point)
 % % rotation_mat = e_u * e_x' + e_v * e_y' + e_w * e_z';
 % new_coordinates = [e_u'; e_v'; e_w'];
 
-cos_theta = new_orient(2) / norm(new_orient);
-sin_theta = -new_orient(1) / norm(new_orient);
+% cos_theta = new_orient(2) / norm(new_orient);
+% sin_theta = -new_orient(1) / norm(new_orient);
 r = [cos_theta, sin_theta, 0; -sin_theta, cos_theta, 0; 0, 0, 1];
 
 p_prime = r * (point - new_center)';

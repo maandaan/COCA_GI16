@@ -19,7 +19,9 @@ angle = radtodeg(angle);
 
 % r = convert_coordinates(first_obj_orient);
 % second_obj_relative_centroid = second_obj_centroid * r' + first_obj_centroid;
-second_obj_relative_centroid = convert_coordinates(first_obj_centroid, first_obj_orient, second_obj_centroid);
+cos_theta = first_obj_orient(2) / norm(first_obj_orient);
+sin_theta = -first_obj_orient(1) / norm(first_obj_orient);
+second_obj_relative_centroid = convert_coordinates(first_obj_centroid, cos_theta, sin_theta, second_obj_centroid);
 
 displacement = (first_obj_centroid - second_obj_centroid) ./ room_diag;
 

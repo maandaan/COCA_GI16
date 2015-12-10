@@ -61,8 +61,13 @@ for mid = 1:total_size
 %             pair_vol = prod(pair_dims);
 %             pair_area = pair_dims(1) * pair_dims(2);
             
-            pair_relative_centroid = convert_coordinates(this_centroid, this_orient, pair_centroid);
-            this_relative_centroid = convert_coordinates(pair_centroid, pair_orient, this_centroid);
+            this_cos = this_orient(2) / norm(this_orient);
+            this_sin = -this_orient(1) / norm(this_orient);
+            pair_cos = pair_orient(2) / norm(pair_orient);
+            pair_sin = -pair_orient(1) / norm(pair_orient);
+
+            pair_relative_centroid = convert_coordinates(this_centroid, this_cos, this_sin, pair_centroid);
+            this_relative_centroid = convert_coordinates(pair_centroid, pair_cos, pair_sin, this_centroid);
 
             displacement = (this_centroid - pair_centroid) ./ room_diag; 
 

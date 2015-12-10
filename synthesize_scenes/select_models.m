@@ -1,4 +1,4 @@
-function [ scene ] = select_models(modelnames_file, scene, global_scene_graph)
+function [ scene ] = select_models(modelnames_file, scene)
 %SELECT_MODELS randomly selects models for each object category
 
 types = [scene(:).obj_type];
