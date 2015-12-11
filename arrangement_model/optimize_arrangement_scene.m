@@ -56,6 +56,8 @@ while length(final_scene) < length(input_scene)
     
     for oid = 1:length(rels_sorted)
         object = input_scene(children(rels_ind(oid)));
+        fprintf('Start optimizing the placement for %s\n', object.identifier);
+        
         %update local_scene
         local_scene = parent;
         local_scene = update_local_scene(local_scene, final_scene, input_scene, children(rels_ind(oid)));
@@ -64,7 +66,8 @@ while length(final_scene) < length(input_scene)
         end
 %         [ optimized_corners, optimized_orientation, final_cost ] = ...
 %             optimize_arrangement_object( object, local_scene, final_scene, sibling_list, room, scene_counts );
-        [all_xy, all_angle, all_score, all_pid] = mcmc_optimize_arrangement_object( object, local_scene, 1000 );
+        [all_xy, all_angle, all_score, all_pid] = ...
+            mcmc_optimize_arrangement_object( object, local_scene, final_scene, 1000 );
         
         if isempty(all_xy)
             global_corners_opt = object.corners;
@@ -73,17 +76,21 @@ while length(final_scene) < length(input_scene)
             [all_score_sorted, sort_ind] = sort(all_score);
             top_xy = all_xy(sort_ind(1),:);
             top_angle = all_angle(sort_ind(1));
-            top_pid = all_pid(sort_ind(1));
+%             top_pid = all_pid(sort_ind(1));
+            top_pid = 1;
             
             object_dims = object.dims .* object.scale;
-            z = mean(object.corners(:,3));
-            rel_center = [top_xy z];
             pair = local_scene(top_pid);
+            pair_dims = pair.dims .* pair.scale;
+            z = mean(object.corners(:,3));
+            top_xy = [top_xy(1) * (pair_dims(1)/2), top_xy(2) * (pair_dims(2)/2)];
+            rel_center = [top_xy z];
             center = inv_convert_coordinates(-mean(pair.corners), pair.orientation, rel_center);
             
-            theta = compute_theta_from_orientation(pair.orientation);
-            opt_angle = theta + degtorad(top_angle);
-            opt_orient = [cos(opt_angle) sin(opt_angle) 0];
+            theta = radtodeg(compute_theta_from_orientation(pair.orientation));
+            opt_angle = theta + top_angle;
+            opt_angle = smooth_final_angle(opt_angle);
+            opt_orient = [cos(degtorad(opt_angle)) sin(degtorad(opt_angle)) 0];
             
             opt_corners_bnd = [-object_dims/2 object_dims/2];
             local_corners = zeros(8,3);
@@ -126,12 +133,12 @@ for sid = 1:length(input_scene(obj_ind).symm_group_id)
     end
     
     if ismember(symm_g{sid}, final_ids)
-        pair_obj_ind = structfind(input_scene, 'identifier', symm_g{sid});
+        pair_obj_ind = structfind(final_scene, 'identifier', symm_g{sid});
         if isempty(pair_obj_ind)
             continue
         end
-        if isempty(structfind(local_scene, 'identifier', input_scene(pair_obj_ind).identifier))
-            local_scene = [local_scene; input_scene(pair_obj_ind)];
+        if isempty(structfind(local_scene, 'identifier', final_scene(pair_obj_ind).identifier))
+            local_scene = [local_scene; final_scene(pair_obj_ind)];
         end
     end
 end
@@ -140,10 +147,10 @@ end
 if ~isempty(input_scene(obj_ind).symm_ref_id) && ...
         ismember(input_scene(obj_ind).symm_ref_id, final_ids)
     
-    pair_obj_ind = structfind(input_scene, 'identifier', input_scene(obj_ind).symm_ref_id);
+    pair_obj_ind = structfind(final_scene, 'identifier', input_scene(obj_ind).symm_ref_id);
     if ~isempty(pair_obj_ind) && ...
-       isempty(structfind(local_scene, 'identifier', input_scene(pair_obj_ind).identifier))
-        local_scene = [local_scene; input_scene(pair_obj_ind)];
+       isempty(structfind(local_scene, 'identifier', final_scene(pair_obj_ind).identifier))
+        local_scene = [local_scene; final_scene(pair_obj_ind)];
     end
 end
 
@@ -152,14 +159,38 @@ for sid = 1:length(input_scene(obj_ind).orientation_rels)
     orientations = input_scene(obj_ind).orientation_rels;
         
     if ismember(orientations(sid).pair_obj_id, final_ids)
-        pair_obj_ind = structfind(input_scene, 'identifier', orientations(sid).pair_obj_id);
+        pair_obj_ind = structfind(final_scene, 'identifier', orientations(sid).pair_obj_id);
         if isempty(pair_obj_ind)
             continue
         end
-        if isempty(structfind(local_scene, 'identifier', input_scene(pair_obj_ind).identifier))
-            local_scene = [local_scene; input_scene(pair_obj_ind)];
+        if isempty(structfind(local_scene, 'identifier', final_scene(pair_obj_ind).identifier))
+            local_scene = [local_scene; final_scene(pair_obj_ind)];
         end
     end
+end
+
+end
+
+function angle = smooth_final_angle(angle)
+
+angle = mod(angle, 360);
+
+if abs(angle - 0) <= 45 || abs(angle - 360) <= 45
+    angle = 0;
+% elseif abs(angle - 45) < 20
+%     angle = 45;
+elseif abs(angle - 90) < 45
+    angle = 90;
+% elseif abs(angle - 135) < 20
+%     angle = 135;
+elseif abs(angle - 180) <= 45
+    angle = 180;
+% elseif abs(angle - 225) < 20
+%     angle = 225;
+elseif abs(angle - 270) < 45
+    angle = 270;
+% elseif abs(angle - 315) < 20
+%     angle = 315;
 end
 
 end

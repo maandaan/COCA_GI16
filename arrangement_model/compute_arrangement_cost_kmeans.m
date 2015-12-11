@@ -5,14 +5,17 @@ function score = compute_arrangement_cost_kmeans( object, pair_objects, pair_id,
 %pairs
 
 orig_theta = compute_rotval_from_orientation(pair_objects(pair_id).orientation);
+ref = pair_objects(pair_id);
+ref_dims = ref.dims .* ref.scale;
 
 score = 0;
 for oid = 1:length(pair_objects)
-    if pair_objects(oid).obj_type == get_object_type_bedroom({'room'})
-        continue
-    end
+%     if pair_objects(oid).obj_type == get_object_type_bedroom({'room'})
+%         continue
+%     end
         
     pair = pair_objects(oid);
+    pair_dims = pair.dims .* pair.scale;
     if oid == pair_id
         rel_xy = curr_xy;
         rel_angle = curr_angle;
@@ -21,6 +24,8 @@ for oid = 1:length(pair_objects)
 %         cos_t = cos(this_theta - orig_theta);
 %         sin_t = sin(this_theta - orig_theta);
         
+        curr_xy = [curr_xy(1)*(ref_dims(1) / 2), curr_xy(2)*(ref_dims(2) / 2)];
+    
         cos_t = pair.orientation(2) / norm(pair.orientation);
         sin_t = -pair.orientation(1) / norm(pair.orientation);
         ref = pair_objects(pair_id);
@@ -29,6 +34,7 @@ for oid = 1:length(pair_objects)
         %convert from global coordinates to local frame
         rel_xyz = convert_coordinates(mean(pair.corners), cos_t, sin_t, global_xyz);
         rel_xy = rel_xyz(1:2);
+        rel_xy = [rel_xy(1) / (pair_dims(1)/2), rel_xy(2) / (pair_dims(2)/2)];
         
         theta = radtodeg(compute_theta_from_orientation(ref.orientation));
         abs_angle = curr_angle + theta;

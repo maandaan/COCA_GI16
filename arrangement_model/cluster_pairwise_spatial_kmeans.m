@@ -23,7 +23,12 @@ for cid = 1:cat_count
         else
             num_clust = e.OptimalK;
         end
-        [ind, c, sumd, d] = kmeans(data(:,1:2), num_clust, 'Replicates', num_clust+1);
+        
+        try
+            [ind, c, sumd, d] = kmeans(data(:,1:2), num_clust, 'Replicates', num_clust+1);
+        catch
+            fprintf('main category: %d, pair_id: %d, num_clust: %d\n', cid, pair_id, num_clust);
+        end
         kmeans_xy = struct('data', data(:,1:2), 'num_cluster', num_clust, ...
             'cluster_index', ind, 'cluster_centroid', c, 'sum_distance', sumd, ...
             'distance_to_centroids', d);
