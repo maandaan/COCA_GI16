@@ -136,7 +136,7 @@ elseif isa(input, 'numeric')
             case 4
                 output{i} = 'mirror';
             case 5
-                output{i} = 'cabinet';
+                output{i} = 'drawer';
             case 6
                 output{i} = 'tv';
             case 7

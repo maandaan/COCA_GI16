@@ -94,17 +94,17 @@ while iter < num_iter
     curr_present_nodes = find(curr_config);
     curr_numobj = length(curr_present_nodes);
     if curr_numobj < numobj_lb
-        prob_add = 1;
-        prob_del = 0;
-        prob_swap = 0;
+        prob_add = 0.8;
+        prob_del = 0.1;
+        prob_swap = 0.1;
     elseif curr_numobj > numobj_ub
-        prob_add = 0;
-        prob_del = 1;
-        prob_swap = 0;
+        prob_add = 0.1;
+        prob_del = 0.8;
+        prob_swap = 0.1;
     else
-        prob_add = 0;
-        prob_del = 0;
-        prob_swap = 1;
+        prob_add = 0.1;
+        prob_del = 0.1;
+        prob_swap = 0.8;
     end
     
     [next_config, next_active_factors, next_inactive_factors] = possible_move(...

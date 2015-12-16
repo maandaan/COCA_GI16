@@ -13,13 +13,13 @@ factors = [];
 for fid = 1:length(updated_focals.subgraphs)
     focal = updated_focals.subgraphs{fid};
     if isempty(focal.edges)
-        if focal.nodelabels ~= 28
+        if ~ismember(focal.nodelabels, [3,8,13,28])
             single_node_focals = [single_node_focals, focal.nodelabels];
         end
         continue
     end
     
-    if ismember(28, focal.nodelabels)
+    if ~isempty(find(ismember([3,8,13,28], focal.nodelabels),1))
         continue
     end
     

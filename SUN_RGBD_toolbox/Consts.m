@@ -32,6 +32,7 @@ co_occurrence_file = 'data/training/SUNRGBD/bedroom_co_occurrence';
 pairwise_locations_file = 'data/training/SUNRGBD/bedroom_pairwise_locations.mat';
 global_factor_graph_file = 'data/training/SUNRGBD/bedroom_global_factor_graph.mat';
 sample_size_fisher_file = 'data/training/SUNRGBD/bedroom_sample_sizes_fisher.mat';
+sidetoside_relations_file = 'data/training/SUNRGBD/bedroom_sidetoside_relations.mat';
 
 %scene database directories and files
 scene_db_dir = 'data/databaseFull_fisher_Stanford/';

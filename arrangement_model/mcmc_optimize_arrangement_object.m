@@ -49,7 +49,11 @@ parent_dims = pair_objects(pair_id).dims .* pair_objects(pair_id).scale;
 object_dims = object.dims .* object.scale;
 curr_xy = [-parent_dims(1)/2 + object_dims(1)/2 0];
 curr_xy = [curr_xy(1)/(parent_dims(1)/2), curr_xy(2)/(parent_dims(2)/2)];
-curr_angle = 180;
+if parent.obj_type == get_object_type_bedroom({'room'})
+    curr_angle = 90;
+else
+    curr_angle = 0;
+end
 
 curr_score = compute_arrangement_cost_kmeans(object, pair_objects, pair_id,...
     curr_xy, curr_angle, kmeans_matrix);

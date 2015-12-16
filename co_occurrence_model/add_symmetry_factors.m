@@ -11,8 +11,8 @@ temp = {mapping_nodes_names(:)};
 for sid = 1:length(symmetry_relations)
     
     if symmetry_relations(sid).outside_obj_freq < symmetry_thresh || ...
-          symmetry_relations(sid).obj_cat == 28 || ...
-          symmetry_relations(sid).outside_obj_cat == 28
+          ismember(symmetry_relations(sid).obj_cat, [3,8,13,28]) || ...
+          ismember(symmetry_relations(sid).outside_obj_cat, [3,8,13,28])
         continue
     end
     

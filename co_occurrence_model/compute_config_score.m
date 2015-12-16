@@ -26,7 +26,7 @@ for fid = 1:length(factors)
     assignment = ismember(factors(fid).var, all_present_nodes);
     v = GetValueOfAssignment(factors(fid), assignment + 1);
     if v == 0
-%         v = 1e-3;
+        v = 1e-4;
         continue
     end
     

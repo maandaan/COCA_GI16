@@ -1,0 +1,13 @@
+MCMC sampling for 10 objects
+Least configuration scores:
+1: painting, bedside, desk, shelf, bedside, 
+2: painting, bedside, sofa, shelf, bedside, 
+3: painting, bedside, chair, dresser, chair, 
+4: painting, bedside, chair, table, dresser, 
+5: painting, bedside, desk, shelf, lamp, 
+Top configuration scores:
+1: desk, bed, computer, bottle, book, 
+2: bedside, bed, shelf, lamp, book, 
+3: desk, bed, bottle, book, bed, 
+4: painting, bed, sofa, shelf, toy, 
+5: desk, bed, bag, book, dresser, 

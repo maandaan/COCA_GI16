@@ -12,7 +12,7 @@ for i = 1:size(support_matrix,1)
        
     [top_support, top_ind] = sort([support_matrix(i,:,1),support_matrix(i,:,2)],'descend');
     
-    if i == 28
+    if ismember(i, [3,8,13,28])
         continue
     end
     
@@ -50,7 +50,7 @@ for i = 1:size(support_matrix,1)
                 factor_type = suppedge_below;
             end
             
-            if parent_ind == 28
+            if ismember(parent_ind, [3,8,13,28])
                 continue
             end
             

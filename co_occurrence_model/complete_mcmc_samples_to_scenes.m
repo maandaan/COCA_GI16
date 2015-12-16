@@ -10,7 +10,7 @@ constraint_nodes = find_constrained_nodes( input_scene, all_vars, mapping_nodes_
 constraint_nodes_ind = find(constraint_nodes);
 input_nodes = all_vars(constraint_nodes_ind);
 
-sampled_scenes = [];
+sampled_scenes = repmat(struct('scene', []), length(sample_objects), 1);
 
 for i = 1:length(sample_objects)
     all_nodes = sample_objects(i).nodes;
@@ -20,7 +20,8 @@ for i = 1:length(sample_objects)
     objects_with_symmetry = assign_symmetry_groups(objects_with_support, factors);
     objects_with_orientation = assign_special_orientation(objects_with_symmetry, factors);
     
-    sampled_scenes = [sampled_scenes; objects_with_orientation];
+%     sampled_scenes = [sampled_scenes; objects_with_orientation];
+    sampled_scenes(i).scene = objects_with_orientation;
 end
 
 end

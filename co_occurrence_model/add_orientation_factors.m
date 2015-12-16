@@ -7,10 +7,18 @@ factors = [];
 orientation_thresh = floor(0.03 * scene_count);
 
 all_rows = 1:length(orientation_relations);
-other_rows = [structfind(orientation_relations, 'first_obj_cat', 28); ...
-    structfind(orientation_relations, 'second_obj_cat', 28)];
-samedir_rows = structfind(orientation_relations, 'orient_type', 3);
-valid_rows = setdiff( setdiff(all_rows, other_rows), samedir_rows);
+unwanted_rows = [];
+for rid = 1:length(orientation_relations)
+    r = orientation_relations(rid);
+    if ismember(r.first_obj_cat, [3,8,13,28]) || ismember(r.second_obj_cat, [3,8,13,28])
+        unwanted_rows = [unwanted_rows, rid];
+    end
+end
+% unwanted_rows = [structfind(orientation_relations, 'first_obj_cat', 28); ...
+%     structfind(orientation_relations, 'second_obj_cat', 28)];
+% samedir_rows = structfind(orientation_relations, 'orient_type', 3);
+% valid_rows = setdiff( setdiff(all_rows, other_rows), samedir_rows);
+valid_rows = setdiff(all_rows, unwanted_rows);
 orient_rels_count = sum([orientation_relations(valid_rows).orient_freq]);
 
 for oid = 1:length(orientation_relations)
@@ -21,15 +29,17 @@ for oid = 1:length(orientation_relations)
     
     % discard the non-frequent ones or the same direction or if one object
     % is from category 'other'
-    if frequency < orientation_thresh || orient_type == 3 || ...
-            obj1 == 28 || obj2 == 28
+    if frequency < orientation_thresh || ismember(obj1, [3,8,13,28]) || ismember(obj2, [3,8,13,28]) ...
+%             || orient_type == 3
         continue
     end
     
     if orient_type == 1
         factor_type = perpendicular;
-    else
+    elseif orient_type == 2
         factor_type = facing;
+    else
+        factor_type = same_dir;
     end
 
     f.var = [obj1, obj2];
@@ -40,11 +50,11 @@ for oid = 1:length(orientation_relations)
     %computing other cases of CPT, either obj1 or obj2 not present
     obj1_rows = [structfind(orientation_relations, 'first_obj_cat', obj1); ...
         structfind(orientation_relations, 'second_obj_cat', obj1)];
-    obj1_rows = setdiff( setdiff(obj1_rows, other_rows), samedir_rows);
+%     obj1_rows = setdiff( setdiff(obj1_rows, other_rows), samedir_rows);
     
     obj2_rows = [structfind(orientation_relations, 'first_obj_cat', obj2); ...
         structfind(orientation_relations, 'second_obj_cat', obj2)];
-    obj2_rows = setdiff( setdiff(obj2_rows, other_rows), samedir_rows);
+%     obj2_rows = setdiff( setdiff(obj2_rows, other_rows), samedir_rows);
     
     neither_rows = setdiff (setdiff(valid_rows, obj1_rows), obj2_rows);
     
