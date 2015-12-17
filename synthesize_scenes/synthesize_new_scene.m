@@ -20,14 +20,14 @@ load(sample_size_fisher_file, 'sample_sizes');
 % % room = select_room(models_dir); %randomly select a layout
 % load('data/test_cases/bedroom_sampled_scenes_001.mat');
 % scene = sampled_scenes(1).scene;
-scene = select_models(modelnames_file, scene);
-scene = prune_models(scene);
+% scene = select_models(modelnames_file, scene);
+% scene = prune_models(scene);
 % %remember to manually check the models
 % 
-scene = compute_model_BB(scene, models_dir);
-scene = scale_models(scene, sample_sizes);
+% scene = compute_model_BB(scene, models_dir);
+% scene = scale_models(scene, sample_sizes);
 % % 
-scene = init_models_to_insert(scene);
+% scene = init_models_to_insert(scene);
 % 
 % %optimize the placement
 [ final_scene ] = optimize_arrangement_scene( scene );
@@ -39,6 +39,6 @@ modelcount = length(scene3d_objects);
 scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
 % scene3d.objects = scene3d_objects;
 
-out_file = [scenes_dir 'synth_scene_31_mcmc_arrangement.txt'];
+out_file = [scenes_dir 'synth_scene_32_sidetoside_constraints.txt'];
 write_scene_to_file( scene3d, out_file )
 

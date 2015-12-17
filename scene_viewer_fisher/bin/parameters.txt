@@ -1,5 +1,5 @@
 databaseDirectory=../../data/databaseFull_fisher_Stanford/
-defaultScene=synth_scene_31_mcmc_arrangement
+defaultScene=synth_scene_32_sidetoside_constraints
 textQuery=@
 
 

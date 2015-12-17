@@ -63,8 +63,7 @@ while length(final_scene) < length(input_scene)
         
         %update local_scene
         local_scene = parent;
-        local_scene = update_local_scene(local_scene, final_scene, ...
-            input_scene, children(rels_ind(oid)), sidetoside_constraints);
+        local_scene = update_local_scene(local_scene, final_scene, input_scene, children(rels_ind(oid)));
         if length(final_scene) == 19
             fprintf('lets debug!\n');
         end
@@ -121,8 +120,7 @@ end
 
 end
 
-function local_scene = update_local_scene(local_scene, final_scene, ...
-    input_scene, obj_ind, sidetoside_constraints)
+function local_scene = update_local_scene(local_scene, final_scene, input_scene, obj_ind)
 % Updates the local scene to include objects with symmetry and orientation
 % relations
 
@@ -142,15 +140,7 @@ if ~isempty(object_rows)
         if isempty(rows)
             continue
         end
-        for rid = 1:length(rows)
-            c = constraints(rows(rid));
-            if (c.first_side == 2 && c.second_side == 4) || ...
-                    (c.first_side == 4 && c.second_side == 2)
-                if isempty(structfind(local_scene, 'identifier', final_scene(oid).identifier))
-                    local_scene = [local_scene; final_scene(oid)];
-                end
-            end
-        end
+        for rid = 1:le
     end
 
 end

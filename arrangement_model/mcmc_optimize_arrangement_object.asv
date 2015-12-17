@@ -76,8 +76,8 @@ all_pid = zeros(num_iter, 1);
 iter = 1;
 collision_count = 0;
 constraint_count = 0;
-while iter <= num_iter && collision_count <= num_iter*2 ...
-    && constraint_count <= num_iter*2
+while iter <= num_iter && collision_count <= num_iter ...
+    && constraint_count <= num_iter
     % choose next sample
 %     r = rand;
 %     next_pair_id = sum(r >= cumsum([0, pairs_prob']));
