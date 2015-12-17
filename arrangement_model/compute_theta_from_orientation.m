@@ -10,7 +10,7 @@ if orient(1) == 0 && orient(2) < 0
     return
 end
 
-theta = atan(-orient(2) / orient(1));
+theta = atan(orient(2) / orient(1));
 if orient(1) < 0
     theta = theta + pi;
 end

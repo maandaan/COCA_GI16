@@ -64,22 +64,20 @@ while length(final_scene) < length(input_scene)
         %update local_scene
         local_scene = parent;
         local_scene = update_local_scene(local_scene, final_scene, ...
-            input_scene, children(rels_ind(oid)), sidetoside_constraints);
-        if length(final_scene) == 19
-            fprintf('lets debug!\n');
-        end
+            input_scene, children(rels_ind(oid)), sidetoside_constraints);        
 %         [ optimized_corners, optimized_orientation, final_cost ] = ...
 %             optimize_arrangement_object( object, local_scene, final_scene, sibling_list, room, scene_counts );
         [all_xy, all_angle, all_score, all_pid] = ...
-            mcmc_optimize_arrangement_object( object, local_scene, final_scene, 500 );
+            mcmc_optimize_arrangement_object( object, local_scene, final_scene, 2000 );
         
         if isempty(all_xy)
             global_corners_opt = object.corners;
             opt_orient = object.orientation;
         else
             [all_score_sorted, sort_ind] = sort(all_score);
-            top_xy = all_xy(sort_ind(1),:);
-            top_angle = all_angle(sort_ind(1));
+            nonzero_ind = find(all_score_sorted);
+            top_xy = all_xy(sort_ind(nonzero_ind(1)),:);
+            top_angle = all_angle(sort_ind(nonzero_ind(1)));
 %             top_pid = all_pid(sort_ind(1));
             top_pid = 1;
             

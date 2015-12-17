@@ -31,6 +31,7 @@ if length(pair_objects) > 1
 else
     pair_id = 1;
 end
+% pair_id = 1;
 
 % %choose one cluster from that pair to sample
 [xy_clusters_prob, angle_clusters_prob] = compute_cluster_probability(object, pair_objects, kmeans_matrix);
@@ -52,12 +53,13 @@ end
 support = pair_objects(1);
 support_dims = support.dims .* support.scale;
 
-parent = pair_objects(pair_id);
-parent_dims = pair_objects(pair_id).dims .* pair_objects(pair_id).scale;
+ref = pair_objects(pair_id);
+ref_dims = pair_objects(pair_id).dims .* pair_objects(pair_id).scale;
 object_dims = object.dims .* object.scale;
-curr_xy = [-parent_dims(1)/2 + object_dims(1)/2 0];
-curr_xy = [curr_xy(1)/(parent_dims(1)/2), curr_xy(2)/(parent_dims(2)/2)];
-if parent.obj_type == get_object_type_bedroom({'room'})
+% curr_xy = [-parent_dims(1)/2 + object_dims(1)/2 0];
+curr_xy = [0,0];
+% curr_xy = [curr_xy(1)/(parent_dims(1)/2), curr_xy(2)/(parent_dims(2)/2)];
+if ref.obj_type == get_object_type_bedroom({'room'})
     curr_angle = 90;
 else
     curr_angle = 0;
@@ -76,9 +78,10 @@ all_pid = zeros(num_iter, 1);
 iter = 1;
 collision_count = 0;
 constraint_count = 0;
-while iter <= num_iter && collision_count <= num_iter*2 ...
-    && constraint_count <= num_iter*2
-    % choose next sample
+while iter <= num_iter 
+%     && collision_count <= num_iter*2 ...
+%     && constraint_count <= num_iter*2
+%     % choose next sample
 %     r = rand;
 %     next_pair_id = sum(r >= cumsum([0, pairs_prob']));
     next_pair_id = pair_id;
@@ -102,48 +105,65 @@ while iter <= num_iter && collision_count <= num_iter*2 ...
 %     next_xy = [next_x, next_y];
 %     next_angle = rand() * 180;
     
-    %check for availability on the support surface
     x = next_xy(1);
     y = next_xy(2);
-    p = support_dims / 2;
-    o = object_dims / 2;
-    if x < -1 + o(1)/p(1) || x > 1 - o(1)/p(1) || ...
-            y < -1 + o(2)/p(2) || y > 1 - o(2)/p(2)
-%         fprintf('Not available space on the supporting surface!!\n');
-        continue
-    end
-    
-    %check for collision
-    x = x .* (parent_dims(1) / 2);
-    y = y .* (parent_dims(2) / 2);
+    x = x .* (ref_dims(1) / 2);
+    y = y .* (ref_dims(2) / 2);
     z = mean(object.corners(:,3));
-    global_xyz = inv_convert_coordinates(-mean(parent.corners), parent.orientation, [x y 0]);
+    global_xyz = inv_convert_coordinates(-mean(ref.corners), ref.orientation, [x y 0]);
     theta = compute_theta_from_orientation(pair_objects(next_pair_id).orientation);
     angle = theta + degtorad(next_angle);
     object_orient = [cos(angle) sin(angle) 0];
-    if check_collision( [global_xyz(1:2) z], object_dims, object_orient, holistic_scene )
-%         fprintf('Collision occures for this placement!!\n');
-        collision_count = collision_count + 1;
+
+    %check for availability on the support surface
+%     p = support_dims / 2;
+%     o = object_dims / 2;
+%     if x < -1 + o(1)/p(1) || x > 1 - o(1)/p(1) || ...
+%             y < -1 + o(2)/p(2) || y > 1 - o(2)/p(2)
+% %         fprintf('Not available space on the supporting surface!!\n');
+%         continue
+%     end
+    x = global_xyz(1);
+    y = global_xyz(2);
+    support_bnd = [min(support.corners), max(support.corners)];
+    if x - object_dims(1)/2 < support_bnd(1) || x + object_dims(1)/2 > support_bnd(4) ...
+            || y - object_dims(2)/2 < support_bnd(2) || y + object_dims(2)/2 > support_bnd(5)
         continue
     end
-    collision_count = 0;
     
-    %check for side-to-side constraints
-    if ~satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
-            object_orient, obj_type, holistic_scene, sidetoside_constraints)
-%         fprintf('Side-to-side constraints are not satisfied for this placement!!\n');
-        constraint_count = constraint_count + 1;
-        continue
-    end
-    constraint_count = 0;
-  
     samples_xy(iter,:) = next_xy;
     samples_angle(iter) = next_angle;
-    next_score = compute_arrangement_cost_kmeans(object, pair_objects, next_pair_id,...
+    next_score_kmeans = compute_arrangement_cost_kmeans(object, pair_objects, next_pair_id,...
         next_xy, next_angle, kmeans_matrix);
     
+    %check for collision
+    collided = check_collision( [global_xyz(1:2) z], object_dims, object_orient, holistic_scene );
+%     if check_collision( [global_xyz(1:2) z], object_dims, object_orient, holistic_scene )
+% %         fprintf('Collision occures for this placement!!\n');
+%         collision_count = collision_count + 1;
+%         continue
+%     end
+%     collision_count = 0;
+    
+    %check for side-to-side constraints
+    sidetoside_satisfied = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+            object_orient, obj_type, holistic_scene, sidetoside_constraints);
+%     if ~satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+%             object_orient, obj_type, holistic_scene, sidetoside_constraints)
+% %         fprintf('Side-to-side constraints are not satisfied for this placement!!\n');
+%         constraint_count = constraint_count + 1;
+%         continue
+%     end
+%     constraint_count = 0;
+  
+    next_score = next_score_kmeans * ~collided * sidetoside_satisfied;
+    
     %mcmc sampling
-    ratio_score = curr_score / next_score;
+    if next_score == 0
+        ratio_score = 0;
+    else
+        ratio_score = curr_score / next_score;
+    end
     alpha = min(1, ratio_score);
     u = rand;
     if alpha > u
@@ -172,7 +192,7 @@ end
 % plot(1:100, samples_angle(1:100));
 
 % figure
-% plot(1:iter, all_score);
+% plot(1:iter-1, all_score);
 
 end
 
