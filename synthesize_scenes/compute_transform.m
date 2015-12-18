@@ -2,12 +2,17 @@ function [ final_scene ] = compute_transform( final_scene )
 %COMPUTE_TRANSFORM
 
 for oid = 1:length(final_scene)
-    if final_scene(oid).obj_type == 29
-        scale = final_scene(oid).scale;
-        trans = [scale(1) 0 0 0; 0 scale(2) 0 0; 0 0 scale(3) 0; 0 0 0 1];
-        final_scene(oid).transform = trans;
-        continue
-    end
+%     if final_scene(oid).obj_type == 29
+%         scale = final_scene(oid).scale;
+%         orient = final_scene(oid).orientation;
+%         cos_theta = orient(2) / norm(orient);
+%         sin_theta = orient(1) / norm(orient);
+%         trans = [scale(1)*cos_theta scale(1)*sin_theta 0 0; ...
+%                 -scale(2)*sin_theta scale(2)*cos_theta 0 0; ...
+%                 0 0 scale(3) 0; 0 0 0 1];
+%         final_scene(oid).transform = trans;
+%         continue
+%     end
     
 %     ind = structfind(model_BBs_dims, 'modelname', final_scene(oid).modelname);
     orig_BB = final_scene(oid).BB;
@@ -31,7 +36,10 @@ for oid = 1:length(final_scene)
     r = [s(1)*cos_theta s(1)*sin_theta 0;...
         -s(2)*sin_theta s(2)*cos_theta 0;...
         0 0 s(3)];
-    t = curr_points(1:3,1) - r * orig_points(1:3,1);
+    curr_center = mean(curr_corners);
+    orig_center = (orig_BB(2,:) + orig_BB(1,:)) / 2;
+%     t = curr_points(1:3,1) - r * orig_points(1:3,1);
+    t = curr_center' - r * orig_center';
     t = [t; 1];
     rotation = [r; 0 0 0];
     transform = [rotation, t];

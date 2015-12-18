@@ -1,5 +1,5 @@
 function [ all_xy, all_angle, all_score, all_pid ] = ...
-    mcmc_optimize_arrangement_object( object, pair_objects, holistic_scene, num_iter )
+    mcmc_optimize_arrangement_object( object, pair_objects, holistic_scene, siblings, num_iter )
 %MCMC_ARRANGEMENT samples a location and angle for each object relative to
 %it's pair objects.
 
@@ -26,7 +26,8 @@ rng shuffle
 
 %assumption: the first object in the local scene is always the supporting
 %surface (parent)
-if length(pair_objects) > 1
+if length(pair_objects) > 1 && ...
+        pair_objects(1).obj_type == get_object_type_bedroom({'room'})
     pair_id = 2;
 else
     pair_id = 1;
@@ -67,6 +68,19 @@ end
 
 curr_score = compute_arrangement_cost_kmeans(object, pair_objects, pair_id,...
     curr_xy, curr_angle, kmeans_matrix);
+x = curr_xy(1);
+y = curr_xy(2);
+x = x .* (ref_dims(1) / 2);
+y = y .* (ref_dims(2) / 2);
+z = mean(object.corners(:,3));
+global_xyz = inv_convert_coordinates(-mean(ref.corners), ref.orientation, [x y 0]);
+theta = compute_theta_from_orientation(pair_objects(pair_id).orientation);
+angle = theta + degtorad(curr_angle);
+object_orient = [cos(angle) sin(angle) 0];
+collided = check_collision( [global_xyz(1:2) z], object_dims, object_orient, holistic_scene );
+sidetoside_satisfied = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+    object_orient, obj_type, siblings, sidetoside_constraints);
+curr_score = curr_score * ~collided * sidetoside_satisfied;
 
 all_xy = zeros(num_iter, 2);
 samples_xy = zeros(num_iter, 2);
@@ -147,7 +161,7 @@ while iter <= num_iter
     
     %check for side-to-side constraints
     sidetoside_satisfied = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
-            object_orient, obj_type, holistic_scene, sidetoside_constraints);
+            object_orient, obj_type, siblings, sidetoside_constraints);
 %     if ~satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
 %             object_orient, obj_type, holistic_scene, sidetoside_constraints)
 % %         fprintf('Side-to-side constraints are not satisfied for this placement!!\n');
@@ -161,6 +175,8 @@ while iter <= num_iter
     %mcmc sampling
     if next_score == 0
         ratio_score = 0;
+    elseif curr_score == 0 %some constraints are violeted
+        ratio_score = 1;
     else
         ratio_score = curr_score / next_score;
     end

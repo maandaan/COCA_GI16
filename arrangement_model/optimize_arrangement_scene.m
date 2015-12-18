@@ -37,7 +37,7 @@ while length(final_scene) < length(input_scene)
         continue
     end
     
-    sibling_list = [];
+    sibling_list = parent;
         
     objects_vol = zeros(length(children),1);
     for oid = 1:length(children)
@@ -68,7 +68,7 @@ while length(final_scene) < length(input_scene)
 %         [ optimized_corners, optimized_orientation, final_cost ] = ...
 %             optimize_arrangement_object( object, local_scene, final_scene, sibling_list, room, scene_counts );
         [all_xy, all_angle, all_score, all_pid] = ...
-            mcmc_optimize_arrangement_object( object, local_scene, final_scene, 2000 );
+            mcmc_optimize_arrangement_object( object, local_scene, final_scene, sibling_list, 2000 );
         
         if isempty(all_xy)
             global_corners_opt = object.corners;
@@ -76,10 +76,15 @@ while length(final_scene) < length(input_scene)
         else
             [all_score_sorted, sort_ind] = sort(all_score);
             nonzero_ind = find(all_score_sorted);
-            top_xy = all_xy(sort_ind(nonzero_ind(1)),:);
-            top_angle = all_angle(sort_ind(nonzero_ind(1)));
-%             top_pid = all_pid(sort_ind(1));
-            top_pid = 1;
+            if isempty(nonzero_ind)
+                top_ind = 1;
+            else
+                top_ind = nonzero_ind(1);
+            end
+            top_xy = all_xy(sort_ind(top_ind),:);
+            top_angle = all_angle(sort_ind(top_ind));
+            top_pid = all_pid(sort_ind(top_ind));
+%             top_pid = 1;
             
             object_dims = object.dims .* object.scale;
             pair = local_scene(top_pid);
@@ -110,7 +115,7 @@ while length(final_scene) < length(input_scene)
         object.corners = global_corners_opt;
         object.orientation = opt_orient;
         final_scene = [final_scene; object];
-%         sibling_list = [sibling_list; object];
+        sibling_list = [sibling_list; object];
 %         local_scene = [local_scene; object];
     end
     

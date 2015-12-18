@@ -30,7 +30,7 @@ load(sample_size_fisher_file, 'sample_sizes');
 % scene = init_models_to_insert(scene);
 % 
 % %optimize the placement
-[ final_scene ] = optimize_arrangement_scene( scene );
+% [ final_scene ] = optimize_arrangement_scene( scene );
 
 final_scene = compute_transform(final_scene);
 % 
@@ -39,6 +39,6 @@ modelcount = length(scene3d_objects);
 scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
 % scene3d.objects = scene3d_objects;
 
-out_file = [scenes_dir 'synth_scene_32_sidetoside_constraints.txt'];
+out_file = [scenes_dir 'synth_scene_33_sidetoside_constraints.txt'];
 write_scene_to_file( scene3d, out_file )
 
