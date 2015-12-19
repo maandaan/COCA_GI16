@@ -6,12 +6,13 @@ types = [scene(:).obj_type];
 count_uniques = hist(c, length(unique_types));
 
 % model_names = struct('obj_type',[], 'modelname',[]);
-scene(1).modelname = '';
+% scene(1).modelname = '';
 % model_count = 1;
 for nid = 1:length(unique_types)
     obj_type = unique_types(nid);
     obj_cat = get_object_type_bedroom(obj_type);
     
+    % find the model names for the specific category
     h = fopen(modelnames_file);
     line = fgets(h);
     obj_models = {};
@@ -31,25 +32,14 @@ for nid = 1:length(unique_types)
     
     if count_uniques(nid) == 1
         rand_ind = randi(count);
-%         model_names(model_count).modelname = obj_models{rand_ind};
-%         model_names(model_count).obj_type = obj_type;
-%         model_count = model_count + 1;
+        % if the object is already inserted in the scene and the model is
+        % specified
+        if isfield(scene, 'modelname') && ~isempty(scene(b(nid)).modelname)
+            continue
+        end
         scene(b(nid)).modelname = obj_models{rand_ind};
     else
-%         symm = false;
-%         factors = global_scene_graph.factors;
-%         symmg_rows = structfind(factors, 'factor_type', 4);
-%         symmresp_rows = structfind(factors, 'factor_type', 5);
-%         symm_rows = [symmg_rows; symmresp_rows];
-%         for rid = 1:length(symm_rows)
-%             vars = factors(symm_rows(rid)).variables;
-%             if vars(1) == obj_type
-%                 symm = true;
-%                 break
-%             end
-%         end
-        % the objects are symmetric, the same model
-        rand_ind = zeros(1,count_uniques(nid));
+%         rand_ind = zeros(1,count_uniques(nid));
         symm = ~isempty(scene(b(nid)).symm_group_id);
         if symm
             random = randi(count);
@@ -57,18 +47,30 @@ for nid = 1:length(unique_types)
         else
             rand_ind = randi(count, 1, count_uniques(nid));
         end
+        
+        %check whether at least one object in the group is already inserted
+        %in the scene
+        group_present = 0;
+        for i = 1:length(c)
+            if c(i) == nid
+                if isfield(scene, 'modelname') && ~isempty(scene(i).modelname)
+                    group_present = 1;
+                    group_modelname = scene(i).modelname;
+                end
+            end
+        end
+        
         m_count = 1;
         for i = 1:length(c)
             if c(i) == nid
-                scene(i).modelname = obj_models{rand_ind(m_count)};
-                m_count = m_count + 1;
+                if group_present && symm %one object in the symmetric group already has a definite modelname
+                    scene(i).modelname = group_modelname;
+                elseif ~isfield(scene, 'modelname') || isempty(scene(i).modelname) %do not change the model for previously inserted objects
+                    scene(i).modelname = obj_models{rand_ind(m_count)};
+                    m_count = m_count + 1;
+                end
             end
         end
-%         for i = 1:length(rand_ind)
-%             model_names(model_count).modelname = obj_models{rand_ind(i)};
-%             model_names(model_count).obj_type = obj_type;
-%             model_count = model_count + 1;
-%         end
     end
 end
 

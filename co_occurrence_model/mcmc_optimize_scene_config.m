@@ -35,6 +35,7 @@ load(mapping_nodes_names_file, 'mapping_nodes_names')
 
 constraint_nodes = find_constrained_nodes( input_scene, all_vars, mapping_nodes_names );
 constraint_nodes_ind = find(constraint_nodes);
+init_active_factors = find_initial_active_factors(constraint_nodes_ind, all_vars, factors);
 
 % factors = global_scene_graph.factors;
 % factors = factors(64:96);
@@ -43,7 +44,7 @@ supp_rows = [structfind(factors, 'factor_type', suppedge_below), structfind(fact
 
 curr_config = constraint_nodes;
 rng('shuffle');
-active_factors = union(randi(num_factors, 1, 5), 20);
+active_factors = union(randi(num_factors, 1, 5), init_active_factors);
 % active_factors = unique(randi(23, 1, 5));
 inactive_factors = setdiff(1:num_factors, active_factors);
 for fid = 1:length(active_factors)
@@ -67,8 +68,8 @@ prob_add = 0.35;
 prob_del = 0.35;
 prob_swap = 0.3;
 
-numobj_lb = numobj_lb + 2; %considering floor and wall always present
-numobj_ub = numobj_ub + 2; 
+numobj_lb = numobj_lb + length(constraint_nodes_ind); 
+numobj_ub = numobj_ub + length(constraint_nodes_ind); 
 
 iter = 2;
 while iter < num_iter

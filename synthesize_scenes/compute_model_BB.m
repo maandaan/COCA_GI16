@@ -5,11 +5,15 @@ function [ scene ] = compute_model_BB( scene, models_dir )
 %bounding box format: [x_min y_min z_min; x_max y_max z_max]
 
 model_num = length(scene);
-scene(1).BB = [];
-scene(1).dims = [];
+% scene(1).BB = [];
+% scene(1).dims = [];
 % scene = repmat(struct('obj_type',[], 'modelname', [], 'BB', [], 'dims', []), model_num, 1);
 
 for mid = 1:model_num
+    if isfield(scene, 'BB') && ~isempty(scene(mid).BB)
+        continue
+    end
+    
     filename = scene(mid).modelname;
     model = read_wobj([models_dir filename '.obj']);
 %     scene(mid).obj_type = scene(mid).obj_type;

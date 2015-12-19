@@ -17,7 +17,7 @@ count = 0;
 sid = 0;
 sample_score = [];
 sample_objects = [];
-obj_count = obj_count + 2;
+obj_count = obj_count;
 
 while count < sample_count && sid < length(sorted_nodes_sets) - 1
     sid = sid + 1;
@@ -27,7 +27,7 @@ while count < sample_count && sid < length(sorted_nodes_sets) - 1
         continue
     end
     
-    if ~isempty(find(ismember([3,8,13,26,28,62,63,75:81,84:87], sample))) %door, window, other in the objects
+    if ~isempty(find(ismember([3,8,13,26,28,62,63,75:81,84:87], sample))) %door, window, cushion, other in the objects
         continue
     end
     

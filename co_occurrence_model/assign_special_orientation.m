@@ -8,7 +8,8 @@ scene(1).orientation_rels = [];
 
 %factors symmetry groups
 orient_rows = [structfind(factors, 'factor_type', perpendicular), ...
-    structfind(factors, 'factor_type', facing)];
+    structfind(factors, 'factor_type', facing), ...
+    structfind(factors, 'factor_type', same_dir)];
 
 for oid = 1:length(scene)
     

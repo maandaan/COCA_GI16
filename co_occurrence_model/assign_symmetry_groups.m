@@ -13,9 +13,9 @@ symm_rows = [structfind(factors, 'factor_type', symm_g), ...
 
 for oid = 1:length(scene)
     
-    if ~isempty(scene(oid).symm_group_id)
-        continue
-    end
+%     if ~isempty(scene(oid).symm_group_id)
+%         continue
+%     end
     obj_type = scene(oid).obj_type;
     
     type_rows = structfind(scene, 'obj_type', obj_type);

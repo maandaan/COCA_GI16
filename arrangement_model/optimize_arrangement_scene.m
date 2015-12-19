@@ -29,7 +29,6 @@ while length(final_scene) < length(input_scene)
         pindex = structfind(final_scene, 'identifier', parent_input_scene);
         parent = final_scene(pindex);
     end
-%     parent = input_scene(parents(1));
     parents = parents(2:end);
         
     children = parent.children;

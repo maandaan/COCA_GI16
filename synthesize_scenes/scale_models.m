@@ -5,6 +5,10 @@ function [ scaled_models ] = scale_models( scene, sample_sizes )
 scaled_models = scene;
 for mid = 1:length(scaled_models)
     model = scene(mid);
+    if isfield(scene, 'scale') && ~isempty(model.scale)
+        continue
+    end
+    
     prior_dims = sample_sizes(model.obj_type).fisherDB_dims;
     scale = prior_dims ./ model.dims;
 %     orig_diag = norm(model.dims);
