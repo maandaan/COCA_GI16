@@ -35,6 +35,10 @@ object_height = newobj_corners(4:5,3);
 dist_thresh = 3;
 for oid = 1:length(holistic_scene)
     pair = holistic_scene(oid);
+    if pair.obj_type == object_type
+        continue
+    end
+    
     if pair.obj_type == get_object_type_bedroom({'room'})
         pair_type = 56;
     else
@@ -127,7 +131,8 @@ for oid = 1:length(holistic_scene)
                         dist24 = compute_sides_dist(rect1, rect2, 2, 4);
                         dist42 = compute_sides_dist(rect1, rect2, 4, 2);
                         p_satisfied = p_satisfied && ...
-                            (abs(dist24 - c.avg_dist) < dist_thresh || abs(dist42 - c2.avg_dist) < dist_thresh);
+                            ((dist24>=0 && dist24 < c.avg_dist + dist_thresh) ...
+                            || (dist42>=0 && dist42 < c2.avg_dist + dist_thresh));
                         fprintf('dist24: %f, avg_dist24: %f\n', dist24, c.avg_dist);
                         fprintf('dist42: %f, avg_dist42: %f\n', dist42, c2.avg_dist);
                     end
