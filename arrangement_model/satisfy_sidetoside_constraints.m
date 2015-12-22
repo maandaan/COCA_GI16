@@ -76,6 +76,14 @@ for oid = 1:length(holistic_scene)
         rect1 = pair_rect;
         rect2 = object_rect;
         
+        %debug
+        for i = 1:length(holistic_scene)
+            plot(holistic_scene(i).corners(1:5,1),holistic_scene(i).corners(1:5,2));
+            hold on
+        end
+        plot([rect2(:,1);rect2(1,1)], [rect2(:,2);rect2(1,2)], 'r');
+        hold off
+        
         min_dist = 1000000;
         for side1 = 1:4
             dist = compute_sides_dist(rect1, rect2, side1, side2);
@@ -84,7 +92,8 @@ for oid = 1:length(holistic_scene)
             end
         end
 %         fprintf('dist: %f, avg_dist: %f\n', min_dist, c.avg_dist);
-        if abs(min_dist - c.avg_dist) > dist_thresh
+%         if abs(min_dist - c.avg_dist) > dist_thresh
+        if min_dist > c.avg_dist + dist_thresh    
             satisfied = false;
             break
         end   
@@ -104,9 +113,12 @@ for oid = 1:length(holistic_scene)
             end
             
             if side1 == 2 && side2 == 4
-                plot([rect1(:,1);rect1(1,1)], [rect1(:,2);rect1(1,2)]);
-                hold on
-                plot([rect2(:,1);rect2(1,1)], [rect2(:,2);rect2(1,2)], 'r');
+                %debug
+                for i = 1:length(holistic_scene)
+                    plot(holistic_scene(i).corners(1:5,1),holistic_scene(i).corners(1:5,2));
+                    hold on
+                end
+                plot([object_rect(:,1);object_rect(1,1)], [object_rect(:,2);object_rect(1,2)], 'r');
                 hold off
                 for i = rid+1:length(rows)
                     c2 = constraints(rows(i));
@@ -127,7 +139,8 @@ for oid = 1:length(holistic_scene)
                     continue
                 end
                 dist = compute_sides_dist(rect1, rect2, side1, side2);
-                p_satisfied = p_satisfied && (abs(dist - c.avg_dist) < dist_thresh);
+%                 p_satisfied = p_satisfied && (abs(dist - c.avg_dist) < dist_thresh);
+                p_satisfied = p_satisfied && (dist >= 0  && dist < c.avg_dist + dist_thresh);
             end
         end
         if ~p_satisfied

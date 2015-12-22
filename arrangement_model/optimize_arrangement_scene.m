@@ -47,17 +47,24 @@ while length(final_scene) < length(input_scene)
     [vol_sorted, ind] = sort(objects_vol, 'descend');
     
     children = children(ind);
-    objects_relations = zeros(length(children),1);
-    for oid = 1:length(children)
-        obj = input_scene(children(oid));
-        objects_relations(oid) = length(obj.symm_group_id) + ...
-            ~isempty(obj.symm_ref_id) + length(obj.orientation_rels) ...
-            - ~isempty(obj.symm_group_id);
-    end
-    [rels_sorted, rels_ind] = sort(objects_relations, 'descend');
+%     objects_relations = zeros(length(children),1);
+%     for oid = 1:length(children)
+%         obj = input_scene(children(oid));
+%         objects_relations(oid) = length(obj.symm_group_id) + ...
+%             ~isempty(obj.symm_ref_id) + length(obj.orientation_rels) ...
+%             - ~isempty(obj.symm_group_id);
+%     end
+    obj_rels_count = count_object_relations( input_scene, children );
+    [rels_sorted, rels_ind] = sort(obj_rels_count, 'descend');
     
     for oid = 1:length(rels_sorted)
         object = input_scene(children(rels_ind(oid)));
+%         if object.optimized_location
+%             final_scene = [final_scene; object];
+%             sibling_list = [sibling_list; object];
+%             continue
+%         end
+        
         fprintf('Start optimizing the placement for %s\n', object.identifier);
         
         %update local_scene
@@ -67,7 +74,7 @@ while length(final_scene) < length(input_scene)
 %         [ optimized_corners, optimized_orientation, final_cost ] = ...
 %             optimize_arrangement_object( object, local_scene, final_scene, sibling_list, room, scene_counts );
         [all_xy, all_angle, all_score, all_pid] = ...
-            mcmc_optimize_arrangement_object( object, local_scene, final_scene, sibling_list, 2000 );
+            mcmc_optimize_arrangement_object( object, local_scene, final_scene, sibling_list, 1000 );
         
         if isempty(all_xy)
             global_corners_opt = object.corners;
@@ -113,6 +120,7 @@ while length(final_scene) < length(input_scene)
         
         object.corners = global_corners_opt;
         object.orientation = opt_orient;
+        object.optimized_location = 1;
         final_scene = [final_scene; object];
         sibling_list = [sibling_list; object];
 %         local_scene = [local_scene; object];
@@ -131,31 +139,31 @@ function local_scene = update_local_scene(local_scene, final_scene, ...
 final_ids = {final_scene(:).identifier};
 % input_ids = {};
 
-obj_type = input_scene(obj_ind).obj_type;
-object_rows = [structfind(sidetoside_constraints, 'first_type', obj_type), ...
-    structfind(sidetoside_constraints, 'second_type', obj_type)];
-if ~isempty(object_rows)
-    constraints = sidetoside_constraints(object_rows);
-    
-    for oid = 1:length(final_scene)
-        pair_type = final_scene(oid).obj_type;
-        rows = [structfind(constraints, 'first_type', pair_type), ...
-            structfind(constraints, 'second_type', pair_type)];
-        if isempty(rows)
-            continue
-        end
-        for rid = 1:length(rows)
-            c = constraints(rows(rid));
-            if (c.first_side == 2 && c.second_side == 4) || ...
-                    (c.first_side == 4 && c.second_side == 2)
-                if isempty(structfind(local_scene, 'identifier', final_scene(oid).identifier))
-                    local_scene = [local_scene; final_scene(oid)];
-                end
-            end
-        end
-    end
-
-end
+% obj_type = input_scene(obj_ind).obj_type;
+% object_rows = [structfind(sidetoside_constraints, 'first_type', obj_type), ...
+%     structfind(sidetoside_constraints, 'second_type', obj_type)];
+% if ~isempty(object_rows)
+%     constraints = sidetoside_constraints(object_rows);
+%     
+%     for oid = 1:length(final_scene)
+%         pair_type = final_scene(oid).obj_type;
+%         rows = [structfind(constraints, 'first_type', pair_type), ...
+%             structfind(constraints, 'second_type', pair_type)];
+%         if isempty(rows)
+%             continue
+%         end
+%         for rid = 1:length(rows)
+%             c = constraints(rows(rid));
+%             if (c.first_side == 2 && c.second_side == 4) || ...
+%                     (c.first_side == 4 && c.second_side == 2)
+%                 if isempty(structfind(local_scene, 'identifier', final_scene(oid).identifier))
+%                     local_scene = [local_scene; final_scene(oid)];
+%                 end
+%             end
+%         end
+%     end
+% 
+% end
 
 %symmetry group
 for sid = 1:length(input_scene(obj_ind).symm_group_id)

@@ -11,16 +11,16 @@ load(sample_size_fisher_file, 'sample_sizes');
 
 new_obj_count = 3;
 empty_scene = false;
-if empty_scene
-    identifier = ['room_' num2str(randi(1000))];
-    input_scene = struct('identifier', identifier, 'obj_type', 29, 'obj_category', 'room', ...
-        'supporter_id', -1, 'supporter', -1, 'supporter_category', [], 'support_type', -1);
-    pres_obj_count = 2;
-else
-    load('data/Synthesized Scenes/scene_zeinab_007.mat', 'final_scene');
-    input_scene = final_scene;
-    pres_obj_count = length(final_scene) + 1;
-end
+% if empty_scene
+%     identifier = ['room_' num2str(randi(1000))];
+%     input_scene = struct('identifier', identifier, 'obj_type', 29, 'obj_category', 'room', ...
+%         'supporter_id', -1, 'supporter', -1, 'supporter_category', [], 'support_type', -1);
+%     pres_obj_count = 2;
+% else
+%     load('data/Synthesized Scenes/scene_zeinab_007.mat', 'final_scene');
+%     input_scene = final_scene;
+%     pres_obj_count = length(final_scene) + 1;
+% end
 
 
 % [ all_config, all_score, nodes_sets ] = mcmc_optimize_scene_config(...
@@ -42,7 +42,7 @@ end
  
 % scene = init_models_to_insert(scene);
  
-load('data/test_cases/bedroom_sample_scene_004.mat', 'scene');
+load('data/test_cases/bedroom_sample_scene_005.mat', 'scene');
 %optimize the placement
 [ final_scene ] = optimize_arrangement_scene( scene );
 
@@ -53,6 +53,6 @@ modelcount = length(scene3d_objects);
 scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
 % scene3d.objects = scene3d_objects;
 
-out_file = [scenes_dir 'synth_scene_33_sidetoside_constraints.txt'];
+out_file = [scenes_dir 'synth_scene_35_progressive_synthesis.txt'];
 write_scene_to_file( scene3d, out_file )
 

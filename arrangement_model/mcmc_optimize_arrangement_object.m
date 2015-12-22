@@ -170,6 +170,12 @@ while iter <= num_iter
 %     end
 %     constraint_count = 0;
   
+    if length(holistic_scene) == 3
+        fprintf('finally!!\n');
+        if sidetoside_satisfied
+            fprintf('Yess!\n');
+        end
+    end
     next_score = next_score_kmeans * ~collided * sidetoside_satisfied;
     
     %mcmc sampling

@@ -2,6 +2,8 @@ function [ collided ] = check_collision( newobj_placement, newobj_dims, newobj_o
 %CHECK_COLLISION checks whether the new placement is colliding the
 %placement of already placed objects.
 
+thresh = 2.5;
+
 newobj_center = newobj_placement(1:3);
 % newobj_BB = [newobj_center - newobj_dims/2; newobj_center + newobj_dims/2];
 corners_bnd = [-newobj_dims/2 newobj_dims/2];
@@ -17,7 +19,13 @@ for i = 1:8
 end
 % newobj_BB = [min(newobj_corners); max(newobj_corners)];
 newobj_height = [min(newobj_corners(:,3)), max(newobj_corners(:,3))];
-newobj_rect = newobj_corners(1:4,1:2);
+newobj_xbnd = [min(newobj_corners(1:4,1)), max(newobj_corners(1:4,1))];
+newobj_ybnd = [min(newobj_corners(1:4,2)), max(newobj_corners(1:4,2))];
+newobj_rect = [newobj_xbnd(1)+thresh, newobj_ybnd(1)+thresh; ...
+    newobj_xbnd(2)-thresh, newobj_ybnd(1)+thresh; ...
+    newobj_xbnd(2)-thresh, newobj_ybnd(2)-thresh; ...
+    newobj_xbnd(1)+thresh, newobj_ybnd(2)-thresh];
+% newobj_rect = newobj_corners(1:4,1:2) - thresh;
 
 epsilon = 0.00001;
 collided = false;
@@ -49,7 +57,13 @@ for oid = 1:length(scene)
 %         && abs(z_intersect(1) - z_intersect(2)) > epsilon;
 
     pair_height = [min(pair.corners(:,3)), max(pair.corners(:,3))];
-    pair_rect = pair.corners(1:4,1:2);
+    pair_xbnd = [min(pair.corners(1:4,1)), max(pair.corners(1:4,1))];
+    pair_ybnd = [min(pair.corners(1:4,2)), max(pair.corners(1:4,2))];
+    pair_rect = [pair_xbnd(1)+thresh, pair_ybnd(1)+thresh; ...
+                 pair_xbnd(2)-thresh, pair_ybnd(1)+thresh; ...
+                 pair_xbnd(2)-thresh, pair_ybnd(2)-thresh; ...
+                 pair_xbnd(1)+thresh, pair_ybnd(2)-thresh];
+%     pair_rect = pair.corners(1:4,1:2);
     z_intersect = range_intersection(newobj_height, pair_height);
     xy_intersect = RectIntersect(pair_rect, newobj_rect);
     
