@@ -59,11 +59,11 @@ while length(final_scene) < length(input_scene)
     
     for oid = 1:length(rels_sorted)
         object = input_scene(children(rels_ind(oid)));
-%         if object.optimized_location
-%             final_scene = [final_scene; object];
-%             sibling_list = [sibling_list; object];
-%             continue
-%         end
+        if object.optimized_location
+            final_scene = [final_scene; object];
+            sibling_list = [sibling_list; object];
+            continue
+        end
         
         fprintf('Start optimizing the placement for %s\n', object.identifier);
         
@@ -100,9 +100,9 @@ while length(final_scene) < length(input_scene)
             rel_center = [top_xy z];
             center = inv_convert_coordinates(-mean(pair.corners), pair.orientation, rel_center);
             
-            theta = radtodeg(compute_theta_from_orientation(pair.orientation));
-            opt_angle = theta + top_angle;
-            opt_angle = smooth_final_angle(opt_angle);
+%             theta = radtodeg(compute_theta_from_orientation(pair.orientation));
+%             opt_angle = theta + top_angle;
+            opt_angle = smooth_final_angle(radtodeg(top_angle));
             opt_orient = [cos(degtorad(opt_angle)) sin(degtorad(opt_angle)) 0];
             
             opt_corners_bnd = [-object_dims/2 object_dims/2];

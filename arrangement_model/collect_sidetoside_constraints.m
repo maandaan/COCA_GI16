@@ -8,7 +8,7 @@ c = struct('first_type', [], 'second_type', [], ...
     'first_side', [], 'second_side', [], 'avg_dist', [], 'frequency', []);
 count = 0;
 cat_count = size(sidetoside_rels_matrix, 1);
-thresh = 20;
+thresh = 50;
 
 for i = 1:cat_count - 2
     if ismember(i, [3,8,13,28])

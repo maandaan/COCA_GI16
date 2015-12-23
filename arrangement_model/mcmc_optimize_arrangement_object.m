@@ -75,12 +75,27 @@ y = y .* (ref_dims(2) / 2);
 z = mean(object.corners(:,3));
 global_xyz = inv_convert_coordinates(-mean(ref.corners), ref.orientation, [x y 0]);
 theta = compute_theta_from_orientation(pair_objects(pair_id).orientation);
-angle = theta + degtorad(curr_angle);
-object_orient = [cos(angle) sin(angle) 0];
-collided = check_collision( [global_xyz(1:2) z], object_dims, object_orient, holistic_scene );
-sidetoside_satisfied = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
-    object_orient, obj_type, siblings, sidetoside_constraints);
-curr_score = curr_score * ~collided * sidetoside_satisfied;
+
+angle1 = theta + degtorad(curr_angle);
+curr_angle_abs = angle1;
+object_orient1 = [cos(angle1) sin(angle1) 0];
+collided1 = check_collision( [global_xyz(1:2) z], object_dims, object_orient1, holistic_scene );
+sidetoside_satisfied1 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+    object_orient1, obj_type, siblings, sidetoside_constraints);
+curr_score1 = curr_score * ~collided1 * sidetoside_satisfied1;
+
+if curr_score1 == 0
+    angle2 = theta - degtorad(curr_angle);
+    curr_angle_abs = angle2;
+    object_orient2 = [cos(angle2) sin(angle2) 0];
+    collided2 = check_collision( [global_xyz(1:2) z], object_dims, object_orient2, holistic_scene );
+    sidetoside_satisfied2 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+        object_orient2, obj_type, siblings, sidetoside_constraints);
+    curr_score2 = curr_score * ~collided2 * sidetoside_satisfied2;
+    curr_score = curr_score2;
+else
+    curr_score = curr_score1;
+end
 
 all_xy = zeros(num_iter, 2);
 samples_xy = zeros(num_iter, 2);
@@ -126,8 +141,9 @@ while iter <= num_iter
     z = mean(object.corners(:,3));
     global_xyz = inv_convert_coordinates(-mean(ref.corners), ref.orientation, [x y 0]);
     theta = compute_theta_from_orientation(pair_objects(next_pair_id).orientation);
-    angle = theta + degtorad(next_angle);
-    object_orient = [cos(angle) sin(angle) 0];
+    angle1 = theta + degtorad(next_angle);
+    next_angle_abs = angle1;
+    object_orient1 = [cos(angle1) sin(angle1) 0];
 
     %check for availability on the support surface
 %     p = support_dims / 2;
@@ -151,7 +167,7 @@ while iter <= num_iter
         next_xy, next_angle, kmeans_matrix);
     
     %check for collision
-    collided = check_collision( [global_xyz(1:2) z], object_dims, object_orient, holistic_scene );
+    collided1 = check_collision( [global_xyz(1:2) z], object_dims, object_orient1, holistic_scene );
 %     if check_collision( [global_xyz(1:2) z], object_dims, object_orient, holistic_scene )
 % %         fprintf('Collision occures for this placement!!\n');
 %         collision_count = collision_count + 1;
@@ -160,8 +176,8 @@ while iter <= num_iter
 %     collision_count = 0;
     
     %check for side-to-side constraints
-    sidetoside_satisfied = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
-            object_orient, obj_type, siblings, sidetoside_constraints);
+    sidetoside_satisfied1 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+            object_orient1, obj_type, siblings, sidetoside_constraints);
 %     if ~satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
 %             object_orient, obj_type, holistic_scene, sidetoside_constraints)
 % %         fprintf('Side-to-side constraints are not satisfied for this placement!!\n');
@@ -170,7 +186,18 @@ while iter <= num_iter
 %     end
 %     constraint_count = 0;
   
-    next_score = next_score_kmeans * ~collided * sidetoside_satisfied;
+    next_score = next_score_kmeans * ~collided1 * sidetoside_satisfied1;
+    if next_score == 0
+        angle2 = theta - degtorad(next_angle);
+        next_angle_abs = angle2;
+        object_orient2 = [cos(angle2) sin(angle2) 0];
+        collided2 = check_collision( [global_xyz(1:2) z], object_dims, ...
+            object_orient2, holistic_scene );
+        sidetoside_satisfied2 = satisfy_sidetoside_constraints (...
+            [global_xyz(1:2) z], object_dims, object_orient2, ...
+            obj_type, siblings, sidetoside_constraints);
+        next_score = next_score_kmeans * ~collided2 * sidetoside_satisfied2;
+    end
     
     %mcmc sampling
     if next_score == 0
@@ -184,12 +211,12 @@ while iter <= num_iter
     u = rand;
     if alpha > u
         curr_xy = next_xy;
-        curr_angle = next_angle;
+        curr_angle_abs = next_angle_abs;
         curr_score = next_score;
         pair_id = next_pair_id;
     end
     all_xy(iter, :) = curr_xy;
-    all_angle(iter) = curr_angle;
+    all_angle(iter) = curr_angle_abs;
     all_score(iter) = curr_score;
     all_pid(iter) = pair_id;
     
