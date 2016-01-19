@@ -18,6 +18,7 @@ parents = 1;
 room = input_scene(1);
 % new_objects = input_scene;
 final_scene = room;
+use_hard_constraints = 1;
 
 while length(final_scene) < length(input_scene)
     
@@ -73,8 +74,8 @@ while length(final_scene) < length(input_scene)
             input_scene, children(rels_ind(oid)), sidetoside_constraints);        
 %         [ optimized_corners, optimized_orientation, final_cost ] = ...
 %             optimize_arrangement_object( object, local_scene, final_scene, sibling_list, room, scene_counts );
-        [all_xy, all_angle, all_score, all_pid] = ...
-            mcmc_optimize_arrangement_object( object, local_scene, final_scene, sibling_list, 1000 );
+        [all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_constraints] = ...
+            mcmc_optimize_arrangement_object( object, local_scene, final_scene, sibling_list, 1000, use_hard_constraints );
         
         if isempty(all_xy)
             global_corners_opt = object.corners;
@@ -85,7 +86,23 @@ while length(final_scene) < length(input_scene)
             if isempty(nonzero_ind)
                 top_ind = 1;
             else
-                top_ind = nonzero_ind(1);
+                index = 1;
+                top_ind = nonzero_ind(index);
+                if use_hard_constraints %if we didn't check for the constraints while sampling
+                    while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) || ...
+                            ~all_sidetoside_constraints(sort_ind(top_ind)))
+                        index = index + 1;
+                        top_ind = nonzero_ind(index);
+                    end
+                    
+                    %none of the samples satisfy the hard constraints
+                    if index == length(nonzero_ind)
+                        if all_collision(sort_ind(top_ind)) || ...
+                                ~all_sidetoside_constraints(sort_ind(top_ind))
+                            top_ind = 1;
+                        end
+                    end
+                end
             end
             top_xy = all_xy(sort_ind(top_ind),:);
             top_angle = all_angle(sort_ind(top_ind));

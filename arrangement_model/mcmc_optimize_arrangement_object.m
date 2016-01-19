@@ -1,7 +1,8 @@
-function [ all_xy, all_angle, all_score, all_pid ] = ...
-    mcmc_optimize_arrangement_object( object, pair_objects, holistic_scene, siblings, num_iter )
+function [ all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_constraints ] = ...
+    mcmc_optimize_arrangement_object( object, pair_objects, holistic_scene, siblings, num_iter, use_hard_constraints )
 %MCMC_ARRANGEMENT samples a location and angle for each object relative to
-%it's pair objects.
+%it's pair objects. (The last input, use_hard_constraints indicates whether
+%to apply the hard constraints after the sampling or not.)
 
 Consts;
 load(kmeans_file, 'kmeans_matrix');
@@ -40,7 +41,7 @@ end
 % xy_cluster_id = sum(r >= cumsum([0, xy_clusters_prob(pair_id).prob']));
 % r = rand;
 % angle_cluster_id = sum(r >= cumsum([0, angle_clusters_prob(pair_id).prob']));
-% 
+%
 % kmeans_xy = kmeans_matrix(pair_objects(pair_id).obj_type, obj_type).kmeans_xy;
 % kmeans_angle = kmeans_matrix(pair_objects(pair_id).obj_type, obj_type).kmeans_angle;
 
@@ -82,19 +83,33 @@ object_orient1 = [cos(angle1) sin(angle1) 0];
 collided1 = check_collision( [global_xyz(1:2) z], object_dims, object_orient1, holistic_scene );
 sidetoside_satisfied1 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
     object_orient1, obj_type, siblings, sidetoside_constraints);
-curr_score1 = curr_score * ~collided1 * sidetoside_satisfied1;
 
-if curr_score1 == 0
+if collided1 || ~sidetoside_satisfied1
     angle2 = theta - degtorad(curr_angle);
     curr_angle_abs = angle2;
     object_orient2 = [cos(angle2) sin(angle2) 0];
     collided2 = check_collision( [global_xyz(1:2) z], object_dims, object_orient2, holistic_scene );
     sidetoside_satisfied2 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
         object_orient2, obj_type, siblings, sidetoside_constraints);
-    curr_score2 = curr_score * ~collided2 * sidetoside_satisfied2;
-    curr_score = curr_score2;
+    
+    curr_collision = collided2;
+    curr_sidetoside_constraints = sidetoside_satisfied2;
+    
 else
-    curr_score = curr_score1;
+    curr_collision = collided1;
+    curr_sidetoside_constraints = sidetoside_satisfied1;
+end
+
+if ~use_hard_constraints
+    
+    curr_score1 = curr_score * ~collided1 * sidetoside_satisfied1;
+    
+    if collided1 || ~sidetoside_satisfied1
+        curr_score2 = curr_score * ~collided2 * sidetoside_satisfied2;
+        curr_score = curr_score2;
+    else
+        curr_score = curr_score1;
+    end
 end
 
 all_xy = zeros(num_iter, 2);
@@ -103,16 +118,18 @@ all_angle = zeros(num_iter, 1);
 samples_angle = zeros(num_iter, 1);
 all_score = zeros(num_iter, 1);
 all_pid = zeros(num_iter, 1);
+all_collision = zeros(num_iter, 1);
+all_sidetoside_constraints = zeros(num_iter, 1);
 
 iter = 1;
-collision_count = 0;
-constraint_count = 0;
-while iter <= num_iter 
-%     && collision_count <= num_iter*2 ...
-%     && constraint_count <= num_iter*2
-%     % choose next sample
-%     r = rand;
-%     next_pair_id = sum(r >= cumsum([0, pairs_prob']));
+% collision_count = 0;
+% constraint_count = 0;
+while iter <= num_iter
+    %     && collision_count <= num_iter*2 ...
+    %     && constraint_count <= num_iter*2
+    %     % choose next sample
+    %     r = rand;
+    %     next_pair_id = sum(r >= cumsum([0, pairs_prob']));
     next_pair_id = pair_id;
     r = rand;
     next_xy_cluster_id = sum(r >= cumsum([0, xy_clusters_prob(next_pair_id).prob']));
@@ -126,13 +143,13 @@ while iter <= num_iter
     
     next_xy_cluster_ind = find(next_kmeans_xy.cluster_index == next_xy_cluster_id);
     next_angle_cluster_ind = find(next_kmeans_angle.cluster_index == next_angle_cluster_id);
-        
+    
     next_xy = next_data( next_xy_cluster_ind( randi( length(next_xy_cluster_ind))),1:2);
     next_angle = next_data( next_angle_cluster_ind( randi( length(next_angle_cluster_ind))),4);
-%     next_x = rand() * 2 - 1;
-%     next_y = rand() * 2 - 1;
-%     next_xy = [next_x, next_y];
-%     next_angle = rand() * 180;
+    %     next_x = rand() * 2 - 1;
+    %     next_y = rand() * 2 - 1;
+    %     next_xy = [next_x, next_y];
+    %     next_angle = rand() * 180;
     
     x = next_xy(1);
     y = next_xy(2);
@@ -144,15 +161,15 @@ while iter <= num_iter
     angle1 = theta + degtorad(next_angle);
     next_angle_abs = angle1;
     object_orient1 = [cos(angle1) sin(angle1) 0];
-
+    
     %check for availability on the support surface
-%     p = support_dims / 2;
-%     o = object_dims / 2;
-%     if x < -1 + o(1)/p(1) || x > 1 - o(1)/p(1) || ...
-%             y < -1 + o(2)/p(2) || y > 1 - o(2)/p(2)
-% %         fprintf('Not available space on the supporting surface!!\n');
-%         continue
-%     end
+    %     p = support_dims / 2;
+    %     o = object_dims / 2;
+    %     if x < -1 + o(1)/p(1) || x > 1 - o(1)/p(1) || ...
+    %             y < -1 + o(2)/p(2) || y > 1 - o(2)/p(2)
+    % %         fprintf('Not available space on the supporting surface!!\n');
+    %         continue
+    %     end
     x = global_xyz(1);
     y = global_xyz(2);
     support_bnd = [min(support.corners), max(support.corners)];
@@ -168,26 +185,29 @@ while iter <= num_iter
     
     %check for collision
     collided1 = check_collision( [global_xyz(1:2) z], object_dims, object_orient1, holistic_scene );
-%     if check_collision( [global_xyz(1:2) z], object_dims, object_orient, holistic_scene )
-% %         fprintf('Collision occures for this placement!!\n');
-%         collision_count = collision_count + 1;
-%         continue
-%     end
-%     collision_count = 0;
+    %     if check_collision( [global_xyz(1:2) z], object_dims, object_orient, holistic_scene )
+    % %         fprintf('Collision occures for this placement!!\n');
+    %         collision_count = collision_count + 1;
+    %         continue
+    %     end
+    %     collision_count = 0;
     
     %check for side-to-side constraints
     sidetoside_satisfied1 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
-            object_orient1, obj_type, siblings, sidetoside_constraints);
-%     if ~satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
-%             object_orient, obj_type, holistic_scene, sidetoside_constraints)
-% %         fprintf('Side-to-side constraints are not satisfied for this placement!!\n');
-%         constraint_count = constraint_count + 1;
-%         continue
-%     end
-%     constraint_count = 0;
-  
-    next_score = next_score_kmeans * ~collided1 * sidetoside_satisfied1;
-    if next_score == 0
+        object_orient1, obj_type, siblings, sidetoside_constraints);
+    %     if ~satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+    %             object_orient, obj_type, holistic_scene, sidetoside_constraints)
+    % %         fprintf('Side-to-side constraints are not satisfied for this placement!!\n');
+    %         constraint_count = constraint_count + 1;
+    %         continue
+    %     end
+    %     constraint_count = 0;
+    
+    %since we have the relative angle in our knowledge, one solution is to
+    %add the relative angle to the reference object orientation and another
+    %solution is to subtract it, check for the second solution is the first
+    %one does not lead to a plausible arrangement
+    if collided1 || ~sidetoside_satisfied1
         angle2 = theta - degtorad(next_angle);
         next_angle_abs = angle2;
         object_orient2 = [cos(angle2) sin(angle2) 0];
@@ -196,7 +216,22 @@ while iter <= num_iter
         sidetoside_satisfied2 = satisfy_sidetoside_constraints (...
             [global_xyz(1:2) z], object_dims, object_orient2, ...
             obj_type, siblings, sidetoside_constraints);
-        next_score = next_score_kmeans * ~collided2 * sidetoside_satisfied2;
+        
+        next_collision = collided2;
+        next_sidetoside_constraints = sidetoside_satisfied2;
+    else
+        next_collision = collided1;
+        next_sidetoside_constraints = sidetoside_satisfied1;
+    end
+    
+    
+    if use_hard_constraints
+        next_score = next_score_kmeans;
+    else
+        next_score = next_score_kmeans * ~collided1 * sidetoside_satisfied1;
+        if collided1 || ~sidetoside_satisfied1
+            next_score = next_score_kmeans * ~collided2 * sidetoside_satisfied2;
+        end
     end
     
     %mcmc sampling
@@ -214,11 +249,15 @@ while iter <= num_iter
         curr_angle_abs = next_angle_abs;
         curr_score = next_score;
         pair_id = next_pair_id;
+        curr_collision = next_collision;
+        curr_sidetoside_constraints = next_sidetoside_constraints;
     end
     all_xy(iter, :) = curr_xy;
     all_angle(iter) = curr_angle_abs;
     all_score(iter) = curr_score;
     all_pid(iter) = pair_id;
+    all_collision(iter) = curr_collision;
+    all_sidetoside_constraints(iter) = curr_sidetoside_constraints;
     
     fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
         iter, curr_score, next_score, alpha, u);
