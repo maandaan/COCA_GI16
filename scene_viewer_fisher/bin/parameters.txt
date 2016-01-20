@@ -1,5 +1,5 @@
 databaseDirectory=../../data/databaseFull_fisher_Stanford/
-defaultScene=synth_scene_39_progressive_synthesis
+defaultScene=synth_scene_41_progressive_synthesis
 textQuery=@
 
 

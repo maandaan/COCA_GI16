@@ -1,5 +1,6 @@
 function [ all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_constraints ] = ...
-    mcmc_optimize_arrangement_object( object, pair_objects, holistic_scene, siblings, num_iter, use_hard_constraints )
+    mcmc_optimize_arrangement_object( object, init_xy, pair_objects, ...
+    holistic_scene, siblings, num_iter, use_hard_constraints )
 %MCMC_ARRANGEMENT samples a location and angle for each object relative to
 %it's pair objects. (The last input, use_hard_constraints indicates whether
 %to apply the hard constraints after the sampling or not.)
@@ -59,7 +60,8 @@ ref = pair_objects(pair_id);
 ref_dims = pair_objects(pair_id).dims .* pair_objects(pair_id).scale;
 object_dims = object.dims .* object.scale;
 % curr_xy = [-parent_dims(1)/2 + object_dims(1)/2 0];
-curr_xy = [0,0];
+% curr_xy = [0,0];
+curr_xy = init_xy;
 % curr_xy = [curr_xy(1)/(parent_dims(1)/2), curr_xy(2)/(parent_dims(2)/2)];
 if ref.obj_type == get_object_type_bedroom({'room'})
     curr_angle = 90;
@@ -121,7 +123,14 @@ all_pid = zeros(num_iter, 1);
 all_collision = zeros(num_iter, 1);
 all_sidetoside_constraints = zeros(num_iter, 1);
 
-iter = 1;
+all_xy(1, :) = curr_xy;
+all_angle(1) = curr_angle_abs;
+all_score(1) = curr_score;
+all_pid(1) = pair_id;
+all_collision(1) = curr_collision;
+all_sidetoside_constraints(1) = curr_sidetoside_constraints;
+
+iter = 2;
 % collision_count = 0;
 % constraint_count = 0;
 while iter <= num_iter
