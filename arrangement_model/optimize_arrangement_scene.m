@@ -18,6 +18,8 @@ parents = 1;
 room = input_scene(1);
 % new_objects = input_scene;
 final_scene = room;
+use_hard_constraints = 1;
+init_locations = [0,0; .65,0; 0,.65; .65,.65; -.65,0; 0,-.65; -.65,-.65; -.65,.65; .65,-.65];
 
 while length(final_scene) < length(input_scene)
     
@@ -56,25 +58,33 @@ while length(final_scene) < length(input_scene)
 %     end
     obj_rels_count = count_object_relations( input_scene, children );
     [rels_sorted, rels_ind] = sort(obj_rels_count, 'descend');
+    children = children(rels_ind);
     
-    for oid = 1:length(rels_sorted)
-        object = input_scene(children(rels_ind(oid)));
-%         if object.optimized_location
-%             final_scene = [final_scene; object];
-%             sibling_list = [sibling_list; object];
-%             continue
-%         end
+    % put the ones with previously optimized location on the top
+    opt_locations = [input_scene(children).optimized_location];
+    [opt_loc_sorted, opt_loc_ind] = sort(opt_locations, 'descend');
+    
+    for oid = 1:length(opt_loc_sorted)
+        object = input_scene(children(opt_loc_ind(oid)));
+        if object.optimized_location
+            final_scene = [final_scene; object];
+            sibling_list = [sibling_list; object];
+            continue
+        end
         
         fprintf('Start optimizing the placement for %s\n', object.identifier);
+        
+        repeat_sampling = 1;
         
         %update local_scene
         local_scene = parent;
         local_scene = update_local_scene(local_scene, final_scene, ...
-            input_scene, children(rels_ind(oid)), sidetoside_constraints);        
+            input_scene, children(opt_loc_ind(oid)), sidetoside_constraints);        
 %         [ optimized_corners, optimized_orientation, final_cost ] = ...
 %             optimize_arrangement_object( object, local_scene, final_scene, sibling_list, room, scene_counts );
-        [all_xy, all_angle, all_score, all_pid] = ...
-            mcmc_optimize_arrangement_object( object, local_scene, final_scene, sibling_list, 1000 );
+        [all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_constraints] = ...
+            mcmc_optimize_arrangement_object( object, init_locations(1,:), local_scene, final_scene, sibling_list, 1000, use_hard_constraints );
+        
         
         if isempty(all_xy)
             global_corners_opt = object.corners;
@@ -84,9 +94,70 @@ while length(final_scene) < length(input_scene)
             nonzero_ind = find(all_score_sorted);
             if isempty(nonzero_ind)
                 top_ind = 1;
+                repeat_sampling = 1;
             else
-                top_ind = nonzero_ind(1);
+                index = 1;
+                top_ind = nonzero_ind(index);
+                if use_hard_constraints %if we didn't check for the constraints while sampling
+                    while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) || ...
+                            ~all_sidetoside_constraints(sort_ind(top_ind)))
+                        index = index + 1;
+                        top_ind = nonzero_ind(index);
+                    end
+                    
+                    %none of the samples satisfy the hard constraints
+                    if index == length(nonzero_ind)
+                        if all_collision(sort_ind(top_ind)) || ...
+                                ~all_sidetoside_constraints(sort_ind(top_ind))
+                            top_ind = 1;
+                            repeat_sampling = 1;
+                        else
+                            repeat_sampling = 0;
+                        end
+                    else
+                        repeat_sampling = 0;
+                    end
+                end
             end
+            
+            init_iter = 2;
+            while repeat_sampling && init_iter <= length(init_locations)  %if a good sample is not found, re-start the sampling with another initial placement
+                [all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_constraints] = ...
+                    mcmc_optimize_arrangement_object( object, init_locations(init_iter, :), ...
+                    local_scene, final_scene, sibling_list, 1000, use_hard_constraints );
+                init_iter = init_iter + 1;
+                
+                [all_score_sorted, sort_ind] = sort(all_score);
+                nonzero_ind = find(all_score_sorted);
+                if isempty(nonzero_ind)
+                    top_ind = 1;
+                    repeat_sampling = 1;
+                else
+                    index = 1;
+                    top_ind = nonzero_ind(index);
+                    if use_hard_constraints %if we didn't check for the constraints while sampling
+                        while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) || ...
+                                ~all_sidetoside_constraints(sort_ind(top_ind)))
+                            index = index + 1;
+                            top_ind = nonzero_ind(index);
+                        end
+                        
+                        %none of the samples satisfy the hard constraints
+                        if index == length(nonzero_ind)
+                            if all_collision(sort_ind(top_ind)) || ...
+                                    ~all_sidetoside_constraints(sort_ind(top_ind))
+                                top_ind = 1;
+                                repeat_sampling = 1;
+                            else
+                                repeat_sampling = 0;
+                            end
+                        else
+                            repeat_sampling = 0;
+                        end
+                    end
+                end
+            end
+           
             top_xy = all_xy(sort_ind(top_ind),:);
             top_angle = all_angle(sort_ind(top_ind));
             top_pid = all_pid(sort_ind(top_ind));
@@ -100,9 +171,9 @@ while length(final_scene) < length(input_scene)
             rel_center = [top_xy z];
             center = inv_convert_coordinates(-mean(pair.corners), pair.orientation, rel_center);
             
-            theta = radtodeg(compute_theta_from_orientation(pair.orientation));
-            opt_angle = theta + top_angle;
-            opt_angle = smooth_final_angle(opt_angle);
+%             theta = radtodeg(compute_theta_from_orientation(pair.orientation));
+%             opt_angle = theta + top_angle;
+            opt_angle = smooth_final_angle(radtodeg(top_angle));
             opt_orient = [cos(degtorad(opt_angle)) sin(degtorad(opt_angle)) 0];
             
             opt_corners_bnd = [-object_dims/2 object_dims/2];
