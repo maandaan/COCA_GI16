@@ -1,9 +1,6 @@
 databaseDirectory=../../data/databaseFull_fisher_Stanford/
-defaultScene=synth_scene_43_progressive_synthesis
+defaultScene=synth_scene_43_progressive_synthesis.txt
 textQuery=@
-
-
-
 
 
 

@@ -1,0 +1,20 @@
+# Model 7422f80b0b135ddc5e68e764635b3aa5
+# Name another fraidusson poster
+# Vertices
+mtllib 7422f80b0b135ddc5e68e764635b3aa5.mtl
+v 0 0 0
+vt 0 0
+v 252.75 0 183
+vt 1 1
+v 0 0 183
+vt 0 1
+v 252.75 0 183
+vt 1 1
+v 0 0 0
+vt 0 0
+v 252.75 0 0
+vt 1 0
+g another fraidusson poster
+usemtl m0
+f 1 2 3
+f 4 5 6

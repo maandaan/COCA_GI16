@@ -1,0 +1,32 @@
+newmtl m0
+Ka 0 0 0.298039
+Kd 0 0 0.298039
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m1
+Ka 0.27451 0.509804 0.705882
+Kd 0.27451 0.509804 0.705882
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m2
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/e2a160ca80b243af.jpg
+map_Kd ../textures/e2a160ca80b243af.jpg
+newmtl m3
+Ka 0 0 0.298039
+Kd 0 0 0.298039
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m4
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0

@@ -90,7 +90,8 @@ while iter < num_iter
 %     next_config = curr_config;
 % %     next_config(new_nodes) = ~curr_config(new_nodes);
 %     next_config(new_nodes) = 1;
-    fprintf('iteration %d\n', iter);
+
+%     fprintf('iteration %d\n', iter);
     
     curr_present_nodes = find(curr_config);
     curr_numobj = length(curr_present_nodes);
@@ -207,8 +208,8 @@ while iter < num_iter
 %         end
 %     end
     
-    fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
-        iter, curr_config_score, next_config_score, alpha, u);
+%     fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
+%         iter, curr_config_score, next_config_score, alpha, u);
     iter = iter + 1;
 end
 
@@ -221,8 +222,8 @@ for i = 1:iter
     inter_nodes_sets(i).nodes = all_vars(nodes);
 end
 
-figure
-plot(10:iter-1, all_score(10:iter-1));
+% figure
+% plot(10:iter-1, all_score(10:iter-1));
 
 % final_config = curr_config;
 % all_nodes = find(final_config);

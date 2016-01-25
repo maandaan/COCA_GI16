@@ -1,0 +1,88 @@
+newmtl m0
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/5e5511b12936d5de.jpg
+map_Kd ../textures/5e5511b12936d5de.jpg
+newmtl m1
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/5e5511b12936d5de.jpg
+map_Kd ../textures/5e5511b12936d5de.jpg
+newmtl m2
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/26bfa99ebf9a51e9.jpg
+map_Kd ../textures/26bfa99ebf9a51e9.jpg
+newmtl m3
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/5e5511b12936d5de.jpg
+map_Kd ../textures/5e5511b12936d5de.jpg
+newmtl m4
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/e2e288ec40255461.jpg
+map_Kd ../textures/e2e288ec40255461.jpg
+newmtl m5
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/5e5511b12936d5de.jpg
+map_Kd ../textures/5e5511b12936d5de.jpg
+newmtl m6
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/e2e288ec40255461.jpg
+map_Kd ../textures/e2e288ec40255461.jpg
+newmtl m7
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/5e5511b12936d5de.jpg
+map_Kd ../textures/5e5511b12936d5de.jpg
+newmtl m8
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/e2e288ec40255461.jpg
+map_Kd ../textures/e2e288ec40255461.jpg
+newmtl m9
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/5e5511b12936d5de.jpg
+map_Kd ../textures/5e5511b12936d5de.jpg
+newmtl m10
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/26bfa99ebf9a51e9.jpg
+map_Kd ../textures/26bfa99ebf9a51e9.jpg

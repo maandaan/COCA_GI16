@@ -1,0 +1,240 @@
+newmtl m0
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/a90c6679ad905eef.jpg
+map_Kd ../textures/a90c6679ad905eef.jpg
+newmtl m1
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/40c9a877c414e86d.jpg
+map_Kd ../textures/40c9a877c414e86d.jpg
+newmtl m2
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/78d004f300880b0a.jpg
+map_Kd ../textures/78d004f300880b0a.jpg
+newmtl m3
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/c82e2fd0cb933ec5.jpg
+map_Kd ../textures/c82e2fd0cb933ec5.jpg
+newmtl m4
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/ba20008ae809a8d2.jpg
+map_Kd ../textures/ba20008ae809a8d2.jpg
+newmtl m5
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/b3587863dcd9c9c5.jpg
+map_Kd ../textures/b3587863dcd9c9c5.jpg
+newmtl m6
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/f36620cc6b4e1fda.jpg
+map_Kd ../textures/f36620cc6b4e1fda.jpg
+newmtl m7
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/b4bd739cd9c1720d.jpg
+map_Kd ../textures/b4bd739cd9c1720d.jpg
+newmtl m8
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/b319fe9f696b49c7.jpg
+map_Kd ../textures/b319fe9f696b49c7.jpg
+newmtl m9
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/0aa610a4feba7dfa.jpg
+map_Kd ../textures/0aa610a4feba7dfa.jpg
+newmtl m10
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m11
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/6d92d9de38af3e83.jpg
+map_Kd ../textures/6d92d9de38af3e83.jpg
+newmtl m12
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/7cc8dbb0d5493ef7.jpg
+map_Kd ../textures/7cc8dbb0d5493ef7.jpg
+newmtl m13
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/00811558a1013fc7.jpg
+map_Kd ../textures/00811558a1013fc7.jpg
+newmtl m14
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/76dc83b2798acd6c.jpg
+map_Kd ../textures/76dc83b2798acd6c.jpg
+newmtl m15
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/9dc911ca684f382f.jpg
+map_Kd ../textures/9dc911ca684f382f.jpg
+newmtl m16
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/00811558a1013fc7.jpg
+map_Kd ../textures/00811558a1013fc7.jpg
+newmtl m17
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/dd05964a4e0dace9.jpg
+map_Kd ../textures/dd05964a4e0dace9.jpg
+newmtl m18
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/7359f4bf0cc50651.jpg
+map_Kd ../textures/7359f4bf0cc50651.jpg
+newmtl m19
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m20
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/056cceceb34cf7f8.jpg
+map_Kd ../textures/056cceceb34cf7f8.jpg
+newmtl m21
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/39aac03586a65c8d.jpg
+map_Kd ../textures/39aac03586a65c8d.jpg
+newmtl m22
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/2720cc506f24fbb9.jpg
+map_Kd ../textures/2720cc506f24fbb9.jpg
+newmtl m23
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/a98cfe0f05f0b7f0.jpg
+map_Kd ../textures/a98cfe0f05f0b7f0.jpg
+newmtl m24
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m25
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/2acbb4122282a81d.jpg
+map_Kd ../textures/2acbb4122282a81d.jpg
+newmtl m26
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/e34e396dc56162ab.jpg
+map_Kd ../textures/e34e396dc56162ab.jpg
+newmtl m27
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/b4a0f2915dc2748b.jpg
+map_Kd ../textures/b4a0f2915dc2748b.jpg
+newmtl m28
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/b98e654d3c97291c.jpg
+map_Kd ../textures/b98e654d3c97291c.jpg
+newmtl m29
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m30
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/2acbb4122282a81d.jpg
+map_Kd ../textures/2acbb4122282a81d.jpg

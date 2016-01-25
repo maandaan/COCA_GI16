@@ -72,7 +72,7 @@ while length(final_scene) < length(input_scene)
             continue
         end
         
-        fprintf('Start optimizing the placement for %s\n', object.identifier);
+%         fprintf('Start optimizing the placement for %s\n', object.identifier);
         
         repeat_sampling = 1;
         
@@ -156,6 +156,12 @@ while length(final_scene) < length(input_scene)
                         end
                     end
                 end
+            end
+            
+            %not a plausible arrangment
+            if init_iter > length(init_locations)
+                final_scene = [];
+                return
             end
            
             top_xy = all_xy(sort_ind(top_ind),:);

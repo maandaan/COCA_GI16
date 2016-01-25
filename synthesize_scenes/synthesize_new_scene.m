@@ -44,12 +44,12 @@ load(sample_size_fisher_file, 'sample_sizes');
 % scene = scale_models(scene, sample_sizes);
 %  
 % scene = init_models_to_insert(scene);
-% save('data/test_cases/bedroom_sample_scene_011.mat', 'scene');
+% save('data\Synthesized Scenes\scenes\bedroom00001_init_6.mat', 'scene');
 %  
-% load('data/test_cases/bedroom_sample_scene_011.mat', 'scene');
-%optimize the placement
+% % load('data/test_cases/bedroom_sample_scene_011.mat', 'scene');
+% % % optimize the placement
 % [ final_scene ] = optimize_arrangement_scene( scene );
-% save('data/Synthesized Scenes/scene_zeinab_015.mat', 'final_scene');
+% save('data\Synthesized Scenes\scenes\bedroom00001_final_6.mat', 'final_scene');
 
 final_scene = compute_transform(final_scene);
  
@@ -58,6 +58,7 @@ modelcount = length(scene3d_objects);
 scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
 % scene3d.objects = scene3d_objects;
 
-out_file = [scenes_dir 'synth_scene_43_progressive_synthesis.txt'];
+% out_file = [scenes_dir 'synth_scene_43_progressive_synthesis.txt'];
+out_file = 'C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\scenes\bedroom00001_10.txt';
 write_scene_to_file( scene3d, out_file )
 
