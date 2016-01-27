@@ -11,3 +11,9 @@ bedroom00001_6_adjusted
 bedroom00001_7_adjusted
 bedroom00001_8_adjusted
 bedroom00001_9_adjusted
+bedroom00013_1
+bedroom00013_2
+bedroom00013_3
+bedroom00013_4
+bedroom00013_5
+bedroom00013_7

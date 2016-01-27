@@ -26,14 +26,14 @@ objectsets_filename = [scenes_dir, results_filename, '_objectsets.mat'];
 % [ all_config, all_score, nodes_sets ] = mcmc_optimize_scene_config(...
 %     input_scene, 1000, objects_num, objects_num, 1);
 % [ sample_score, sample_objects ] = choose_mcmc_samples( ...
-%     all_score, nodes_sets, objects_num + pres_obj_count, 50, 1 );
+%     all_score, nodes_sets, objects_num + pres_obj_count, 15, 1 );
 % sampled_scenes = complete_mcmc_samples_to_scenes( input_scene, sample_objects );
 % save(objectsets_filename, 'sampled_scenes');
 % fprintf('Finished MCMC sampling from the factor graph!\n');
 
 load(objectsets_filename, 'sampled_scenes');
 
-for sample_id = 4:length(sampled_scenes)
+for sample_id = 1:length(sampled_scenes)
     scene = sampled_scenes(sample_id).scene;
     scene = select_models(modelnames_file, scene);
     scene = prune_models(scene);
@@ -75,6 +75,7 @@ for sample_id = 4:length(sampled_scenes)
     fprintf('Finished optimizing the placement for sample %d!\n', sample_id);
     
     %preparing the results for scene_viewer
+    final_scene = fix_3D_models(final_scene);
     final_scene = compute_transform(final_scene);
     scene3d_objects = prepare_data_to_write_file(final_scene);
     modelcount = length(scene3d_objects);

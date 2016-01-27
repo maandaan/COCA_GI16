@@ -5,6 +5,5 @@ For computer: da0f6b3a375a7e77e963c7e7c24b8dcd, the orientation should be revers
 For toy: a4c14d2008146b61bcab7dd7c7b222d8, the orientation should be reversed (both x and y multiplied by 1)
 For room: room07, it has a window, resulting in a different 0 for y axis
 For luggage: 133c16fc6ca7d77676bb31db0358e9c6, the orientation should be reversed (both x and y multiplied by 1)
-For bed: 3d3b4b8874f2aaddc397356311cbeea4, decrease the height by 29cm.
 For desk: 5ce562e0632b7e81d8e3889d90601dd1, the orientation should be reversed (both x and y multiplied by 1)
 For bed: 215f72973cfa2c9a42c2142b4fb342c8, the orientation should be reversed (both x and y multiplied by 1)

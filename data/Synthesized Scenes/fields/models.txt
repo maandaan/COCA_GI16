@@ -5,7 +5,6 @@ room03|@room
 room04|@room
 room05|@room
 room06|@room
-room07|@room
 room08|@room
 room09|@room
 room10|@room

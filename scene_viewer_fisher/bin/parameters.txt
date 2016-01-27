@@ -1,5 +1,5 @@
-databaseDirectory=../../data/databaseFull_fisher_Stanford/
-defaultScene=synth_scene_43_progressive_synthesis.txt
+databaseDirectory=../../data/Synthesized Scenes/
+defaultScene=bedroom00132_1
 textQuery=@
 
 
