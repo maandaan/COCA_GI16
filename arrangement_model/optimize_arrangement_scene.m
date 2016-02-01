@@ -83,7 +83,7 @@ while length(final_scene) < length(input_scene)
 %         [ optimized_corners, optimized_orientation, final_cost ] = ...
 %             optimize_arrangement_object( object, local_scene, final_scene, sibling_list, room, scene_counts );
         [all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_constraints] = ...
-            mcmc_optimize_arrangement_object( object, init_locations(1,:), local_scene, final_scene, sibling_list, 1000, use_hard_constraints );
+            mcmc_optimize_arrangement_object( object, init_locations(1,:), sibling_list, final_scene, sibling_list, 1000, use_hard_constraints );
         
         
         if isempty(all_xy)
@@ -99,16 +99,16 @@ while length(final_scene) < length(input_scene)
                 index = 1;
                 top_ind = nonzero_ind(index);
                 if use_hard_constraints %if we didn't check for the constraints while sampling
-                    while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) || ...
-                            ~all_sidetoside_constraints(sort_ind(top_ind)))
+                    while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)))
+%                             || ~all_sidetoside_constraints(sort_ind(top_ind)))
                         index = index + 1;
                         top_ind = nonzero_ind(index);
                     end
                     
                     %none of the samples satisfy the hard constraints
                     if index == length(nonzero_ind)
-                        if all_collision(sort_ind(top_ind)) || ...
-                                ~all_sidetoside_constraints(sort_ind(top_ind))
+                        if all_collision(sort_ind(top_ind)) 
+%                                 || ~all_sidetoside_constraints(sort_ind(top_ind))
                             top_ind = 1;
                             repeat_sampling = 1;
                         else
@@ -124,7 +124,7 @@ while length(final_scene) < length(input_scene)
             while repeat_sampling && init_iter <= length(init_locations)  %if a good sample is not found, re-start the sampling with another initial placement
                 [all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_constraints] = ...
                     mcmc_optimize_arrangement_object( object, init_locations(init_iter, :), ...
-                    local_scene, final_scene, sibling_list, 1000, use_hard_constraints );
+                    sibling_list, final_scene, sibling_list, 1000, use_hard_constraints );
                 init_iter = init_iter + 1;
                 
                 [all_score_sorted, sort_ind] = sort(all_score);
@@ -136,16 +136,16 @@ while length(final_scene) < length(input_scene)
                     index = 1;
                     top_ind = nonzero_ind(index);
                     if use_hard_constraints %if we didn't check for the constraints while sampling
-                        while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) || ...
-                                ~all_sidetoside_constraints(sort_ind(top_ind)))
+                        while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind))) 
+%                                 || ~all_sidetoside_constraints(sort_ind(top_ind)))
                             index = index + 1;
                             top_ind = nonzero_ind(index);
                         end
                         
                         %none of the samples satisfy the hard constraints
                         if index == length(nonzero_ind)
-                            if all_collision(sort_ind(top_ind)) || ...
-                                    ~all_sidetoside_constraints(sort_ind(top_ind))
+                            if all_collision(sort_ind(top_ind)) 
+%                                     || ~all_sidetoside_constraints(sort_ind(top_ind))
                                 top_ind = 1;
                                 repeat_sampling = 1;
                             else
@@ -170,7 +170,7 @@ while length(final_scene) < length(input_scene)
 %             top_pid = 1;
             
             object_dims = object.dims .* object.scale;
-            pair = local_scene(top_pid);
+            pair = sibling_list(top_pid);
             pair_dims = pair.dims .* pair.scale;
             z = mean(object.corners(:,3));
             top_xy = [top_xy(1) * (pair_dims(1)/2), top_xy(2) * (pair_dims(2)/2)];

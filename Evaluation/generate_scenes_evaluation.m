@@ -65,12 +65,14 @@ for sample_id = 7:7%length(sampled_scenes)
 %     fprintf('Finished initializing the placement and scaling the sizes for sample %d!\n', sample_id);
     
     load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
+    
     iter = 1;
     
     %evaluate the effect of symmetry relations on the arrangement
     for oid = 1:length(scene)
         scene(oid).symm_group_id = [];
         scene(oid).symm_ref_id = [];
+        scene(oid).orientation_rels = [];
     end
     
     [ final_scene ] = optimize_arrangement_scene( scene );
@@ -98,7 +100,7 @@ for sample_id = 7:7%length(sampled_scenes)
         continue
     end
     
-    save([scenes_dir, results_filename, '_final_symmetryarrangement_', num2str(sample_id)], 'final_scene');
+    save([scenes_dir, results_filename, '_final_allpairs_', num2str(sample_id)], 'final_scene');
     fprintf('Finished optimizing the placement for sample %d!\n', sample_id);
     
     %preparing the results for scene_viewer
@@ -108,7 +110,7 @@ for sample_id = 7:7%length(sampled_scenes)
     modelcount = length(scene3d_objects);
     scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
     % scene3d.objects = scene3d_objects;
-    out_file = [scenes_dir, results_filename, '_symmetryarrangement_', num2str(sample_id), '.txt'];
+    out_file = [scenes_dir, results_filename, '_allpairs_', num2str(sample_id), '.txt'];
     write_scene_to_file( scene3d, out_file );
     fprintf('Finished preparing the result for scene viewer for sample %d!\n', sample_id);
 end

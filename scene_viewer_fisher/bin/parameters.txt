@@ -1,5 +1,5 @@
 databaseDirectory=../../data/Synthesized Scenes/
-defaultScene=bedroom00013_symmetryarrangement_7
+defaultScene=bedroom00013_allpairs_7
 textQuery=@
 
 

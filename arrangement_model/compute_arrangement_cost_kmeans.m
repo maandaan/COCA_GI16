@@ -15,6 +15,12 @@ for oid = 1:length(pair_objects)
 %     end
         
     pair = pair_objects(oid);
+    kmeans_xy = kmeans_matrix(pair.obj_type, object.obj_type).kmeans_xy;
+    kmeans_angle = kmeans_matrix(pair.obj_type, object.obj_type).kmeans_angle;
+    if isempty(kmeans_xy) %there's no pairwise data between two objects
+        continue
+    end
+    
     pair_dims = pair.dims .* pair.scale;
     if oid == pair_id
         rel_xy = curr_xy;
@@ -44,8 +50,6 @@ for oid = 1:length(pair_objects)
         rel_angle = radtodeg(angle);
     end
     
-    kmeans_xy = kmeans_matrix(pair.obj_type, object.obj_type).kmeans_xy;
-    kmeans_angle = kmeans_matrix(pair.obj_type, object.obj_type).kmeans_angle;
     xy_dist = compute_distance_from_clusters(rel_xy, kmeans_xy);
     angle_dist = compute_distance_from_clusters(rel_angle, kmeans_angle);
     
@@ -75,7 +79,11 @@ end
 
 function dist = compute_distance_from_clusters(x, kmeans)
 
-d = zeros(kmeans.num_cluster, 1);
+try
+    d = zeros(kmeans.num_cluster, 1);
+catch
+    fprintf('What is wrong??\n');
+end
 for cid = 1:kmeans.num_cluster
     d(cid) = norm(x - kmeans.cluster_centroid(cid,:));
 end
