@@ -76,6 +76,7 @@ for oid = 1:length(scene)
     
     %debug
 %     plot(pair.corners(1:5,1), pair.corners(1:5,2));
+%     hold off
 
     if collided
         break

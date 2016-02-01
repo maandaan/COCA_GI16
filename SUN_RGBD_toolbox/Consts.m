@@ -31,6 +31,7 @@ kmeans_file = 'data/training/SUNRGBD/bedroom_kmeans_spatial_relations';
 co_occurrence_file = 'data/training/SUNRGBD/bedroom_co_occurrence';
 pairwise_locations_file = 'data/training/SUNRGBD/bedroom_pairwise_locations.mat';
 global_factor_graph_file = 'data/training/SUNRGBD/bedroom_global_factor_graph.mat';
+% global_factor_graph_file = 'data/training/SUNRGBD/bedroom_global_factor_graph_alloff.mat';
 sample_size_fisher_file = 'data/training/SUNRGBD/bedroom_sample_sizes_fisher.mat';
 sidetoside_relations_file = 'data/training/SUNRGBD/bedroom_sidetoside_relations.mat';
 sidetoside_constraints_file = 'data/training/SUNRGBD/bedroom_sidetoside_constraints.mat';

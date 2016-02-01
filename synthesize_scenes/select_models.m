@@ -20,7 +20,7 @@ for nid = 1:length(unique_types)
     while ischar(line)
         if ~isempty(strfind(line, obj_cat{1}))
             line_parts = strsplit(line, '|');
-            if strcmp(line_parts{2}, obj_cat{1}) %look for exact matches
+            if strcmp(strtrim(line_parts{2}), obj_cat{1}) %look for exact matches
                 count = count + 1;
                 obj_models{count} = line_parts{1};
             end

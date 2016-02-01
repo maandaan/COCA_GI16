@@ -201,6 +201,14 @@ while length(final_scene) < length(input_scene)
         final_scene = [final_scene; object];
         sibling_list = [sibling_list; object];
 %         local_scene = [local_scene; object];
+
+        %debug
+        for i = 1:length(final_scene)
+            plot(final_scene(i).corners(1:5,1), final_scene(i).corners(1:5,2));
+            hold on
+        end
+        hold off
+        
     end
     
     parents = [parents, children];
