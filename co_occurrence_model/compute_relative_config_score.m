@@ -38,7 +38,7 @@ for fid = 1:length(factors)
     curr_score = curr_score + log(v);
 end
 
-relative_score = curr_score / new_score
+relative_score = curr_score / new_score;
 
 end
 

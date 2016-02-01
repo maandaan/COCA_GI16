@@ -118,12 +118,12 @@ for oid = 1:length(holistic_scene)
             
             if side1 == 2 && side2 == 4
                 %debug
-                for i = 1:length(holistic_scene)
-                    plot(holistic_scene(i).corners(1:5,1),holistic_scene(i).corners(1:5,2));
-                    hold on
-                end
-                plot([object_rect(:,1);object_rect(1,1)], [object_rect(:,2);object_rect(1,2)], 'r');
-                hold off
+%                 for i = 1:length(holistic_scene)
+%                     plot(holistic_scene(i).corners(1:5,1),holistic_scene(i).corners(1:5,2));
+%                     hold on
+%                 end
+%                 plot([object_rect(:,1);object_rect(1,1)], [object_rect(:,2);object_rect(1,2)], 'r');
+%                 hold off
                 for i = rid+1:length(rows)
                     c2 = constraints(rows(i));
                     if c2.first_side == 4 && c2.second_side == 2
@@ -133,8 +133,8 @@ for oid = 1:length(holistic_scene)
                         p_satisfied = p_satisfied && ...
                             ((dist24>=0 && dist24 < c.avg_dist + dist_thresh) ...
                             || (dist42>=0 && dist42 < c2.avg_dist + dist_thresh));
-                        fprintf('dist24: %f, avg_dist24: %f\n', dist24, c.avg_dist);
-                        fprintf('dist42: %f, avg_dist42: %f\n', dist42, c2.avg_dist);
+%                         fprintf('dist24: %f, avg_dist24: %f\n', dist24, c.avg_dist);
+%                         fprintf('dist42: %f, avg_dist42: %f\n', dist42, c2.avg_dist);
                     end
                 end
             else

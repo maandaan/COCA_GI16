@@ -1,0 +1,34 @@
+# Model e6fa1cd11a330b98775a2d8ffff3881
+# Name minotti conner carpet
+# Vertices
+mtllib e6fa1cd11a330b98775a2d8ffff3881.mtl
+v 0 0 0
+vt 0 0
+v 118.11 119.24 0
+vt 1 1
+v 118.11 0 0
+vt 1 0
+v 118.11 119.24 0
+vt 1 1
+v 0 0 0
+vt 0 0
+v 0 119.24 0
+vt 0 1
+v 118.11 0 0
+vt 1 0
+v 118.11 119.24 0
+vt 1 1
+v 0 0 0
+vt 0 0
+v 0 119.24 0
+vt 0 1
+v 0 0 0
+vt 0 0
+v 118.11 119.24 0
+vt 1 1
+g minotti conner carpet
+usemtl m0
+f 1 2 3
+f 4 5 6
+f 7 8 9
+f 10 11 12

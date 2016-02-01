@@ -1,0 +1,22 @@
+newmtl m0
+Ka 0.305882 0.121569 0.117647
+Kd 0.305882 0.121569 0.117647
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+newmtl m1
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/faba882b7c1fc12f.jpg
+map_Kd ../textures/faba882b7c1fc12f.jpg
+newmtl m2
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/0379c7a575b0ed54.jpg
+map_Kd ../textures/0379c7a575b0ed54.jpg

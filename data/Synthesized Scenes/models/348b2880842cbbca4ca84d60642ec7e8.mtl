@@ -1,0 +1,14 @@
+newmtl m0
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 1
+map_Ka ../textures/83a094888c1c6fd8.jpg
+map_Kd ../textures/83a094888c1c6fd8.jpg
+newmtl m1
+Ka 0.498039 0.498039 0.498039
+Kd 0.498039 0.498039 0.498039
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0

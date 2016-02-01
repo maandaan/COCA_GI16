@@ -72,7 +72,7 @@ while length(final_scene) < length(input_scene)
             continue
         end
         
-        fprintf('Start optimizing the placement for %s\n', object.identifier);
+%         fprintf('Start optimizing the placement for %s\n', object.identifier);
         
         repeat_sampling = 1;
         
@@ -157,6 +157,12 @@ while length(final_scene) < length(input_scene)
                     end
                 end
             end
+            
+            %not a plausible arrangment
+            if init_iter > length(init_locations)
+                final_scene = [];
+                return
+            end
            
             top_xy = all_xy(sort_ind(top_ind),:);
             top_angle = all_angle(sort_ind(top_ind));
@@ -195,6 +201,14 @@ while length(final_scene) < length(input_scene)
         final_scene = [final_scene; object];
         sibling_list = [sibling_list; object];
 %         local_scene = [local_scene; object];
+
+        %debug
+        for i = 1:length(final_scene)
+            plot(final_scene(i).corners(1:5,1), final_scene(i).corners(1:5,2));
+            hold on
+        end
+        hold off
+        
     end
     
     parents = [parents, children];

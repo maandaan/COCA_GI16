@@ -1,0 +1,32 @@
+newmtl m0
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/5be7e09f337d6427.jpg
+map_Kd ../textures/5be7e09f337d6427.jpg
+newmtl m1
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/261581d34f4c6274.jpg
+map_Kd ../textures/261581d34f4c6274.jpg
+newmtl m2
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/5be7e09f337d6427.jpg
+map_Kd ../textures/5be7e09f337d6427.jpg
+newmtl m3
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0 0.0 0.0
+Ns 1.0
+d 0
+map_Ka ../textures/261581d34f4c6274.jpg
+map_Kd ../textures/261581d34f4c6274.jpg

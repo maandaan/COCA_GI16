@@ -1,0 +1,95 @@
+# Model d7d3dc14748ec6d347cd142fcccd1cc2
+# Name  d rubik     s cube
+# Vertices
+mtllib d7d3dc14748ec6d347cd142fcccd1cc2.mtl
+v -919 0 0
+vt 1 0
+v 0 919 0
+vt 0 1
+v 0 0 0
+vt 0 0
+v 0 919 0
+vt 0 1
+v -919 0 0
+vt 1 0
+v -919 919 0
+vt 1 1
+v -919 919 898.5
+vt 0 1
+v 0 0 898.5
+vt 1 0
+v 0 919 898.5
+vt 1 1
+v 0 0 898.5
+vt 1 0
+v -919 919 898.5
+vt 0 1
+v -919 0 898.5
+vt 0 0
+v -919 0 0
+vt 1 0
+v -919 919 898.5
+vt 0 1
+v -919 919 0
+vt 0 0
+v -919 919 898.5
+vt 0 1
+v -919 0 0
+vt 1 0
+v -919 0 898.5
+vt 1 1
+v -919 0 0
+vt 0 0
+v 0 0 898.5
+vt 1 1
+v -919 0 898.5
+vt 0 1
+v 0 0 898.5
+vt 1 1
+v -919 0 0
+vt 0 0
+v 0 0 0
+vt 1 0
+v 0 0 898.5
+vt 0 1
+v 0 919 0
+vt 1 0
+v 0 919 898.5
+vt 1 1
+v 0 919 0
+vt 1 0
+v 0 0 898.5
+vt 0 1
+v 0 0 0
+vt 0 0
+v 0 919 0
+vt 0 0
+v -919 919 898.5
+vt 1 1
+v 0 919 898.5
+vt 0 1
+v -919 919 898.5
+vt 1 1
+v 0 919 0
+vt 0 0
+v -919 919 0
+vt 1 0
+g  d rubik     s cube
+usemtl m0
+f 1 2 3
+f 4 5 6
+usemtl m1
+f 7 8 9
+f 10 11 12
+usemtl m2
+f 13 14 15
+f 16 17 18
+usemtl m3
+f 19 20 21
+f 22 23 24
+usemtl m4
+f 25 26 27
+f 28 29 30
+usemtl m5
+f 31 32 33
+f 34 35 36

@@ -19,9 +19,11 @@ for nid = 1:length(unique_types)
     count = 0;
     while ischar(line)
         if ~isempty(strfind(line, obj_cat{1}))
-            count = count + 1;
             line_parts = strsplit(line, '|');
-            obj_models{count} = line_parts{1};
+            if strcmp(strtrim(line_parts{2}), obj_cat{1}) %look for exact matches
+                count = count + 1;
+                obj_models{count} = line_parts{1};
+            end
         end
         line = fgets(h);
     end

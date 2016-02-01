@@ -243,6 +243,10 @@ while iter <= num_iter
         end
     end
     
+    %debug
+%     fprintf('k-means score:%f, collided_1:%d, collided_2:%d, sidetoside_satisfied_1:%d, sidetoside_satisfied_2:%d\n',...
+%         next_score_kmeans, collided1, collided2, sidetoside_satisfied1, sidetoside_satisfied2);
+    
     %mcmc sampling
     if next_score == 0
         ratio_score = 0;
@@ -268,8 +272,8 @@ while iter <= num_iter
     all_collision(iter) = curr_collision;
     all_sidetoside_constraints(iter) = curr_sidetoside_constraints;
     
-    fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
-        iter, curr_score, next_score, alpha, u);
+%     fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
+%         iter, curr_score, next_score, alpha, u);
     iter = iter + 1;
 end
 
