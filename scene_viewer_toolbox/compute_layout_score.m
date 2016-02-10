@@ -33,9 +33,13 @@ for oid = 1:length(scene)
     collision_penalty = compute_collision_penalty( scene, obj, oid );
     
     %proximity penalty
+    proximity_penalty = compute_proximity_penalty( scene, obj, oid );
     
     %overhang penalty
     overhang_penalty = compute_overhang_penalty( obj, parent );
+    
+    obj_score = pairwise_score * support_score * collision_penalty * ...
+        proximity_penalty * overhang_penalty;
     
     score = score + obj_score;
 end
