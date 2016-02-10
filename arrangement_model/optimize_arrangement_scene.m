@@ -99,16 +99,16 @@ while length(final_scene) < length(input_scene)
                 index = 1;
                 top_ind = nonzero_ind(index);
                 if use_hard_constraints %if we didn't check for the constraints while sampling
-                    while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) || ...
-                            ~all_sidetoside_constraints(sort_ind(top_ind)))
+                    while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) ...
+                            || ~all_sidetoside_constraints(sort_ind(top_ind)))
                         index = index + 1;
                         top_ind = nonzero_ind(index);
                     end
                     
                     %none of the samples satisfy the hard constraints
                     if index == length(nonzero_ind)
-                        if all_collision(sort_ind(top_ind)) || ...
-                                ~all_sidetoside_constraints(sort_ind(top_ind))
+                        if all_collision(sort_ind(top_ind)) ...
+                                || ~all_sidetoside_constraints(sort_ind(top_ind))
                             top_ind = 1;
                             repeat_sampling = 1;
                         else
@@ -136,16 +136,16 @@ while length(final_scene) < length(input_scene)
                     index = 1;
                     top_ind = nonzero_ind(index);
                     if use_hard_constraints %if we didn't check for the constraints while sampling
-                        while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) || ...
-                                ~all_sidetoside_constraints(sort_ind(top_ind)))
+                        while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) ... 
+                                || ~all_sidetoside_constraints(sort_ind(top_ind)))
                             index = index + 1;
                             top_ind = nonzero_ind(index);
                         end
                         
                         %none of the samples satisfy the hard constraints
                         if index == length(nonzero_ind)
-                            if all_collision(sort_ind(top_ind)) || ...
-                                    ~all_sidetoside_constraints(sort_ind(top_ind))
+                            if all_collision(sort_ind(top_ind)) ...
+                                    || ~all_sidetoside_constraints(sort_ind(top_ind))
                                 top_ind = 1;
                                 repeat_sampling = 1;
                             else
