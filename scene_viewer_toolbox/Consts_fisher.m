@@ -23,3 +23,4 @@ gmm_pairwise_file_SUNRGBD = 'data/training/SUNRGBD/gmm_pairwise_relations_fisher
 gmm_weights_file_SUNRGBD = 'data/training/SUNRGBD/gmm_weights_fisher.mat';
 pairwise_location_file_SUNRGBD = 'data/training/SUNRGBD/bedroom_pairwise_locations.mat';
 gmm_location_file_SUNRGBD = 'data/training/SUNRGBD/gmm_pairwise_location_fisher.mat';
+sample_size_fisher_file = 'data/training/SUNRGBD/bedroom_sample_sizes_fisher.mat';

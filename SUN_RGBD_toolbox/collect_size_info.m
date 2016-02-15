@@ -5,6 +5,8 @@ Consts;
 load(sunrgbdmeta_file);
 load(mapping_file, 'map_scene_name_type');
 total_size = size(map_scene_name_type, 1);
+% load(sample_size_fisher_file, 'sample_sizes');
+% room_sample_size = sample_sizes(get_object_type_bedroom({'room'})).fisherDB_dims;
 
 epsilon = 1;
 
@@ -33,12 +35,15 @@ for mid = 1:total_size
 %         all_valid_sizes(obj_ind).max_h = max(all_valid_sizes(obj_ind).max_h, room_dims(3));
 %         all_valid_sizes(obj_ind).min_h = min(all_valid_sizes(obj_ind).min_h, room_dims(3));
 %         
-        if abs(room_dims(1) - 0) < epsilon || abs(room_dims(2) - 0) < epsilon
-            continue
+        if ~(abs(room_dims(1) - 0) < epsilon || abs(room_dims(2) - 0) < epsilon)
+            if room_dims(1) > room_dims(2)
+                aspect_ratio = room_dims(1) / room_dims(2);
+            else
+                aspect_ratio = room_dims(2) / room_dims(1);
+            end
+            all_valid_sizes(obj_ind).max_aspectratio = max(all_valid_sizes(obj_ind).max_aspectratio, aspect_ratio);
+            all_valid_sizes(obj_ind).min_aspectratio = min(all_valid_sizes(obj_ind).min_aspectratio, aspect_ratio);
         end
-        wl_ratio = room_dims(2) / room_dims(1);
-        all_valid_sizes(obj_ind).max_wlratio = max(all_valid_sizes(obj_ind).max_wlratio, wl_ratio);
-        all_valid_sizes(obj_ind).min_wlratio = min(all_valid_sizes(obj_ind).min_wlratio, wl_ratio);
     end
     
     gt3D = SUNRGBDMeta(:,mid).groundtruth3DBB;
@@ -66,12 +71,17 @@ for mid = 1:total_size
 %         all_valid_sizes(obj_ind).max_h = max(all_valid_sizes(obj_ind).max_h, dims(3));
 %         all_valid_sizes(obj_ind).min_h = min(all_valid_sizes(obj_ind).min_h, dims(3));
         
+%         obj_sample_size = sample_sizes(obj_ind).fisherDB_dims;
         if abs(dims(1) - 0) < epsilon || abs(dims(2) - 0) < epsilon
             continue
         end
-        wl_ratio = dims(2) / dims(1);
-        all_valid_sizes(obj_ind).max_wlratio = max(all_valid_sizes(obj_ind).max_wlratio, wl_ratio);
-        all_valid_sizes(obj_ind).min_wlratio = min(all_valid_sizes(obj_ind).min_wlratio, wl_ratio);
+        if dims(1) > dims(2)
+            aspect_ratio = dims(1) / dims(2);
+        else
+            aspect_ratio = dims(2) / dims(1);
+        end
+        all_valid_sizes(obj_ind).max_aspectratio = max(all_valid_sizes(obj_ind).max_aspectratio, aspect_ratio);
+        all_valid_sizes(obj_ind).min_aspectratio = min(all_valid_sizes(obj_ind).min_aspectratio, aspect_ratio);
         
 %         all_valid_sizes(obj_ind).diag_sum = all_valid_sizes(obj_ind).diag_sum + diag;
 %         all_valid_sizes(obj_ind).instance_count = all_valid_sizes(obj_ind).instance_count + 1;
