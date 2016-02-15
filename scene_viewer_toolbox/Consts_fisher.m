@@ -13,3 +13,13 @@ gmm_pairwise_file = 'data\training\FisherDB\gmm_pairwise_relations.mat';
 gmm_weights_file = 'data\training\FisherDB\gmm_weights.mat';
 support_relations_file = 'data\training\FisherDB\support_relations.mat';
 estimated_PDF_support_file = 'data\training\FisherDB\estimated_PDF_support.mat';
+
+%SUN RGBD data
+sunrgbdmeta_file = 'SUNRGBDMeta.mat';
+mapping_file = 'data/training/SUNRGBD/scene_name_type.mat';
+scene_type = 'bedroom';
+pairwise_relations_file_SUNRGBD = 'data/training/SUNRGBD/pairwise_relations_fisher.mat';
+gmm_pairwise_file_SUNRGBD = 'data/training/SUNRGBD/gmm_pairwise_relations_fisher.mat';
+gmm_weights_file_SUNRGBD = 'data/training/SUNRGBD/gmm_weights_fisher.mat';
+pairwise_location_file_SUNRGBD = 'data/training/SUNRGBD/bedroom_pairwise_locations.mat';
+gmm_location_file_SUNRGBD = 'data/training/SUNRGBD/gmm_pairwise_location_fisher.mat';

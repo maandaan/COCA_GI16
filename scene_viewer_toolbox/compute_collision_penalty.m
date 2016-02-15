@@ -5,11 +5,17 @@ function collision_penalty = compute_collision_penalty( scene, obj, oid )
 epsilon = 0.00001;
 collided = false;
 
+%special case
+if obj.obj_type == get_object_type_bedroom({'room'})
+    collision_penalty = 1;
+    return
+end
+
 obj_height = [min(obj.corners(:,3)), max(obj.corners(:,3))];
 obj_rect = obj.corners(1:4,1:2);
 
 for pid = 1:length(scene)
-    if oid == pid
+    if oid == pid || scene(pid).obj_type == get_object_type_bedroom({'room'})
         continue
     end
     

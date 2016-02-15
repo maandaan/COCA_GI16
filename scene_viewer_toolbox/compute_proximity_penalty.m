@@ -3,8 +3,9 @@ function proximity_penalty = compute_proximity_penalty( scene, obj, oid )
 %prevent multiple instances of a category from being concentrated around
 %the same mode.
 
-Cosnts_fisher;
-load(pairwise_relations_file, 'pairwise_relations');
+Consts_fisher;
+% load(pairwise_relations_file, 'pairwise_relations');
+load(pairwise_relations_file_SUNRGBD, 'pairwise_relations');
 proximity_penalty = 1;
 
 type = obj.obj_type;
@@ -20,6 +21,10 @@ if ~isempty(data)
     avg_dist = avg_dist / count;
 end
 
+if avg_dist == 0 %no data available for multiple instances of this category
+    return
+end
+
 for pid = 1:length(scene)
     if pid == oid 
         continue
@@ -32,7 +37,7 @@ for pid = 1:length(scene)
     
     pair_center = mean(pair.corners);
     this_dist = norm(pair_center - obj_center);
-    proximity_penalty = 1 - exp(-((this_dist^2) / 2* avg_dist^2));
+    proximity_penalty = 1 - exp(-((this_dist^2) / (2* avg_dist^2)));
 end
 
 end

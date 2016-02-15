@@ -1,3 +1,11 @@
-databaseDirectory=../../data/databaseFull_fisher_Stanford/
-defaultScene=scene00024
+databaseDirectory=../../data/Synthesized Scenes/
+defaultScene=bedroom00013_2_fisher_SUNRGBD_v7
 textQuery=11705ed6a5b1ed37f83d00225df18677
+
+
+
+
+
+
+
+

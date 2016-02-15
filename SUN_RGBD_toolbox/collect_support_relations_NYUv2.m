@@ -2,7 +2,7 @@
 % dataset from image regions to object labels. (by Zeinab Sadeghipour)
 
 scene_type = 'bedroom';
-nyu_dataset_dir = '../indoor_scene_seg_sup/data2/2012_eccv_support_inference/';
+nyu_dataset_dir = 'data/indoor_scene_seg_sup/data2/2012_eccv_support_inference/';
 
 nyu_dataset_path = [nyu_dataset_dir 'nyu_depth_v2_labeled.mat'];
 nyu_data = matfile(nyu_dataset_path);
