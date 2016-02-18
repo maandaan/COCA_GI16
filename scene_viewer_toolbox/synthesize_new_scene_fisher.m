@@ -4,7 +4,7 @@ function synthesize_new_scene_fisher( input_scene, scene_file, scene_dir, out_di
 
 out_file = [out_dir, scene_file];
 
-[arranged_scenes, scores] = arrange_objects( input_scene, 100 );
+[arranged_scenes, scores] = arrange_objects( input_scene, [30,55,75,90,100] );
 save([out_file '.mat'], 'arranged_scenes', 'scores');
 
 for i = 1:length(arranged_scenes)

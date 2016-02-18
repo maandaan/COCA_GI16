@@ -8,6 +8,7 @@ samples = random(gmm, no_samples);
 scores = zeros(no_samples,1);
 sample_corners = repmat(struct('corners', []), no_samples, 1);
 sample_orientations = repmat(struct('orientation', []), no_samples, 1);
+
 for sid = 1:no_samples
     
     object_dims = obj.dims .* obj.scale;
@@ -46,13 +47,13 @@ for sid = 1:no_samples
     
     obj.corners = global_corners_opt_1;
     obj.orientation = object_orient1;
-    scene = [scene; obj];
-    [~, sample_score_1] = compute_layout_score( scene, length(scene) );
+    temp_scene = [scene; obj];
+    [~, sample_score_1] = compute_layout_score( temp_scene, length(temp_scene) );
     
     obj.corners = global_corners_opt_2;
     obj.orientation = object_orient2;
-    scene = [scene(1:end-1); obj];
-    [~, sample_score_2] = compute_layout_score( scene, length(scene) );
+    temp_scene = [scene; obj];
+    [~, sample_score_2] = compute_layout_score( temp_scene, length(temp_scene) );
     
     if sample_score_1 > sample_score_2
         scores(sid) = sample_score_1;
@@ -70,6 +71,10 @@ for sid = 1:no_samples
 end
 
 [scores_sorted, ind] = sort(scores, 'descend');
+% nonzero_indices = find(scores_sorted);
+% interval_len = min(length(nonzero_indices), fix(no_samples/5));
+% chosen_index = fix(interval_len/2) + 1;
+
 obj.corners = sample_corners(ind(1)).corners;
 obj.orientation = sample_orientations(ind(1)).orientation;
 max_score = scores(ind(1));

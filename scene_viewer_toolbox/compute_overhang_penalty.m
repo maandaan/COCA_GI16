@@ -19,13 +19,13 @@ end
 
 projected_area = (x_intersect(2) - x_intersect(1)) * (y_intersect(2) - y_intersect(1));
 % overhang_penalty = (projected_area / obj_area) * 100;
-% overhang_penalty = projected_area / obj_area;
+overhang_penalty = projected_area / obj_area;
 
-if projected_area / obj_area >= .9
-    overhang_penalty = 1;
-else
-    overhang_penalty = 0;
-end
+% if projected_area / obj_area >= .9
+%     overhang_penalty = 1;
+% else
+%     overhang_penalty = 0;
+% end
 
 end
 

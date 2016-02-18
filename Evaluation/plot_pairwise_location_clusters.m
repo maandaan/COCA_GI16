@@ -16,7 +16,7 @@ colors = {'r','b','g','c','k'};
 
 figure
 for pid = 1:pairs_num
-    scatter(data(pid,1),data(pid,2),10,colors{pairs_ind(pid)},'filled');
+    scatter(data(pid,1),data(pid,2),25,colors{pairs_ind(pid)},'filled');
     hold on
 end
 

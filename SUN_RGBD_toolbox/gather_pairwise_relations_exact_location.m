@@ -13,11 +13,12 @@ load(sunrgbdmeta_file);
 categories_count = 54; %from get_object_type_bedroom.m
 %spatial_rel is a nx4 matrix with three columns for relative locations and 4th column:
 %angle, in radians
-pair_spatial_rels_location = repmat(struct('spatial_rel',[]), categories_count, categories_count);
+pair_spatial_rels_location = repmat(struct('spatial_rel',[], 'SUNRGBD_info',[], ...
+    'SUNRGBDMeta_index', []), categories_count, categories_count);
 
 valid_rooms = 0;
 
-for mid = 1:total_size
+for mid = 9174:9174%total_size
     % check for the scene type
     if ~strcmp(map_scene_name_type(mid).sceneType, scene_type)
         continue
@@ -53,12 +54,7 @@ for mid = 1:total_size
         this_dims = [norm(this_corners(1,:) - this_corners(2,:)), ...
                      norm(this_corners(2,:) - this_corners(3,:)), ...
                      abs(this_corners(1,3) - this_corners(5,3))] * 100;
-%         this_dims = max(this_corners) - min(this_corners);
-%         this_vol = prod(this_dims);
-%         this_area = this_dims(1) * this_dims(2);
-        
-%         rotation_mat = convert_coordinates(this_orient);
-        
+
         % relative location to room
         obj_rel_centroid = convert_coordinates(room_centroid, room_cos, room_sin, this_centroid);
         %normalizing
@@ -70,8 +66,15 @@ for mid = 1:total_size
         angle = acos( min(max(cos_angle, -1), 1) ); % for fixing the cases where the cos_angle = 1 or -1
         angle = radtodeg(angle);
         if isempty(find(obj_rel_centroid == Inf)) && isempty(find(obj_rel_centroid == -Inf))
+            temp = pair_spatial_rels_location(room_type, this_type).SUNRGBD_info;
+            temp = [temp; SUNRGBDMeta(:,mid)];
+            pair_spatial_rels_location(room_type, this_type).SUNRGBD_info = temp;
+            
+            temp = pair_spatial_rels_location(room_type, this_type).SUNRGBDMeta_index;
+            temp = [temp; mid];
+            pair_spatial_rels_location(room_type, this_type).SUNRGBDMeta_index = temp;
+            
             room_spatial_rel = pair_spatial_rels_location(room_type, this_type).spatial_rel;
-            %             this_spatial_rel = [this_spatial_rel; displacement angle];
             room_spatial_rel = [room_spatial_rel; obj_rel_centroid angle];
             pair_spatial_rels_location(room_type, this_type).spatial_rel = room_spatial_rel;
         end
@@ -80,14 +83,10 @@ for mid = 1:total_size
             pair_centroid = gt3D(pid).centroid .* 100;
             pair_orient = gt3D(pid).orientation;
             pair_type = get_object_type_bedroom({gt3D(pid).classname});
-%             pair_rotation_mat = convert_coordinates(pair_orient);
             pair_corners = get_corners_of_bb3d(gt3D(pid));
             pair_dims = [norm(pair_corners(1,:) - pair_corners(2,:)), ...
                          norm(pair_corners(2,:) - pair_corners(3,:)), ...
                          abs(pair_corners(1,3) - pair_corners(5,3))] * 100;
-%             pair_dims = max(pair_corners) - min(pair_corners);
-%             pair_vol = prod(pair_dims);
-%             pair_area = pair_dims(1) * pair_dims(2);
             
             this_cos = this_orient(2) / norm(this_orient);
             this_sin = -this_orient(1) / norm(this_orient);
@@ -111,20 +110,36 @@ for mid = 1:total_size
             angle = acos( min(max(cos_angle, -1), 1) ); % for fixing the cases where the cos_angle = 1 or -1
             angle = radtodeg(angle);
             
+            %this_type, pair_type
+            temp = pair_spatial_rels_location(this_type, pair_type).SUNRGBD_info;
+            temp = [temp; SUNRGBDMeta(:,mid)];
+            pair_spatial_rels_location(this_type, pair_type).SUNRGBD_info = temp;
+            
+            temp = pair_spatial_rels_location(this_type, pair_type).SUNRGBDMeta_index;
+            temp = [temp; mid];
+            pair_spatial_rels_location(this_type, pair_type).SUNRGBDMeta_index = temp;
+            
             this_spatial_rel = pair_spatial_rels_location(this_type, pair_type).spatial_rel;
-%             this_spatial_rel = [this_spatial_rel; displacement angle];
             this_spatial_rel = [this_spatial_rel; pair_relative_centroid angle];
             pair_spatial_rels_location(this_type, pair_type).spatial_rel = this_spatial_rel;
             
+            %pair_type, this_type
+            temp = pair_spatial_rels_location(pair_type, this_type).SUNRGBD_info;
+            temp = [temp; SUNRGBDMeta(:,mid)];
+            pair_spatial_rels_location(pair_type, this_type).SUNRGBD_info = temp;
+            
+            temp = pair_spatial_rels_location(pair_type, this_type).SUNRGBDMeta_index;
+            temp = [temp; mid];
+            pair_spatial_rels_location(pair_type, this_type).SUNRGBDMeta_index = temp;
+            
             pair_spatial_rel = pair_spatial_rels_location(pair_type, this_type).spatial_rel;
-%             pair_spatial_rel = [pair_spatial_rel; -displacement angle];
             pair_spatial_rel = [pair_spatial_rel; this_relative_centroid angle];
             pair_spatial_rels_location(pair_type, this_type).spatial_rel = pair_spatial_rel;
                            
         end
     end
 end
-save(pairwise_locations_file, 'pair_spatial_rels_location')
+% save(pairwise_locations_file, 'pair_spatial_rels_location')
 end
 
 

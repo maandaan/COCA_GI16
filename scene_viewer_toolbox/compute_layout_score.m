@@ -52,7 +52,7 @@ for oid = 1:length(scene)
     end
     
     obj_score = pairwise_score * support_score * collision_penalty * ...
-        proximity_penalty * overhang_penalty;
+        proximity_penalty * overhang_penalty * 100;
     
     if oid == object_id
         object_score = obj_score;

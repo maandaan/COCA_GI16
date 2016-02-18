@@ -1,4 +1,4 @@
-function [arranged_scenes, scores] = arrange_objects( input_scene, step_size )
+function [arranged_scenes, scores] = arrange_objects( input_scene, sample_iterations )
 %ARRANGE_OBJECTS optimizes the placement of objects based on the
 %arrangement model in the example-based scene synthesis paper (Fisher et
 %al.)
@@ -7,10 +7,7 @@ Consts_fisher;
 load(gmm_location_file_SUNRGBD, 'gmm_matrix');
 
 scene = input_scene;
-max_iter = 500;
-
-scores = zeros(step_size, 1);
-arranged_scenes = repmat(struct('scene',[]), step_size, 1);
+max_iter = 100;
 
 %% sorting based on the sizes
 objects_vol = zeros(length(scene),1);
@@ -72,13 +69,42 @@ end
 
 %% optimizing the placement
 optimization_maxiter = 100;
+scores = zeros(length(sample_iterations)+1, 1);
+arranged_scenes = repmat(struct('scene',[]), length(sample_iterations)+1, 1);
+
 % scene = generate_new_layout(scene);
 [score,~] = compute_layout_score(scene, 0);
 step_count = 1;
+scores(step_count) = score;
+arranged_scenes(step_count).scene = scene;
+step_count = step_count + 1;
+
+%debug
+% hold off
+% for oid = 1:length(scene)
+%     obj = scene(oid);
+%     corners = obj.corners;
+%     plot(corners(1:5,1), corners(1:5,2));
+%     hold on
+% end
+% title(sprintf('score:%f', score))
+
+figure
 for iter = 1:optimization_maxiter
     new_layout = generate_new_layout( scene );
     [new_score, ~] = compute_layout_score(new_layout,0);
-    if mod(iter,step_size) == 0
+    
+    %debug
+%     hold off
+%     for oid = 1:length(new_layout)
+%         obj = new_layout(oid);
+%         corners = obj.corners;
+%         plot(corners(1:5,1), corners(1:5,2));
+%         hold on
+%     end
+%     title(sprintf('score:%f', new_score))
+    
+    if ~isempty(find(sample_iterations == iter, 1))
         scores(step_count) = new_score;
         arranged_scenes(step_count).scene = new_layout;
         step_count = step_count + 1;
@@ -86,6 +112,7 @@ for iter = 1:optimization_maxiter
     if new_score > score
         score = new_score;
         scene = new_layout;
+%         figure
     end
     fprintf('iteration %d finished! score: %f, new_score: %f\n', iter, score, new_score);
 end
