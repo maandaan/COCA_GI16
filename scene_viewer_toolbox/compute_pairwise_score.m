@@ -26,12 +26,16 @@ for pid = 1:length(scene)
     gmm_l = gmm_matrix(pair.obj_type, obj.obj_type).gmm_location;
     gmm_a = gmm_matrix(pair.obj_type, obj.obj_type).gmm_angle;
     gmm = gmm_matrix(pair.obj_type, obj.obj_type).gmm;
+    
     pair_center = mean(pair.corners);
-    pair_rel_center = convert_coordinates(obj_center, obj_cos, obj_sin, pair_center);
+    cos_t = pair.orientation(2) / norm(pair.orientation);
+    sin_t = pair.orientation(1) / norm(pair.orientation);
+    
+    rel_center = convert_coordinates(pair_center, cos_t, sin_t, obj_center);
     pair_dims = pair.dims .* pair.scale;
-    pair_rel_center = [pair_rel_center(1) / (pair_dims(1)/2), ...
-                       pair_rel_center(2) / (pair_dims(2)/2), ...
-                       pair_rel_center(3) / (pair_dims(3)/2)];
+    rel_center = [rel_center(1) / (pair_dims(1)/2), ...
+                       rel_center(2) / (pair_dims(2)/2), ...
+                       rel_center(3) / (pair_dims(3)/2)];
     
 %     pair_orient = [pair.transform(1,2) / pair.scale, pair.transform(1,1) / pair.scale];
     pair_orient = pair.orientation(1:2);
@@ -40,9 +44,9 @@ for pid = 1:length(scene)
     angle = radtodeg(angle);
     
     weight = gmm_weights(pair.obj_type, obj.obj_type).weight;
-    location_score = pdf(gmm_l, pair_rel_center);
+    location_score = pdf(gmm_l, rel_center);
     angle_score = pdf(gmm_a, angle);
-    gmm_score = pdf(gmm, [pair_rel_center angle]);
+    gmm_score = pdf(gmm, [rel_center angle]);
 %     pairwise_score = pairwise_score + weight * (location_score + angle_score);
     pairwise_score = pairwise_score + weight * gmm_score;
 end

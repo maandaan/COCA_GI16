@@ -11,6 +11,8 @@ load(sunrgbdmeta_file);
 categories_count = 54; %from get_object_type_bedroom.m
 gmm_weights = repmat(struct('frequency', 0, 'weight', 0), categories_count, categories_count);
 
+room_type = get_object_type_bedroom({'room'});
+
 valid_rooms = 0;
 for mid = 1:total_size
     % check for the scene type
@@ -28,9 +30,15 @@ for mid = 1:total_size
     obj_labels = {gt3D(:).classname};
     obj_types = get_object_type_bedroom(obj_labels);
     
-    for oid = 1:length(obj_types)     
+    for oid = 1:length(obj_types)
+        %the pair with room
+        
+        curr_freq = gmm_weights(room_type, obj_types(oid)).frequency;
+        curr_freq = curr_freq + 1;
+        gmm_weights(room_type, obj_types(oid)).frequency = curr_freq;
+            
         for ooid = 1:length(obj_types)
-            if ooid == oid || obj_types(ooid) == get_object_type_bedroom({'room'})
+            if ooid == oid || obj_types(ooid) == room_type
                 continue
             end
             

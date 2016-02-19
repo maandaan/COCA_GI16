@@ -71,13 +71,14 @@ for sid = 1:no_samples
 end
 
 [scores_sorted, ind] = sort(scores, 'descend');
-% nonzero_indices = find(scores_sorted);
-% interval_len = min(length(nonzero_indices), fix(no_samples/5));
+nonzero_indices = find(scores_sorted);
+interval_len = min(length(nonzero_indices), fix(no_samples/10));
 % chosen_index = fix(interval_len/2) + 1;
+chosen_index = randi(interval_len);
 
-obj.corners = sample_corners(ind(1)).corners;
-obj.orientation = sample_orientations(ind(1)).orientation;
-max_score = scores(ind(1));
+obj.corners = sample_corners(ind(chosen_index)).corners;
+obj.orientation = sample_orientations(ind(chosen_index)).orientation;
+max_score = scores(ind(chosen_index));
 new_obj = obj;
 
 end

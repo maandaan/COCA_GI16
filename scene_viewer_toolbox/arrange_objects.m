@@ -7,7 +7,8 @@ Consts_fisher;
 load(gmm_location_file_SUNRGBD, 'gmm_matrix');
 
 scene = input_scene;
-max_iter = 100;
+max_iter = 100; %for initial sampling
+optimization_maxiter = 200;
 
 %% sorting based on the sizes
 objects_vol = zeros(length(scene),1);
@@ -65,10 +66,18 @@ for oid = 2:length(scene)
 %     end
     [new_obj, temp_scores, max_score] = generate_initial_samples( scene(1:oid-1), obj, parent, max_iter, gmm_matrix );
     scene(oid) = new_obj;
+    
+    %debug
+    hold off
+    for i = 1:oid
+        obj = scene(i);
+        corners = obj.corners;
+        plot(corners(1:5,1), corners(1:5,2));
+        hold on
+    end
 end
 
 %% optimizing the placement
-optimization_maxiter = 100;
 scores = zeros(length(sample_iterations)+1, 1);
 arranged_scenes = repmat(struct('scene',[]), length(sample_iterations)+1, 1);
 
@@ -80,14 +89,14 @@ arranged_scenes(step_count).scene = scene;
 step_count = step_count + 1;
 
 %debug
-% hold off
-% for oid = 1:length(scene)
-%     obj = scene(oid);
-%     corners = obj.corners;
-%     plot(corners(1:5,1), corners(1:5,2));
-%     hold on
-% end
-% title(sprintf('score:%f', score))
+hold off
+for oid = 1:length(scene)
+    obj = scene(oid);
+    corners = obj.corners;
+    plot(corners(1:5,1), corners(1:5,2));
+    hold on
+end
+title(sprintf('score:%f', score))
 
 figure
 for iter = 1:optimization_maxiter
@@ -95,25 +104,34 @@ for iter = 1:optimization_maxiter
     [new_score, ~] = compute_layout_score(new_layout,0);
     
     %debug
-%     hold off
-%     for oid = 1:length(new_layout)
-%         obj = new_layout(oid);
-%         corners = obj.corners;
-%         plot(corners(1:5,1), corners(1:5,2));
-%         hold on
-%     end
-%     title(sprintf('score:%f', new_score))
-    
-    if ~isempty(find(sample_iterations == iter, 1))
-        scores(step_count) = new_score;
-        arranged_scenes(step_count).scene = new_layout;
-        step_count = step_count + 1;
+    hold off
+    for oid = 1:length(new_layout)
+        obj = new_layout(oid);
+        corners = obj.corners;
+        plot(corners(1:5,1), corners(1:5,2));
+        hold on
     end
+    title(sprintf('score:%f', new_score))
+    
     if new_score > score
         score = new_score;
         scene = new_layout;
-%         figure
+        figure
+%         for oid = 1:length(new_layout)
+%             obj = new_layout(oid);
+%             corners = obj.corners;
+%             plot(corners(1:5,1), corners(1:5,2));
+%             hold on
+%         end
+%         title(sprintf('score:%f', new_score))
     end
+    
+    if ~isempty(find(sample_iterations == iter, 1))
+        scores(step_count) = score;
+        arranged_scenes(step_count).scene = scene;
+        step_count = step_count + 1;
+    end
+    
     fprintf('iteration %d finished! score: %f, new_score: %f\n', iter, score, new_score);
 end
 

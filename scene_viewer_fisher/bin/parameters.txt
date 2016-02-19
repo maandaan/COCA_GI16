@@ -1,7 +1,28 @@
 databaseDirectory=../../data/Synthesized Scenes/
 
-defaultScene=bedroom00001_9_fisher_comp1_iter6_score_8.2395e-06
+defaultScene=bedroom00013_7_restart
 textQuery=11705ed6a5b1ed37f83d00225df18677
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

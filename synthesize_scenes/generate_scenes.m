@@ -33,7 +33,7 @@ objectsets_filename = [scenes_dir, results_filename, '_objectsets.mat'];
 % 
 % load(objectsets_filename, 'sampled_scenes');
 
-for sample_id = 2:2%length(sampled_scenes)
+for sample_id = 7:7%length(sampled_scenes)
 %     scene = sampled_scenes(sample_id).scene;
 %     scene = select_models(modelnames_file, scene);
 %     scene = prune_models(scene);
@@ -45,14 +45,14 @@ for sample_id = 2:2%length(sampled_scenes)
 %     save([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
 %     fprintf('Finished initializing the placement and scaling the sizes for sample %d!\n', sample_id);
     
-    load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
+    load([scenes_dir, results_filename, '_init_', num2str(sample_id) '_restart'], 'scene');
     iter = 1;
-    [ final_scene, temp_scenes ] = optimize_arrangement_scene( scene, scene(7).identifier );
+    [ final_scene, temp_scenes ] = optimize_arrangement_scene( scene, '' );
     
     while isempty(final_scene) && iter <= max_arrangement_opt_iter 
         %the arrangement failed, should be restarted
         fprintf('Optimization Failed! Restarting...\n');
-        [final_scene, temp_scenes] = optimize_arrangement_scene( scene, scene(7).identifier );
+        [final_scene, temp_scenes] = optimize_arrangement_scene( scene, '' );
         iter = iter + 1;
     end
     
@@ -72,12 +72,13 @@ for sample_id = 2:2%length(sampled_scenes)
     %in the case of previously populted scenes, we might need to repeat the
     %optimization for present objects as well (total restart)
     iter = 1;
+    temp_scenes_2 = [];
     while isempty(final_scene) && iter <= max_arrangement_opt_iter
         fprintf('Optimization Failed! Restarting...\n');
         for object_id = 2:length(scene)
             scene(object_id).optimized_location = 0;
         end
-        [final_scene, temp_scenes_2] = optimize_arrangement_scene( scene, scene(7).identifier );
+        [final_scene, temp_scenes_2] = optimize_arrangement_scene( scene, '' );
         iter = iter + 1;
     end
     
@@ -100,7 +101,7 @@ for sample_id = 2:2%length(sampled_scenes)
         continue
     end
     
-    save([scenes_dir, results_filename, '_final_', num2str(sample_id)], 'final_scene');
+    save([scenes_dir, results_filename, '_final_', num2str(sample_id) '_restart'], 'final_scene');
     fprintf('Finished optimizing the placement for sample %d!\n', sample_id);
     
     %preparing the results for scene_viewer
@@ -110,7 +111,7 @@ for sample_id = 2:2%length(sampled_scenes)
     modelcount = length(scene3d_objects);
     scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
     % scene3d.objects = scene3d_objects;
-    out_file = [scenes_dir, results_filename, '_', num2str(sample_id), '.txt'];
+    out_file = [scenes_dir, results_filename, '_', num2str(sample_id), '_restart', '.txt'];
     write_scene_to_file( scene3d, out_file );
     fprintf('Finished preparing the result for scene viewer for sample %d!\n', sample_id);
 end

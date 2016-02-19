@@ -26,13 +26,13 @@ rng shuffle
 % r = rand;
 % pair_id = sum(r >= cumsum([0, pairs_prob']));
 
-%assumption: the first object in the local scene is always the supporting
-%surface (parent)
+parent_id = object.supporter_id;
+parent_row = structfind(pair_objects, 'identifier', parent_id);
 if length(pair_objects) > 1 && ...
-        pair_objects(1).obj_type == get_object_type_bedroom({'room'})
+        pair_objects(parent_row).obj_type == get_object_type_bedroom({'room'})
     pair_id = 2;
 else
-    pair_id = 1;
+    pair_id = parent_row;
 end
 % pair_id = 1;
 

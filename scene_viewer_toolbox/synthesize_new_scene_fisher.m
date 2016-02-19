@@ -4,7 +4,8 @@ function synthesize_new_scene_fisher( input_scene, scene_file, scene_dir, out_di
 
 out_file = [out_dir, scene_file];
 
-[arranged_scenes, scores] = arrange_objects( input_scene, [30,55,75,90,100] );
+% [30,55,75,90,100]
+[arranged_scenes, scores] = arrange_objects( input_scene, [30,70,100,125,150,170,190,200] );
 save([out_file '.mat'], 'arranged_scenes', 'scores');
 
 for i = 1:length(arranged_scenes)
@@ -17,7 +18,7 @@ for i = 1:length(arranged_scenes)
     
     write_scene_to_file( scene3d, [out_file '_iter' num2str(i) '_score_' num2str(scores(i)) '.txt'] );
     
-    run_scene_viewer( [scene_file '_iter' num2str(i) '_score_' num2str(scores(i))], scene_dir )
+%     run_scene_viewer( [scene_file '_iter' num2str(i) '_score_' num2str(scores(i))], scene_dir )
 end
 
 end
