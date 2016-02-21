@@ -46,8 +46,22 @@ for cid = 1:cat_count
             'cluster_index', ind, 'cluster_centroid', c, 'sum_distance', sumd, ...
             'distance_to_centroids', d);
         
+        %cluster x,y and angle
+        e = evalclusters([data(:,1:2), data(:,4)], 'kmeans', 'silhouette', 'klist',[1:5]);
+        %find the optimal number of clusters
+        if isempty( find(e.CriterionValues(2:end) >= 0.6, 1))
+            num_clust = 1;
+        else
+            num_clust = e.OptimalK;
+        end
+        [ind, c, sumd, d] = kmeans([data(:,1:2), data(:,4)], num_clust, 'Replicates', num_clust+1);
+        kmeans_xyangle = struct('data', [data(:,1:2), data(:,4)], 'num_cluster', num_clust, ...
+            'cluster_index', ind, 'cluster_centroid', c, 'sum_distance', sumd, ...
+            'distance_to_centroids', d);
+        
         kmeans_matrix(cid, pair_id).kmeans_xy = kmeans_xy;
         kmeans_matrix(cid, pair_id).kmeans_angle = kmeans_angle;
+        kmeans_matrix(cid, pair_id).kmeans_xyangle = kmeans_xyangle;
     end
     fprintf('Finished for category: %d\n', cid);
 end

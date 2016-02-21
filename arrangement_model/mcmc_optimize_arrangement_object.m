@@ -272,8 +272,8 @@ while iter <= num_iter
     all_collision(iter) = curr_collision;
     all_sidetoside_constraints(iter) = curr_sidetoside_constraints;
     
-%     fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
-%         iter, curr_score, next_score, alpha, u);
+    fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
+        iter, curr_score, next_score, alpha, u);
     iter = iter + 1;
 end
 

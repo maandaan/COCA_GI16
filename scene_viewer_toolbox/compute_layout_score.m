@@ -8,6 +8,11 @@ load(estimated_PDF_support_file, 'estimated_PDFs');
 
 layout_score = 0;
 object_score = 0;
+sum_pairwise = 0;
+sum_collision = 0;
+sum_overhang = 0;
+sum_proximity = 0;
+sum_support = 0;
 for oid = 1:length(scene)
 %     obj_score = 0;
     
@@ -29,8 +34,8 @@ for oid = 1:length(scene)
         support_score = 1;
     else
         parent = scene(parent_row);
-        x_rng = max(parent.corners(1:4,1)) - min(parent.corners(1:4,1));
-        y_rng = max(parent.corners(1:4,2)) - min(parent.corners(1:4,2));
+        x_rng = norm(parent.corners(1,:) - parent.corners(2,:));
+        y_rng = norm(parent.corners(2,:) - parent.corners(3,:));
         area = sqrt(x_rng * y_rng);
         height = min(obj.corners(:,3));
         f_area = estimated_PDFs(obj.obj_type).estimated_PDF(1,1);
@@ -54,6 +59,10 @@ for oid = 1:length(scene)
     obj_score = pairwise_score * support_score * collision_penalty * ...
         proximity_penalty * overhang_penalty * 100;
     
+    %debug
+    fprintf('%s: pairwise: %f, support: %f, collision: %f, proximity: %f, overhang: %f\n', ...
+        obj.identifier, pairwise_score, support_score, collision_penalty, proximity_penalty, overhang_penalty);
+    
     if oid == object_id
         object_score = obj_score;
     end
@@ -65,7 +74,16 @@ for oid = 1:length(scene)
     end
     
     layout_score = layout_score + obj_score;
+    %debug
+    sum_pairwise = sum_pairwise + pairwise_score;
+    sum_support = sum_support + support_score;
+    sum_collision = sum_collision + collision_penalty;
+    sum_proximity = sum_proximity + proximity_penalty;
+    sum_overhang = sum_overhang + overhang_penalty;
 end
+
+fprintf('scene: pairwise: %f, support: %f, collision: %f, proximity: %f, overhang: %f\n', ...
+        sum_pairwise, sum_support, sum_collision, sum_proximity, sum_overhang);
 
 end
 

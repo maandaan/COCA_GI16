@@ -25,10 +25,10 @@ for sid = 1:no_samples
     sample_angle = samples(sid,4);
     
     theta = compute_theta_from_orientation(pair.orientation);
-    angle1 = theta + degtorad(sample_angle);
-    angle2 = theta - degtorad(sample_angle);
-    object_orient1 = [cos(angle1) sin(angle1) 0];
-    object_orient2 = [cos(angle2) sin(angle2) 0];
+    angle1 = smooth_final_angle(radtodeg(theta) + sample_angle);
+    angle2 = smooth_final_angle(radtodeg(theta) - sample_angle);
+    object_orient1 = [cos(degtorad(angle1)) sin(degtorad(angle1)) 0];
+    object_orient2 = [cos(degtorad(angle2)) sin(degtorad(angle2)) 0];
 %     sample_orient = [cos(degtorad(sample_angle)) sin(degtorad(sample_angle)) 0];
     
     opt_corners_bnd = [-object_dims/2 object_dims/2];
@@ -65,16 +65,17 @@ for sid = 1:no_samples
         sample_orientations(sid).orientation = object_orient2;
     end
     
-    if mod(sid,50) == 0
-        fprintf('it''s going on... iteration %d\n', sid);
-    end
+%     if mod(sid,50) == 0
+%         fprintf('it''s going on... iteration %d\n', sid);
+%     end
 end
 
 [scores_sorted, ind] = sort(scores, 'descend');
 nonzero_indices = find(scores_sorted);
 interval_len = min(length(nonzero_indices), fix(no_samples/10));
 % chosen_index = fix(interval_len/2) + 1;
-chosen_index = randi(interval_len);
+% chosen_index = randi(interval_len);
+chosen_index = 1;
 
 obj.corners = sample_corners(ind(chosen_index)).corners;
 obj.orientation = sample_orientations(ind(chosen_index)).orientation;
@@ -83,3 +84,18 @@ new_obj = obj;
 
 end
 
+function angle = smooth_final_angle(angle)
+
+angle = mod(angle, 360);
+
+if abs(angle - 0) <= 45 || abs(angle - 360) <= 45
+    angle = 0;
+elseif abs(angle - 90) < 45
+    angle = 90;
+elseif abs(angle - 180) <= 45
+    angle = 180;
+elseif abs(angle - 270) < 45
+    angle = 270;
+end
+
+end

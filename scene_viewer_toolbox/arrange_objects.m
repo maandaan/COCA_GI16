@@ -1,4 +1,4 @@
-function [arranged_scenes, scores] = arrange_objects( input_scene, sample_iterations )
+function [arranged_scenes, scores] = arrange_objects( input_scene, sample_iterations, init_file )
 %ARRANGE_OBJECTS optimizes the placement of objects based on the
 %arrangement model in the example-based scene synthesis paper (Fisher et
 %al.)
@@ -76,6 +76,10 @@ for oid = 2:length(scene)
         hold on
     end
 end
+
+save(init_file, 'scene');
+
+% load(init_file, 'scene');
 
 %% optimizing the placement
 scores = zeros(length(sample_iterations)+1, 1);

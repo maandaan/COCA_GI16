@@ -17,6 +17,7 @@ for oid = 1:length(pair_objects)
     pair = pair_objects(oid);
     kmeans_xy = kmeans_matrix(pair.obj_type, object.obj_type).kmeans_xy;
     kmeans_angle = kmeans_matrix(pair.obj_type, object.obj_type).kmeans_angle;
+    kmeans_xyangle = kmeans_matrix(pair.obj_type, object.obj_type).kmeans_xyangle;
     if isempty(kmeans_xy) %there's no pairwise data between two objects
         continue
     end
@@ -52,8 +53,10 @@ for oid = 1:length(pair_objects)
     
     xy_dist = compute_distance_from_clusters(rel_xy, kmeans_xy);
     angle_dist = compute_distance_from_clusters(rel_angle, kmeans_angle);
+    xyangle_dist = compute_distance_from_clusters([rel_xy ,rel_angle], kmeans_xyangle);
     
-    score = score + xy_dist + angle_dist;
+%     score = score + xy_dist + angle_dist;
+    score = score + xyangle_dist;
 end
 
 end

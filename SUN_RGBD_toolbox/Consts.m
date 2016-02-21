@@ -41,7 +41,8 @@ sidetoside_constraints_file = 'data/training/SUNRGBD/bedroom_sidetoside_constrai
 scene_db_dir = 'data/Synthesized Scenes/';
 models_dir = [scene_db_dir 'models/'];
 scenes_dir = [scene_db_dir 'scenes/'];
-modelnames_file = [scene_db_dir 'fields/models.txt'];
+% modelnames_file = [scene_db_dir 'fields/models.txt'];
+modelnames_file = [scene_db_dir 'fields/models_pruned_categories.txt'];
 % modelnames_file = [scene_db_dir 'fields/names.txt'];
 
 % information

@@ -18,8 +18,8 @@ for sid = 1:length(fisher_scenes)
             continue
         end
         
-        x_rng = max(parent.corners(1:4,1)) - min(parent.corners(1:4,1));
-        y_rng = max(parent.corners(1:4,2)) - min(parent.corners(1:4,2));
+        x_rng = norm(parent.corners(1,:) - parent.corners(2,:));
+        y_rng = norm(parent.corners(2,:) - parent.corners(3,:));
         area = sqrt(x_rng * y_rng);
         
         for cid = 1:length(children)

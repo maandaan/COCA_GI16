@@ -9,16 +9,16 @@ function new_layout = generate_new_layout( scene )
 new_layout = scene;
 %randomly choose one object to pertubate based on their sizes, bigger ->
 %more probable to be selected
-objects_vol = zeros(length(scene)-1,1);
+objects_area = zeros(length(scene)-1,1);
 for oid = 2:length(scene)
     obj = scene(oid);
     obj_dims = obj.dims .* obj.scale; %max(obj.corners) - min(obj.corners);
-    objects_vol(oid-1) = prod(obj_dims);
+    objects_area(oid-1) = obj_dims(1) * obj_dims(2);
 end
 % [vol_sorted, ind] = sort(objects_vol, 'descend');
 
 r = rand;
-prob = objects_vol ./ sum(objects_vol);
+prob = objects_area ./ sum(objects_area);
 selected_obj_ind = sum(r >= cumsum([0, prob'])) + 1;
     
 % selected_obj_ind = randi(length(scene)-1) + 1;
@@ -36,25 +36,27 @@ angle = radtodeg(atan(obj.orientation(2) / obj.orientation(1)));
 if obj.orientation(1) < 0 %2nd and 3rd quarter
     angle = angle + 180;
 end
-delta_angle = normrnd(0, 45);
+delta_angle = normrnd(0, 15);
 if delta_angle > 180
     delta_angle = 180;
 end
 new_angle = delta_angle + angle;
+new_angle = smooth_final_angle(new_angle);
 obj.orientation = [cos(degtorad(new_angle)), sin(degtorad(new_angle)), 0];
 
 
 %perturbation in placement
 obj_center = mean(obj.corners);
 obj_dims = obj.dims .* obj.scale;
-sigma = obj_dims ./ 5;
+% new_center = obj_center;
+sigma = parent_dims ./ 4;
 delta_x = normrnd(0, sigma(1));
 delta_y = normrnd(0, sigma(2));
 
 new_center_x = obj_center(1) + delta_x;
 new_center_y = obj_center(2) + delta_y;
 new_center = [new_center_x new_center_y obj_center(3)];
-
+% 
 opt_corners_bnd = [-obj_dims/2 obj_dims/2];
 local_corners = zeros(8,3);
 global_corners = zeros(8,3);
@@ -80,14 +82,16 @@ if ~isempty(obj.children)
       
         angle = radtodeg(atan(obj.orientation(2) / obj.orientation(1)));
         new_angle = delta_angle + angle;
+        new_angle = smooth_final_angle(new_angle);
         obj.orientation = [cos(degtorad(new_angle)), sin(degtorad(new_angle)), 0];
         
         obj_center = mean(obj.corners);
         obj_dims = obj.dims .* obj.scale;
+%         new_center = obj_center;
         new_center_x = obj_center(1) + delta_x;
         new_center_y = obj_center(2) + delta_y;
         new_center = [new_center_x new_center_y obj_center(3)];
-        
+%         
         opt_corners_bnd = [-obj_dims/2 obj_dims/2];
         local_corners = zeros(8,3);
         global_corners = zeros(8,3);
@@ -107,3 +111,18 @@ end
 
 end
 
+function angle = smooth_final_angle(angle)
+
+angle = mod(angle, 360);
+
+if abs(angle - 0) <= 45 || abs(angle - 360) <= 45
+    angle = 0;
+elseif abs(angle - 90) < 45
+    angle = 90;
+elseif abs(angle - 180) <= 45
+    angle = 180;
+elseif abs(angle - 270) < 45
+    angle = 270;
+end
+
+end
