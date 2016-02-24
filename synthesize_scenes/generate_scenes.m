@@ -26,12 +26,12 @@ end
 [ all_config, all_score, nodes_sets ] = mcmc_optimize_scene_config(...
     input_scene, 1000, objects_num, objects_num, 1);
 [ sample_score, sample_objects ] = choose_mcmc_samples( ...
-    all_score, nodes_sets, objects_num + pres_obj_count, 15, 1 );
+    all_score, nodes_sets, objects_num + pres_obj_count, 10, 1 );
 sampled_scenes = complete_mcmc_samples_to_scenes( input_scene, sample_objects );
 save(objectsets_filename, 'sampled_scenes');
 fprintf('Finished MCMC sampling from the factor graph!\n');
 
-load(objectsets_filename, 'sampled_scenes');
+% load(objectsets_filename, 'sampled_scenes');
 
 for sample_id = 1:length(sampled_scenes)
     scene = sampled_scenes(sample_id).scene;
@@ -45,59 +45,30 @@ for sample_id = 1:length(sampled_scenes)
     save([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
     fprintf('Finished initializing the placement and scaling the sizes for sample %d!\n', sample_id);
     
-%     load([scenes_dir, results_filename, '_init_', num2str(sample_id) '_restart'], 'scene');
+%     load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
 %     load([scenes_dir, results_filename, '_final_', num2str(sample_id)], 'final_scene');
-    scene = final_scene;
-    iter = 1;
-    [ final_scene, temp_scenes ] = optimize_arrangement_scene( scene, '' );
+%     scene = final_scene;
+    fixed_objects_rows = structfind(scene, 'optimized_location', 1);
+    fixed_objects_num = length(fixed_objects_rows);
     
-    while isempty(final_scene) && iter <= max_arrangement_opt_iter 
-        %the arrangement failed, should be restarted
-        fprintf('Optimization Failed! Restarting...\n');
-        [final_scene, temp_scenes] = optimize_arrangement_scene( scene, '' );
-        iter = iter + 1;
-    end
+    [ final_scene, missed_obj, ~, ~] = place_objects( scene, max_arrangement_opt_iter );
     
-    %% comparing mcmc sampling with hill climbing in fisher's paper
-%     for tsid = 1:length(temp_scenes)
-%         temp_scene = fix_3D_models(temp_scenes(tsid).scene);
-%         temp_scene = compute_transform(temp_scene);
-%         scene3d_objects = prepare_data_to_write_file(temp_scene);
-%         modelcount = length(scene3d_objects);
-%         scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
-%         % scene3d.objects = scene3d_objects;
-%         out_file = [scenes_dir, results_filename, '_', num2str(sample_id), '_mcmceval_first_', num2str(tsid) '.txt'];
-%         write_scene_to_file( scene3d, out_file );
-%     end
+    save([scenes_dir, results_filename, '_intermediate_', num2str(sample_id)],...
+        'scene','final_scene','missed_obj','fixed_objects_num');
     
-    %%
-    %in the case of previously populted scenes, we might need to repeat the
-    %optimization for present objects as well (total restart)
-    iter = 1;
-    temp_scenes_2 = [];
-    while isempty(final_scene) && iter <= max_arrangement_opt_iter
-        fprintf('Optimization Failed! Restarting...\n');
-        for object_id = 2:length(scene)
-            scene(object_id).optimized_location = 0;
+%     load([scenes_dir, results_filename, '_intermediate_', num2str(sample_id)]);
+    %the placement could not be optimized, let's remove the object
+    while isempty(final_scene)
+        scene = remove_object(scene, missed_obj);
+        
+        if length(scene) <= fixed_objects_num
+            break
         end
-        [final_scene, temp_scenes_2] = optimize_arrangement_scene( scene, '' );
-        iter = iter + 1;
+        
+        [final_scene, missed_obj, ~, ~] = place_objects( scene, max_arrangement_opt_iter );
     end
     
-    %% comparing mcmc sampling with hill climbing in fisher's paper
-%     for tsid = 1:length(temp_scenes_2)
-%         temp_scene = fix_3D_models(temp_scenes_2(tsid).scene);
-%         temp_scene = compute_transform(temp_scene);
-%         scene3d_objects = prepare_data_to_write_file(temp_scene);
-%         modelcount = length(scene3d_objects);
-%         scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
-%         % scene3d.objects = scene3d_objects;
-%         out_file = [scenes_dir, results_filename, '_', num2str(sample_id), '_mcmceval_second_', num2str(tsid) '.txt'];
-%         write_scene_to_file( scene3d, out_file );
-%     end
-    
-    %%
-    
+    % none of the new objects can be 
     if isempty(final_scene)
         fprintf('The placement for sample %d could not be optimized! :( \n', sample_id);
         continue

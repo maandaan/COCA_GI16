@@ -1,4 +1,4 @@
-function [ final_scene, temp_scenes ] = optimize_arrangement_scene( input_scene, obj_id )
+function [ final_scene, missed_obj, temp_scenes ] = optimize_arrangement_scene( input_scene, obj_id )
 %OPTIMIZE_ARRANGEMENT_SCENE optimizes the location for all the objects in
 %the scene after we specified which objects should be placed.
 
@@ -14,6 +14,7 @@ mapping_file = 'data/training/SUNRGBD/scene_name_type.mat';
 Consts;
 load(sidetoside_constraints_file, 'sidetoside_constraints');
 temp_scenes = [];
+missed_obj = [];
 
 parents = 1;
 room = input_scene(1);
@@ -34,7 +35,8 @@ while length(final_scene) < length(input_scene)
     end
     parents = parents(2:end);
         
-    children = parent.children;
+%     children = parent.children;
+    children = structfind(input_scene, 'supporter_id', parent.identifier)';
     if isempty(children)
         continue
     end
@@ -242,6 +244,7 @@ while length(final_scene) < length(input_scene)
 %%
             %not a plausible arrangment
             if init_iter > length(init_locations)
+                missed_obj = object;
                 final_scene = [];
                 return
             end

@@ -50,13 +50,14 @@ end
 
 %correcting z coordinates, ignore the room
 for mid = 2:models_num
-    if isempty(scene(mid).children)
+    children = structfind(scene, 'supporter_id', scene(mid).identifier);
+    if isempty(children)
         continue
     end
     
     pcorners = scene(mid).corners;
     pheight = max(pcorners(:,3));
-    children = scene(mid).children;
+%     children = scene(mid).children;
     for cid = 1:length(children)
         if ~new_objs(children(cid))
             continue
