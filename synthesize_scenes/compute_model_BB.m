@@ -1,4 +1,4 @@
-function [ scene ] = compute_model_BB( scene, models_dir )
+function [ scene ] = compute_model_BB( scene, models_dir, modelnames_file )
 %COMPUTE_MODEL_BB computes the bounding box and size for selected models to
 %be inserted in the scene.
 
@@ -15,7 +15,21 @@ for mid = 1:model_num
     end
     
     filename = scene(mid).modelname;
-    model = read_wobj([models_dir filename '.obj']);
+    
+    %some 3D models obj files have strange problems
+    model_fixed = 0;
+    while ~model_fixed
+        model_fixed = 1;
+        try
+            model = read_wobj([models_dir filename '.obj']);
+        catch
+            model_fixed = 0;
+            scene(mid).modelname = [];
+            scene(mid) = select_models(modelnames_file, scene(mid));
+            filename = scene(mid).modelname;
+        end
+    end
+    
 %     scene(mid).obj_type = scene(mid).obj_type;
 %     scene(mid).modelname = filename;
     scene(mid).BB = [min(model.vertices,[],1); max(model.vertices,[],1)];

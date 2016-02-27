@@ -33,13 +33,13 @@ objectsets_filename = [scenes_dir, results_filename, '_objectsets.mat'];
 
 load(objectsets_filename, 'sampled_scenes');
 
-for sample_id = 9:length(sampled_scenes)
+for sample_id = 4:length(sampled_scenes)
     scene = sampled_scenes(sample_id).scene;
     scene = select_models(modelnames_file, scene);
     scene = prune_models(scene);
     fprintf('Finished selecting models for the sample %d!\n', sample_id);
     
-    scene = compute_model_BB(scene, models_dir);
+    scene = compute_model_BB(scene, models_dir, modelnames_file);
     scene = scale_models(scene, sample_sizes);
     scene = init_models_to_insert(scene);
     save([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
