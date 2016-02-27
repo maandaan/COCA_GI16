@@ -22,6 +22,10 @@ for mid = 1:length(scene)
             temp = scene(mid).orientation(1);
             scene(mid).orientation(1) = scene(mid).orientation(2);
             scene(mid).orientation(2) = temp;
+        
+        case {'8ed7309372c7b0dd98d5fc0473d00a1c'}
+            scene(mid).orientation(1) = 6.123e-17;
+            scene(mid).orientation(2) = 1;
             
 %         case {'3d3b4b8874f2aaddc397356311cbeea4'}
 %             scene(mid).corners(5:8,3) = scene(mid).corners(5:8,3) - 29;
