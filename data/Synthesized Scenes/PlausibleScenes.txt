@@ -43,3 +43,6 @@ bedroom00131_6
 bedroom01311_2
 bedroom01311_3 (chair)
 bedroom01311_8 (should be fixed)
+bedroom13113_2
+bedroom13113_3
+bedroom13113_4
