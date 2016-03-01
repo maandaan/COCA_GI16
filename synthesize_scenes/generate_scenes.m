@@ -26,7 +26,7 @@ end
 [ all_config, all_score, nodes_sets ] = mcmc_optimize_scene_config(...
     input_scene, 1000, objects_num, objects_num, 1);
 [ sample_score, sample_objects ] = choose_mcmc_samples( ...
-    all_score, nodes_sets, objects_num + pres_obj_count, 10, 1 );
+    all_score, nodes_sets, objects_num + pres_obj_count, 30, 1 );
 sampled_scenes = complete_mcmc_samples_to_scenes( input_scene, sample_objects );
 save(objectsets_filename, 'sampled_scenes');
 fprintf('Finished MCMC sampling from the factor graph!\n');
