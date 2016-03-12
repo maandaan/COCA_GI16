@@ -12,7 +12,7 @@ total_size = size(map_scene_name_type, 1);
 sunrgbdmeta_file = 'SUNRGBDMeta.mat';
 load(sunrgbdmeta_file);
 
-categories_count = 54; %from get_object_type_bedroom.m
+[dummy, categories_count] = get_object_type_bedroom('');
 %spatial_rel is a nx2 matrix with one column for distance and 2nd column:
 %angle, in radians
 co_spatial_relations = repmat(struct('spatial_rel',[]), categories_count, categories_count);
@@ -110,6 +110,8 @@ for mid = 1:total_size
     
     valid_rooms = valid_rooms + 1;
 end
+
+save('data/training/SUNRGBD/bedroom_special_orientations_v2.mat', 'special_orientations');
 valid_rooms
 end
 

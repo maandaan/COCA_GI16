@@ -10,7 +10,7 @@ total_size = size(map_scene_name_type, 1);
 
 load(sunrgbdmeta_file);
 
-categories_count = 54; %from get_object_type_bedroom.m
+[dummy, categories_count] = get_object_type_bedroom('');
 %spatial_rel is a nx4 matrix with three columns for relative locations and 4th column:
 %angle, in radians
 pair_spatial_rels_location = repmat(struct('spatial_rel',[], 'SUNRGBD_info',[], ...
@@ -18,7 +18,7 @@ pair_spatial_rels_location = repmat(struct('spatial_rel',[], 'SUNRGBD_info',[], 
 
 valid_rooms = 0;
 
-for mid = 9174:9174%total_size
+for mid = 1:total_size
     % check for the scene type
     if ~strcmp(map_scene_name_type(mid).sceneType, scene_type)
         continue
@@ -139,7 +139,7 @@ for mid = 9174:9174%total_size
         end
     end
 end
-% save(pairwise_locations_file, 'pair_spatial_rels_location')
+save(pairwise_locations_file_v2, 'pair_spatial_rels_location')
 end
 
 

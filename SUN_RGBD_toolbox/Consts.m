@@ -36,6 +36,15 @@ sample_size_fisher_file = 'data/training/SUNRGBD/bedroom_sample_sizes_fisher.mat
 sidetoside_relations_file = 'data/training/SUNRGBD/bedroom_sidetoside_relations.mat';
 sidetoside_constraints_file = 'data/training/SUNRGBD/bedroom_sidetoside_constraints.mat';
 
+%filenames for version 2, considering all objects even the small ones
+instance_freq_file_v2 = 'data/training/SUNRGBD/bedroom_instance_frequency_v2.mat';
+co_occurrence_file_v2 = 'data/training/SUNRGBD/bedroom_co_occurrence_v2';
+pairwise_locations_file_v2 = 'data/training/SUNRGBD/bedroom_pairwise_locations_v2.mat';
+local_graphs_file_v2 = 'data/training/SUNRGBD/bedroom_local_scene_graphs_v2.mat';
+sidetoside_relations_file_v2 = 'data/training/SUNRGBD/bedroom_sidetoside_relations_v2.mat';
+mapping_nodes_names_file_v2 = 'data/training/SUNRGBD/bedroom_mapping_nodes_names_BN_v2.mat';
+focals_file_v2 = 'data/training/SUNRGBD/bedroom_focal_joining_results_v2.mat';
+
 %scene database directories and files
 % scene_db_dir = 'data/databaseFull_fisher_Stanford/';
 scene_db_dir = 'data/Synthesized Scenes/';

@@ -1,0 +1,47 @@
+night_stand -> bedside, night stand, nightstand 
+alarm_clock -> alarm, alarm clock, clock
+table -> endtable
+bottle -> plastic_bottle, plastic bottle, water_bottle
+shoe -> sandals, slipper, slippers, shoes, rubber_shoes
+tissue_box -> tissue, tissue box, tissuebox, tissue_paper
+book -> books
+remote_control -> remote, remotecontrol, remote control
+mug -> cup
+phone -> telephone, cell_phone
+bag -> attachecase, messengerbag, back_pack, backpack, bags, bagpack
+curtain -> blinds, venetianblinds
+painting -> picture, poster, wallframe, wall_frame, map, walldecor, walldisplay, portrait, pictures, decor
+bedding -> comforter, mattress, bed_sheet
+rug -> rubbermat, mat, rubber_mat
+sofa_chair -> recliner
+toy -> stuffed_toy, stufftoys, toyhorse, miniaturehosue, doll, toy_train, toy_car, figurine, toys
+diploma -> diplomas
+bulletin_board -> bulletinboard
+sofa -> futon
+tv -> television
+garbage_bin -> garbagebin, recycle_bin
+suits_case -> travelingbag, luggage
+plant_pot -> cactus, plant, plants
+electric_fan -> electricfan, fan
+vase -> flower_vase
+towels -> towel
+paper -> papers
+container -> containers
+basket -> plastic_basket
+box -> plastic_box
+glass_window -> window_glass, window
+helmet -> crash_helmet
+keyboard -> key_board
+clothes -> pants, coat, sweater
+bowl -> plastic_bowl
+laundry_basket -> laundrybasket
+magazine -> magazines
+pictureframe -> frames
+shelf -> bookshelf
+air_conditioner -> airconditioner
+ironboard -> ironingboard
+cabinet -> file_cabinet
+dresser -> dressermirror, dresser_mirror
+clothing_rack -> laundry_rack
+jars -> jar
+hanger -> hangers

@@ -5,8 +5,8 @@ function [ support_matrix ] = count_support_relations( support_labels )
 %output: support_matrix(i,j,k) = m; i.e. category i is supported by category
 %j for the supporting type k (=1 -> below, =2 -> behind), for m times
 
-categories_count = 54; %from get_object_type_bedroom.m
-categories_count = categories_count + 3; %one for floor, one for wall, one for ceiling(?)
+[dummy, cat_count] = get_object_type_bedroom('');
+categories_count = cat_count + 3; %one for floor, one for wall, one for ceiling(?)
 support_matrix = zeros(categories_count, categories_count, 2);
 
 for sid = 1:size(support_labels)
@@ -38,11 +38,11 @@ for sid = 1:size(support_labels)
         end
         
         if strcmp(supporting{1}, 'floor')
-            supporting_cat = 55;
+            supporting_cat = cat_count + 1;
         elseif strcmp(supporting{1}, 'wall')
-            supporting_cat = 56;
+            supporting_cat = cat_count + 2;
         elseif strcmp(supporting{1}, 'ceiling')
-            supporting_cat = 57;
+            supporting_cat = cat_count + 3;
         else
             supporting_cat = get_object_type_bedroom(supporting);
             %just to check annotation

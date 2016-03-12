@@ -2,7 +2,7 @@ function [ orientation_relations ] = construct_special_orientation_matrix( speci
 %CONSTRUCT_SPECIAL_ORIENTATION_MATRIX constructs a struct array of special
 %orientation relations. (by Zeinab Sadeghipour)
 
-% special_orientation_file = 'data/training/SUNRGBD/bedroom_special_orientations.mat'
+% special_orientation_file = 'data/training/SUNRGBD/bedroom_special_orientations_v2.mat'
 
 % sunrgbdmeta_file = '../SUNRGBD/code/SUNRGBDtoolbox/Metadata/SUNRGBDMeta.mat';
 % load(sunrgbdmeta_file, 'SUNRGBDMeta');
@@ -49,7 +49,7 @@ for soid = 1:length(special_orientations)
 end
 
 orientation_relations = orientation_relations(2:end);
-save('data/training/SUNRGBD/bedroom_special_orientation_relations.mat', 'orientation_relations');
+save('data/training/SUNRGBD/bedroom_special_orientation_relations_2.mat', 'orientation_relations');
 
 end
 

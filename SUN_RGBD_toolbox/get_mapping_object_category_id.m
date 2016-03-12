@@ -19,7 +19,7 @@ for mid = 1:total_size
         continue
     end
     
-    mid
+%     mid
     % get the object labels in each scene
     gt = SUNRGBDMeta(:,mid);
     gt3D = gt.groundtruth3DBB;
@@ -41,6 +41,8 @@ for mid = 1:total_size
         end
     end
 end
+
+save('data/training/SUNRGBD/bedroom_object_category_id_all.mat', 'map_object_category_id');
 
 end
 

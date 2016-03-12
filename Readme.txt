@@ -5,10 +5,10 @@ Notice: These are all for bedrooms, update for each scene type.
 	2. run get_mapping_object_category_id (function for getting all the object categories available in a specific scene type)
 		- then I polished the results to updata get_object_type_bedroom.m
 	3. run count_categories (function for computing how many times objects co-occur and also how many instances of each category occurrs)
-	4. run gather_pairwise_spatial_relations (function for gathering the location and orientation relations between pairs of objects)
+	4. run gather_pairwise_relations_exact_location (function for gathering the location and orientation relations between pairs of objects)
         - special orientations: 1 -> 90deg, 2 -> 180deg (facing), 3 -> 0deg
     4.1. run construct_special_orientation_matrix
-	5. run collect_support_relations
+	5. run collect_support_relations_NYUv2
     6. run construct_symmetric_matrix
 
 

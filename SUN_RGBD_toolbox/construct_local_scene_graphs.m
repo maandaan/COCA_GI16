@@ -81,6 +81,7 @@ for mid = 1:total_size
 end
 
 save(valid_scene_indices, 'valid_scene_type_indices');
+save(local_graphs_file_v2, 'local_graphs')
 
 end
 

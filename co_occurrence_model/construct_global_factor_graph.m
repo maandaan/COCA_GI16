@@ -4,9 +4,9 @@ function [ factors ] = construct_global_factor_graph
 
 Consts;
 
-load(support_relations_file, 'support_matrix');
-load(mapping_nodes_names_file, 'mapping_nodes_names');
-load(focals_file, 'updated_focals');
+load(support_relations_file_v2, 'support_matrix');
+load(mapping_nodes_names_file_v2, 'mapping_nodes_names');
+load(focals_file_v2, 'updated_focals');
 load(symmetry_relations_file, 'symmetry_relations');
 load(orientation_relations_file, 'orientation_relations');
 load(instance_freq_file, 'instances_freq');

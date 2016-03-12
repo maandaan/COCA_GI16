@@ -7,7 +7,7 @@ function [ frequent_subgraphs ] = FSM_local_scene_graph( local_graphs_file )
 
 load(local_graphs_file, 'local_graphs');
 scene_counts = length(local_graphs);
-min_support = floor(0.05 * scene_counts);
+min_support = floor(0.01 * scene_counts);
 [subg, count, GY] = gspan (local_graphs, min_support);
 
 frequent_subgraphs.subgraphs = subg;
@@ -20,6 +20,8 @@ for i = 1:length(subg)
     supporter_set(i).supporters = supporters;
 end
 frequent_subgraphs.supporter_set = supporter_set;
+
+save('data/training/SUNRGBD/bedroom_FSM_gSpan_results_v2.mat', 'frequent_subgraphs')
     
 end
 

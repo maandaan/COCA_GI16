@@ -9,7 +9,8 @@ total_size = size(map_scene_name_type, 1);
 load(sunrgbdmeta_file);
 epsilon = 0.001;
 
-cat_count = 56;
+[dummy, categories_count] = get_object_type_bedroom('');
+cat_count = categories_count + 2;
 sidetoside_rels_matrix = repmat(struct('side_rels', []), cat_count, cat_count);
 % relation_count = 0;
 for mid = 1:total_size
@@ -99,7 +100,7 @@ for mid = 1:total_size
     end
 end
 
-save(sidetoside_relations_file, 'sidetoside_rels_matrix');
+save(sidetoside_relations_file_v2, 'sidetoside_rels_matrix');
 end
 
 function [min_dist_1, min_dist_2, rect2_side] = compute_dist(rect1, rect2, side)

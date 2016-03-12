@@ -22,7 +22,9 @@ for mid = 1:model_num
         model_fixed = 1;
         try
             model = read_wobj([models_dir filename '.obj']);
-        catch
+        catch me
+            fprintf(me.message);
+            fprintf('\n');
             model_fixed = 0;
             scene(mid).modelname = [];
             scene(mid) = select_models(modelnames_file, scene(mid));

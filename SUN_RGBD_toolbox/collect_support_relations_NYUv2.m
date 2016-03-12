@@ -62,5 +62,5 @@ end
 
 support_matrix = count_support_relations( semantic_support_labels );
 
-save('data/training/SUNRGBD/bedroom_support_labels.mat','semantic_support_labels');
-save('data/training/SUNRGBD/bedroom_support_relations.mat','support_matrix');
+save('data/training/SUNRGBD/bedroom_support_labels_v2.mat','semantic_support_labels');
+save('data/training/SUNRGBD/bedroom_support_relations_v2.mat','support_matrix');

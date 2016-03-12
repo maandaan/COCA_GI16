@@ -10,7 +10,7 @@ sunrgbdmeta_file = 'SUNRGBDMeta.mat';
 load(sunrgbdmeta_file, 'SUNRGBDMeta');
 
 symmetry_groups = gather_symmetric_relations( scene_type, mapping_file );
-save('data/training/SUNRGBD/bedroom_symmetry_groups.mat', 'symmetry_groups');
+save('data/training/SUNRGBD/bedroom_symmetry_groups_v2.mat', 'symmetry_groups');
 
 symmetry_relations = struct('obj_cat', [], 'obj_cat_str', [], 'instance_count', [], ...
     'outside_obj_cat', [], 'outside_obj_str', [], 'outside_obj_freq', []);
@@ -52,7 +52,7 @@ for sgid = 1:length(symmetry_groups)
 end
 
 symmetry_relations = symmetry_relations(2:end);
-save('data/training/SUNRGBD/bedroom_symmetry_relations.mat', 'symmetry_relations');
+save('data/training/SUNRGBD/bedroom_symmetry_relations_v2.mat', 'symmetry_relations');
 
 end
 

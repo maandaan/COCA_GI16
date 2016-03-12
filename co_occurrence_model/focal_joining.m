@@ -2,7 +2,7 @@ function [ updated_focals ] = focal_joining( frequent_subgraphs_file )
 %FOCAL_JOINING combines the extracted focals to form a larger and non-local
 %substructure. (by Zeinab Sadeghipour)
 
-% frequent_subgraphs_file = 'data/training/SUNRGBD/bedroom_FSM_gSpan_results.mat'
+% frequent_subgraphs_file = 'data/training/SUNRGBD/bedroom_FSM_gSpan_results_v2.mat'
 
 load(frequent_subgraphs_file, 'frequent_subgraphs');
 
@@ -32,10 +32,10 @@ for f1 = 1:focal_num
             if isempty(new_focal.nodelabels)
                 continue
             end
-            subplot(1,3,1); visualize_graph(frequent_subgraphs.subgraphs{f1}, 'gspan_code');
-            subplot(1,3,2); visualize_graph(frequent_subgraphs.subgraphs{f2}, 'gspan_code');
-            subplot(1,3,3); visualize_graph(new_focal, 'gspan_code');
-            close all;
+%             subplot(1,3,1); visualize_graph(frequent_subgraphs.subgraphs{f1}, 'gspan_code');
+%             subplot(1,3,2); visualize_graph(frequent_subgraphs.subgraphs{f2}, 'gspan_code');
+%             subplot(1,3,3); visualize_graph(new_focal, 'gspan_code');
+%             close all;
             
             if check_repeated_focals(new_focal, frequent_subgraphs.subgraphs) && ...
                     check_repeated_focals(new_focal, new_subgraphs)
@@ -65,6 +65,8 @@ for i = 1:length(updated_focals.count)
     end
 end
 prob_avg = prob_sum / count;
+
+save('data/training/SUNRGBD/bedroom_focal_joining_results_v2.mat', 'updated_focals');
 
 end
 
