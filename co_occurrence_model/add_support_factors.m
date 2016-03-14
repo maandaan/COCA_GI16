@@ -1,20 +1,22 @@
-function factors = add_support_factors( support_matrix )
+function factors = add_support_factors( support_matrix, mapping_nodes_names )
 %ADD_SUPPORT_FACTORS has the same functionality as
 %add_support_edges_global_graph with the updated use of Factor Graph
 %Toolbox
 
 Consts;
-support_thresh = 0.1 * bedroom_support_scene_size;
+support_thresh = 0.05 * bedroom_support_scene_size;
 factors = [];
 support_rels_count = sum(sum(sum(support_matrix)));
+temp = {mapping_nodes_names(:)};
+cat_count = size(support_matrix,1);
 
 for i = 1:size(support_matrix,1)
        
     [top_support, top_ind] = sort([support_matrix(i,:,1),support_matrix(i,:,2)],'descend');
     
-    if ismember(i, [3,8,13,28])
-        continue
-    end
+%     if ismember(i, [3,8,13,28])
+%         continue
+%     end
     
     % precomputing the conditional probabilities relating to support, for
     % each possible supporter
@@ -32,8 +34,8 @@ for i = 1:size(support_matrix,1)
             support_prob(k) = 0;
         else
 %             support_prob(k) = support_matrix(i,supporter,r) / support_rels_count;
-            if supporter == 55 || supporter == 56 %room generally
-                support_prob(k) = support_matrix(i,supporter,r) / ( sum(sum(support_matrix(:,55,:))) + sum(sum(support_matrix(:,56,:))) );
+            if supporter == cat_count-1 || supporter == cat_count %room generally
+                support_prob(k) = support_matrix(i,supporter,r) / ( sum(sum(support_matrix(:,cat_count-1,:))) + sum(sum(support_matrix(:,cat_count,:))) );
             else
                 support_prob(k) = support_matrix(i,supporter,r) / sum(sum(support_matrix(:,supporter,:)));
             end
@@ -50,11 +52,26 @@ for i = 1:size(support_matrix,1)
                 factor_type = suppedge_below;
             end
             
-            if ismember(parent_ind, [3,8,13,28])
+%             if ismember(parent_ind, [3,8,13,28])
+%                 continue
+%             end
+            
+            %finding the corresponding node labels
+            cat_str = get_object_type_bedroom(i);
+            node_name = [cat_str{1} '_' num2str(1)]; 
+            supporting_node = find(strcmp(temp{:}, node_name));
+            
+%             if parent_ind >= cat_count - 1
+            parent_str = get_object_type_bedroom(parent_ind);
+            node_name = [parent_str{1} '_' num2str(1)]; 
+            parent_node = find(strcmp(temp{:}, node_name));
+            
+            if isempty(supporting_node) || isempty(parent_node)
                 continue
             end
             
-            f.var = [parent_ind, i];
+%             f.var = [parent_ind, i];
+            f.var = [parent_node, supporting_node];
             f.card = [2, 2];
             f.factor_type = factor_type;
             f.val = zeros(1,prod(f.card));

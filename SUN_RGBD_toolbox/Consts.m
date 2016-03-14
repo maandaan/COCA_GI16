@@ -44,6 +44,10 @@ local_graphs_file_v2 = 'data/training/SUNRGBD/bedroom_local_scene_graphs_v2.mat'
 sidetoside_relations_file_v2 = 'data/training/SUNRGBD/bedroom_sidetoside_relations_v2.mat';
 mapping_nodes_names_file_v2 = 'data/training/SUNRGBD/bedroom_mapping_nodes_names_BN_v2.mat';
 focals_file_v2 = 'data/training/SUNRGBD/bedroom_focal_joining_results_v2.mat';
+support_relations_file_v2 = 'data/training/SUNRGBD/bedroom_support_relations_v2.mat';
+symmetry_relations_file_v2 = 'data/training/SUNRGBD/bedroom_symmetry_relations_v2.mat';
+orientation_relations_file_v2 = 'data/training/SUNRGBD/bedroom_special_orientation_relations_v2.mat';
+global_factor_graph_file_v2 = 'data/training/SUNRGBD/bedroom_global_factor_graph_v2.mat';
 
 %scene database directories and files
 % scene_db_dir = 'data/databaseFull_fisher_Stanford/';

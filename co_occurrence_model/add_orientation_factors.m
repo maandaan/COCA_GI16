@@ -1,10 +1,11 @@
-function factors = add_orientation_factors( scene_count, orientation_relations )
+function factors = add_orientation_factors( scene_count, orientation_relations, mapping_nodes_names )
 %ADD_ORIENTATION_FACTORS updated version of
 %add_orientation_edges_global_graph with factor graph toolbox
 
 Consts;
 factors = [];
-orientation_thresh = floor(0.03 * scene_count);
+orientation_thresh = floor(0.01 * scene_count);
+temp = {mapping_nodes_names(:)};
 
 all_rows = 1:length(orientation_relations);
 unwanted_rows = [];
@@ -26,6 +27,8 @@ for oid = 1:length(orientation_relations)
     orient_type = orientation_relations(oid).orient_type;
     obj1 = orientation_relations(oid).first_obj_cat;
     obj2 = orientation_relations(oid).second_obj_cat;
+    obj1_catstr = orientation_relations(oid).first_obj_str;
+    obj2_catstr = orientation_relations(oid).second_obj_str;
     
     % discard the non-frequent ones or the same direction or if one object
     % is from category 'other'
@@ -42,7 +45,16 @@ for oid = 1:length(orientation_relations)
         factor_type = same_dir;
     end
 
-    f.var = [obj1, obj2];
+    %finding the corresponding nodes
+    node_name = [obj1_catstr '_1']; 
+    obj1_node = find(strcmp(temp{:}, node_name));
+    node_name = [obj2_catstr '_1']; 
+    obj2_node = find(strcmp(temp{:}, node_name));
+    if isempty(obj1_node) || isempty(obj2_node)
+        continue
+    end
+               
+    f.var = [obj1_node, obj2_node];
     f.card = [2,2];
     f.factor_type = factor_type;
     f.val = zeros(1,prod(f.card));

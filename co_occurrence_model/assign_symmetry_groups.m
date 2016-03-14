@@ -1,4 +1,5 @@
-function [ objects_with_symmetry ] = assign_symmetry_groups( objects_with_support, factors )
+function [ objects_with_symmetry ] = assign_symmetry_groups( ...
+    objects_with_support, factors, mapping_nodes_names )
 %ASSIGN_SYMMETRY_GROUPS Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,6 +7,7 @@ Consts;
 scene = objects_with_support;
 scene(1).symm_group_id = {};
 scene(1).symm_ref_id = [];
+temp = {mapping_nodes_names(:)};
 
 %factors symmetry groups
 symm_rows = [structfind(factors, 'factor_type', symm_g), ...
@@ -25,9 +27,11 @@ for oid = 1:length(scene)
     
     %check if there's a symmetry factor for this category
     symm_factor_rows = [];
+    node_name = [scene(oid).obj_category '_1'];
+    node_ind = find(strcmp(temp{:}, node_name));
     for rid = 1:length(symm_rows)
         vars = factors(symm_rows(rid)).var;
-        if vars(1) == obj_type
+        if vars(1) == node_ind
             symm_factor_rows = [symm_factor_rows; symm_rows(rid)];
         end
     end
@@ -55,9 +59,14 @@ for oid = 1:length(scene)
         end
     end
     vars = factors(max_factor_row).var;
-    if vars(end) > 56
+    var = vars(end);
+    node_split = strsplit(mapping_nodes_names{var}, '_');
+    if node_split{2} > 1
         continue
     end
+%     if vars(end) > 56
+%         continue
+%     end
     ref_row = structfind(scene, 'obj_type', vars(end));
     if isempty(ref_row)
         continue

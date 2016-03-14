@@ -122,6 +122,10 @@ if isa(input, 'cell') && isa(input{1}, 'char')
         if isempty(cat_row)
             if strcmp(category, 'room')
                 output(i) = max_cat_id + 1;
+            elseif strcmp(category, 'floor')
+                output(i) = max_cat_id + 3;
+            elseif strcmp(category, 'wall')
+                output(i) = max_cat_id + 4;
             else
                 output(i) = max_cat_id + 2;
             end
@@ -138,6 +142,10 @@ elseif isa(input, 'numeric')
         if isempty(cat_row)
             if input(i) == max_cat_id + 1
                 output{i} = 'room';
+            elseif input(i) == max_cat_id + 3
+                output{i} = 'floor';
+            elseif input(i) == max_cat_id + 4
+                output{i} = 'wall';
             else
                 fprintf('Sorry! not found the category id!\n'); 
             end

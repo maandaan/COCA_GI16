@@ -11,8 +11,8 @@ function [ all_config, all_score, nodes_sets ] = mcmc_optimize_scene_config( ...
 %        stability (150);
 
 Consts;
-load(global_factor_graph_file, 'factors', 'all_vars')
-load(mapping_nodes_names_file, 'mapping_nodes_names')
+load(global_factor_graph_file_v2, 'factors', 'all_vars')
+load(mapping_nodes_names_file_v2, 'mapping_nodes_names')
 
 % input_scene = (scene(:).obj)
 % floor_ind = find(strcmp(input_scene, 'floor'));
@@ -114,7 +114,9 @@ while iter < num_iter
         factors, constraint_nodes, all_vars);
 
     next_present_nodes = find(next_config);
-    multi_instance = find(all_vars(next_present_nodes) > 56);
+%     multi_instance = find(all_vars(next_present_nodes) > 56);
+    multi_instance = find_multi_instance(next_present_nodes, all_vars, ...
+        mapping_nodes_names);
     % check that if e.g. cushion_2 is going to be inserted, cushion_1
     % should be there as well
     break_flag = 0;
@@ -141,7 +143,8 @@ while iter < num_iter
 % %     break_flag = 1;
     for nid = 1:length(next_present_nodes)
         n = all_vars(next_present_nodes(nid));
-        if n == 55 || n == 56 
+        if strcmp(mapping_nodes_names{n}, 'floor_1') ...
+                || strcmp(mapping_nodes_names{n}, 'wall_1')%n == 55 || n == 56 
             continue
         end
         valid_node = 0;
@@ -280,6 +283,22 @@ for fid = 1:length(active_factors)
         next_config(ind) = 1;
     end
 %     next_config(factor.var) = 1;
+end
+
+end
+
+function multi_instance = find_multi_instance(nodes, all_vars, mapping_nodes_names)
+%finds which nodes are multiple instances of a category
+
+next_vars = all_vars(nodes);
+multi_instance = [];
+for vid = 1:length(next_vars)
+    node_name = mapping_nodes_names{next_vars(vid)};
+    node_split = strsplit(node_name, '_');
+    count = str2double(node_split{2});
+    if count > 1
+        multi_instance = [multi_instance, vid];
+    end
 end
 
 end

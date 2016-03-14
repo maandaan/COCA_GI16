@@ -18,6 +18,9 @@ total_size = size(map_scene_name_type, 1);
 sunrgbdmeta_file = 'SUNRGBDMeta.mat';
 load(sunrgbdmeta_file);
 
+% load(mapping_nodes_names_file_v2, 'mapping_nodes_names');
+% temp = {mapping_nodes_names(:)};
+
 graph_count = 1;
 valid_scene_type_indices = [];
 

@@ -7,9 +7,9 @@ Consts;
 load(support_relations_file_v2, 'support_matrix');
 load(mapping_nodes_names_file_v2, 'mapping_nodes_names');
 load(focals_file_v2, 'updated_focals');
-load(symmetry_relations_file, 'symmetry_relations');
-load(orientation_relations_file, 'orientation_relations');
-load(instance_freq_file, 'instances_freq');
+load(symmetry_relations_file_v2, 'symmetry_relations');
+load(orientation_relations_file_v2, 'orientation_relations');
+load(instance_freq_file_v2, 'instances_freq');
 
 scene_count = round(updated_focals.count(1) ./ updated_focals.prob(1));
 nodes_count = length(mapping_nodes_names);
@@ -17,8 +17,9 @@ vars = 1:nodes_count;
 factors = [];
 
 % support factors
-support_matrix = support_matrix(1:56, 1:56, :); %just for eliminating the ceiling
-support_factors = add_support_factors(support_matrix);
+support_size = size(support_matrix, 1);
+support_matrix = support_matrix(1:support_size-1, 1:support_size-1, :); %just for eliminating the ceiling
+support_factors = add_support_factors(support_matrix, mapping_nodes_names);
 factors = [factors, support_factors];
 
 % proximity factors
@@ -26,7 +27,8 @@ factors = [factors, support_factors];
 factors = [factors, proximity_factors];
 
 % orientation factors
-orientation_factors = add_orientation_factors(scene_count, orientation_relations);
+orientation_factors = add_orientation_factors(scene_count, ...
+    orientation_relations, mapping_nodes_names);
 factors = [factors, orientation_factors];
 
 % symmetry factors
@@ -57,7 +59,7 @@ factors = [factors, extra_support_factors];
 
 % save the result
 all_vars = validnodes;
-save(global_factor_graph_file, 'factors', 'all_vars');
+save(global_factor_graph_file_v2, 'factors', 'all_vars');
 
 end
 

@@ -10,9 +10,10 @@ temp = {mapping_nodes_names(:)};
 
 for sid = 1:length(symmetry_relations)
     
-    if symmetry_relations(sid).outside_obj_freq < symmetry_thresh || ...
-          ismember(symmetry_relations(sid).obj_cat, [3,8,13,28]) || ...
-          ismember(symmetry_relations(sid).outside_obj_cat, [3,8,13,28])
+    if symmetry_relations(sid).outside_obj_freq < symmetry_thresh 
+%         || ...
+%           ismember(symmetry_relations(sid).obj_cat, [3,8,13,28]) || ...
+%           ismember(symmetry_relations(sid).outside_obj_cat, [3,8,13,28])
         continue
     end
     
@@ -29,8 +30,14 @@ for sid = 1:length(symmetry_relations)
     end
     
     if outside_obj ~= 0
-        factor_type = symm_resp;
-        variables = [variables, outside_obj];
+        node_name = [symmetry_relations(sid).outside_obj_str '_1'];
+        outside_node = find(strcmp(temp{:}, node_name));
+        if isempty(outside_node)
+            factor_type = symm_g;
+        else
+            factor_type = symm_resp;
+            variables = [variables, outside_node];
+        end
     else
         factor_type = symm_g;
     end

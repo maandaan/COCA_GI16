@@ -2,22 +2,25 @@ function constraint_nodes = find_constrained_nodes( input_scene, all_vars, mappi
 %FIND_CONSTRAINED_NODES finds the constrained nodes which should be present
 %in every config since they are in the input scene
 
+floor_type = get_object_type_bedroom({'floor'});
+wall_type = get_object_type_bedroom({'wall'});
+
 obj_types = [];
 other_objs = [input_scene(:).obj_type];
 room_ind = find(other_objs == get_object_type_bedroom({'room'}));
 if ~isempty(room_ind)
     other_objs = [other_objs(1:room_ind-1), other_objs(room_ind+1:end)];
-    obj_types = [obj_types, 55, 56]; %floor and wall
+    obj_types = [obj_types, floor_type, wall_type]; %floor and wall
 end
 
 % check for multiple instances of a category
 [unique_types, ~, c] = unique(other_objs); 
 count_uniques = hist(c, length(unique_types));
 for tid = 1:length(unique_types)
-    if count_uniques(tid) == 1
-        obj_types = [obj_types, unique_types(tid)];
-        continue
-    end
+%     if count_uniques(tid) == 1
+%         obj_types = [obj_types, unique_types(tid)];
+%         continue
+%     end
     
     count = 1;
     category = get_object_type_bedroom(unique_types(tid));

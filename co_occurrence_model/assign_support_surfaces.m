@@ -55,7 +55,7 @@ for oid = 1:length(sampled_objects)
     
     % no support found, assign floor as support
     if max_prob == 0
-        support = 55;
+        support = length(mapping_nodes_names)-1;
         support_type = suppedge_below;
     end
     
@@ -64,19 +64,19 @@ for oid = 1:length(sampled_objects)
     s(oid).identifier = [category '_' num2str(randi(1000))];
     s(oid).supporter = support;
     s(oid).support_type = support_type;
-    if support == 55
-        s(oid).supporter_category = 'floor';
-    elseif support == 56
-        s(oid).supporter_category = 'wall';
-    else
+%     if support == 55
+%         s(oid).supporter_category = 'floor';
+%     elseif support == 56
+%         s(oid).supporter_category = 'wall';
+%     else
         s(oid).supporter_category = get_object_type_bedroom(support);
-    end
+%     end
 end
 
 all_obj = [input_scene; s];
 for oid = 1:length(s)
     supporter_type = s(oid).supporter;
-    if supporter_type > 54
+    if supporter_type >= get_object_type_bedroom({'floor'}) 
         supporter_type = get_object_type_bedroom({'room'});
     end
     ind = structfind(all_obj, 'obj_type', supporter_type);

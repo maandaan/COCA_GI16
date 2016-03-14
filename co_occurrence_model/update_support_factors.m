@@ -7,21 +7,30 @@ factors = supp_factors;
 
 cat_count = size(support_matrix, 1);
 support_rels_count = sum(sum(sum(support_matrix)));
+temp = {mapping_nodes_names(:)};
 
 for fid = 1:length(singlevar_factors)
     var = singlevar_factors(fid).var;
     cat_split = strsplit(mapping_nodes_names{var}, '_');
     category = cat_split{1};
     objtype = get_object_type_bedroom({category});
+    no_instance = cat_split{2};
+    
+    %possible single instance of the category
+    node_name = [category '_1'];
+    node_ind = find(strcmp(temp{:}, node_name));
+    if isempty(node_ind)
+        continue
+    end
     
     continue_flag = 0;
     for sfid = 1:length(factors)
         vars = factors(sfid).var;
-        if vars(2) == objtype
+        if vars(2) == node_ind%objtype
             continue_flag = 1;
             
             %multiple instances of a category
-            if var > cat_count
+            if no_instance > 1%var > cat_count
                 f.var = [vars(1), var];
                 f.factor_type = factors(sfid).factor_type;
                 f.card = [2,2];
@@ -45,13 +54,21 @@ for fid = 1:length(singlevar_factors)
         r = 1;
     end
 %     supp_prob = top_support(1) / support_rels_count;
-    if supporter == 55 || supporter == 56
-        supp_prob = top_support(1) / ( sum(sum(support_matrix(:,55,:))) + sum(sum(support_matrix(:,56,:))) );
+    if supporter == cat_count-1 || supporter == cat_count
+        supp_prob = top_support(1) / ( sum(sum(support_matrix(:,cat_count-1,:))) + sum(sum(support_matrix(:,cat_count,:))) );
     else
         supp_prob = top_support(1) / sum(sum(support_matrix(:,supporter,:)));
     end
     
-    f.var = [supporter, objtype];
+    %finding the corresponding node labels
+    supporter_str = get_object_type_bedroom(supporter);
+    supporter_name = [supporter_str '_1'];
+    supporter_node = find(strcmp(temp{:}, supporter_name));
+    if isempty(supporter_node)
+        continue
+    end
+    
+    f.var = [supporter_node, var];
     f.card = [2,2];
     f.factor_type = r + 1;
     f.val = zeros(1,prod(f.card));

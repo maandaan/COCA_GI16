@@ -1,10 +1,12 @@
-function [ objects_with_orientation ] = assign_special_orientation( objects_with_symmetry, factors )
+function [ objects_with_orientation ] = assign_special_orientation( ...
+    objects_with_symmetry, factors, mapping_nodes_names )
 %ASSIGN_SPECIAL_ORIENTATION Summary of this function goes here
 %   Detailed explanation goes here
 
 Consts;
 scene = objects_with_symmetry;
 scene(1).orientation_rels = [];
+temp = {mapping_nodes_names(:)};
 
 %factors symmetry groups
 orient_rows = [structfind(factors, 'factor_type', perpendicular), ...
@@ -17,6 +19,8 @@ for oid = 1:length(scene)
 %         continue
 %     end
     obj_type = scene(oid).obj_type;
+    node_name = [scene(oid).obj_category '_1'];
+    node_ind = find(strcmp(temp{:}, node_name));
     orient_rels = [];
     
     for pid = 1:length(scene)
@@ -24,7 +28,10 @@ for oid = 1:length(scene)
             continue
         end
         
-        vars = [min(obj_type, scene(pid).obj_type), max(obj_type, scene(pid).obj_type)];
+        node_name = [scene(pid).obj_category '_1'];
+        pair_ind = find(strcmp(temp{:}, node_name));
+        vars = [min(node_ind, pair_ind), max(node_ind, pair_ind)];
+%         vars = [min(obj_type, scene(pid).obj_type), max(obj_type, scene(pid).obj_type)];
         pair_factor_row = structfind(factors, 'var', vars);
         pair_orient_factor_row = intersect(pair_factor_row, orient_rows);
         if isempty(pair_orient_factor_row)

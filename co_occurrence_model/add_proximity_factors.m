@@ -13,15 +13,18 @@ factors = [];
 for fid = 1:length(updated_focals.subgraphs)
     focal = updated_focals.subgraphs{fid};
     if isempty(focal.edges)
-        if ~ismember(focal.nodelabels, [3,8,13,28])
-            single_node_focals = [single_node_focals, focal.nodelabels];
-        end
+%         if ~ismember(focal.nodelabels, [3,8,13,28])
+            category = get_object_type_bedroom(focal.nodelabels);
+            node_name = [category{1} '_1'];
+            node_ind = find(strcmp(temp{:}, node_name));
+            single_node_focals = [single_node_focals, node_ind];
+%         end
         continue
     end
     
-    if ~isempty(find(ismember([3,8,13,28], focal.nodelabels),1))
-        continue
-    end
+%     if ~isempty(find(ismember([3,8,13,28], focal.nodelabels),1))
+%         continue
+%     end
     
     [unique_nodes, ~, c] = unique(focal.nodelabels); 
     count_uniques = hist(c, length(unique_nodes));
@@ -32,15 +35,15 @@ for fid = 1:length(updated_focals.subgraphs)
     variables = [];
     for nid = 1:length(unique_nodes)
         
-        variables = [variables, unique_nodes(nid)];
-        if count_uniques(nid) > 1
+%         variables = [variables, unique_nodes(nid)];
+%         if count_uniques(nid) > 1
             category = get_object_type_bedroom(unique_nodes(nid));
-            for cid = 2:count_uniques(nid)
+            for cid = 1:count_uniques(nid)
                node_name = [category{1} '_' num2str(cid)]; 
                node_ind = find(strcmp(temp{:}, node_name));
                variables = [variables, node_ind];
             end
-        end
+%         end
         
 %         if nid == length(unique_nodes) && nid == 2 && count_uniques(nid) == 1
 %             break;
@@ -81,6 +84,7 @@ for fid = 1:length(updated_focals.subgraphs)
 %     CPT = cpt_struct.CPT;
     
     factors = [factors, f];
+    fprintf('Finished processing focal %d!\n', fid);
 end
 
 

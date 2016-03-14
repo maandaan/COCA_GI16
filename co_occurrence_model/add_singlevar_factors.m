@@ -8,9 +8,9 @@ factors = [];
 for nid = 1:length(validnodes)
     
     f.var = validnodes(nid);
-    if f.var == 55 || f.var == 56 %floor or wall
-        continue
-    end
+%     if f.var == 55 || f.var == 56 %floor or wall
+%         continue
+%     end
     f.card = 2;
     f.factor_type = occurrence;
     f.val = [0,0];
