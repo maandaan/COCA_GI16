@@ -9,12 +9,12 @@ temp = {mapping_nodes_names(:)};
 
 all_rows = 1:length(orientation_relations);
 unwanted_rows = [];
-for rid = 1:length(orientation_relations)
-    r = orientation_relations(rid);
-    if ismember(r.first_obj_cat, [3,8,13,28]) || ismember(r.second_obj_cat, [3,8,13,28])
-        unwanted_rows = [unwanted_rows, rid];
-    end
-end
+% for rid = 1:length(orientation_relations)
+%     r = orientation_relations(rid);
+%     if ismember(r.first_obj_cat, [3,8,13,28]) || ismember(r.second_obj_cat, [3,8,13,28])
+%         unwanted_rows = [unwanted_rows, rid];
+%     end
+% end
 % unwanted_rows = [structfind(orientation_relations, 'first_obj_cat', 28); ...
 %     structfind(orientation_relations, 'second_obj_cat', 28)];
 % samedir_rows = structfind(orientation_relations, 'orient_type', 3);
@@ -32,7 +32,8 @@ for oid = 1:length(orientation_relations)
     
     % discard the non-frequent ones or the same direction or if one object
     % is from category 'other'
-    if frequency < orientation_thresh || ismember(obj1, [3,8,13,28]) || ismember(obj2, [3,8,13,28]) ...
+    if frequency < orientation_thresh 
+%         || ismember(obj1, [3,8,13,28]) || ismember(obj2, [3,8,13,28]) ...
 %             || orient_type == 3
         continue
     end

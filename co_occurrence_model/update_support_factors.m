@@ -14,7 +14,7 @@ for fid = 1:length(singlevar_factors)
     cat_split = strsplit(mapping_nodes_names{var}, '_');
     category = [cat_split{1:end-1}];
     objtype = get_object_type_bedroom({category});
-    no_instance = cat_split{end};
+    no_instance = str2num(cat_split{end});
     
     %possible single instance of the category
     node_name = [category '_1'];
@@ -62,8 +62,8 @@ for fid = 1:length(singlevar_factors)
     
     %finding the corresponding node labels
     supporter_str = get_object_type_bedroom(supporter);
-    supporter_name = [supporter_str '_1'];
-    supporter_node = find(strcmp(temp{:}, supporter_name));
+    supporter_name = [supporter_str{1} '_1'];
+    supporter_node = find(strcmp(temp{:}, supporter_name)); 
     if isempty(supporter_node)
         continue
     end

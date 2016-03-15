@@ -12,6 +12,7 @@ epsilon = 0.001;
 [dummy, categories_count] = get_object_type_bedroom('');
 cat_count = categories_count + 2;
 sidetoside_rels_matrix = repmat(struct('side_rels', []), cat_count, cat_count);
+wall_type = get_object_type_bedroom({'wall'});
 % relation_count = 0;
 for mid = 1:total_size
     % check for the scene type
@@ -49,12 +50,12 @@ for mid = 1:total_size
             [dist1, dist2, rect2_side] = compute_dist(room_poly, this_rect, side);
             avg_dist = (dist1 + dist2) / 2;
             if avg_dist < 30
-                r = sidetoside_rels_matrix(56, this_type).side_rels;
+                r = sidetoside_rels_matrix(wall_type, this_type).side_rels;
                 r = [r; side rect2_side avg_dist];
 %                 t = struct('firstobj_type', 56, 'secondobj_type', this_type, ...
 %                     'firstobj_side', side, 'secondobj_side', rect2_side, 'distance', avg_dist);
 %                 relation_count = relation_count + 1;
-                sidetoside_rels_matrix(56, this_type).side_rels = r;
+                sidetoside_rels_matrix(wall_type, this_type).side_rels = r;
             end
         end
         

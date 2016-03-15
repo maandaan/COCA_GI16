@@ -49,6 +49,7 @@ symmetry_relations_file_v2 = 'data/training/SUNRGBD/bedroom_symmetry_relations_v
 orientation_relations_file_v2 = 'data/training/SUNRGBD/bedroom_special_orientation_relations_v2.mat';
 global_factor_graph_file_v2 = 'data/training/SUNRGBD/bedroom_global_factor_graph_v2.mat';
 sample_size_fisher_file_v2 = 'data/training/SUNRGBD/bedroom_sample_sizes_fisher_v2.mat';
+sidetoside_constraints_file_v2 = 'data/training/SUNRGBD/bedroom_sidetoside_constraints_v2.mat';
 
 %scene database directories and files
 % scene_db_dir = 'data/databaseFull_fisher_Stanford/';

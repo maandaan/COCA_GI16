@@ -36,6 +36,7 @@ symmetry_factors = add_symmetry_factors(scene_count, symmetry_relations, mapping
 factors = [factors, symmetry_factors];
 
 % single variable factors
+% load(global_factor_graph_file_v2, 'factors', 'single_node_focals')
 validnodes = [];
 for fid = 1:length(factors)
     validnodes = union(validnodes, factors(fid).var);
@@ -45,6 +46,12 @@ singlevar_factors = add_singlevar_factors(scene_count, instances_freq, mapping_n
 factors = [factors, singlevar_factors];
 
 % update support factors
+if ~exist('support_factors', 'var')
+    support_factors_ind = [structfind(factors, 'factor_type', suppedge_below), ...
+        structfind(factors, 'factor_type', suppedge_behind)];
+    support_factors = factors(support_factors_ind);
+end
+    
 extra_support_factors = update_support_factors(support_matrix, singlevar_factors, support_factors, mapping_nodes_names);
 factors = [factors, extra_support_factors];
 

@@ -18,6 +18,9 @@ for nid = 1:length(validnodes)
     nodelabel = mapping_nodes_names{f.var};
     nodelabel_split = strsplit(nodelabel, '_');
     obj_cat_str = [nodelabel_split{1:end-1}];
+    if strcmp(obj_cat_str, 'wall') || strcmp(obj_cat_str, 'floor')
+        continue
+    end
     obj_cat = get_object_type_bedroom({obj_cat_str});
     no_instance = str2double(nodelabel_split{end});
     freq = instances_freq(obj_cat).freq / scene_count;

@@ -6,9 +6,10 @@ load(sunrgbdmeta_file);
 load(mapping_file, 'map_scene_name_type');
 total_size = size(map_scene_name_type, 1);
 
-sample_sizes = repmat(struct('objtype',[], 'objtype_str',[], 'fisherDB_dims',[]), 205, 1);
+cat_count = get_object_type_bedroom({'other'}) - 1;
+sample_sizes = repmat(struct('objtype',[], 'objtype_str',[], 'fisherDB_dims',[]), cat_count, 1);
 
-for i = 1:205
+for i = 1:cat_count
     sample_sizes(i).objtype = i;
     sample_sizes(i).objtype_str = get_object_type_bedroom(i);
 end
@@ -16,8 +17,10 @@ end
 room_ind = get_object_type_bedroom({'room'});
 sample_sizes(room_ind).fisherDB_dims = [300, 300, 135];
 
-mid = 1;
-while mid <= total_size && ~check_all_sizes(sample_sizes)
+mid = 0;
+while mid < total_size && ~check_all_sizes(sample_sizes)
+   
+    mid = mid + 1;
     % check for the scene type
     if ~strcmp(map_scene_name_type(mid).sceneType, scene_type)
         continue
@@ -31,7 +34,7 @@ while mid <= total_size && ~check_all_sizes(sample_sizes)
     no_objects = size(gt3D,2);
     for oid = 1:no_objects
         objtype = get_object_type_bedroom({gt3D(oid).classname});
-        if ~isempty(sample_sizes(objtype).fisherDB_dims)
+        if objtype > cat_count || ~isempty(sample_sizes(objtype).fisherDB_dims)
             continue
         end
         
@@ -42,7 +45,6 @@ while mid <= total_size && ~check_all_sizes(sample_sizes)
         sample_sizes(objtype).fisherDB_dims = dims;
     end
     
-    mid = mid + 1;
 end
 
 save(sample_size_fisher_file_v2, 'sample_sizes')

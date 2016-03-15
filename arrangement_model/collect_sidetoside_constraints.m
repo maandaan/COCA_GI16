@@ -3,7 +3,7 @@ function sidetoside_constraints = collect_sidetoside_constraints
 %constraints for arranging objects
 
 Consts;
-load(sidetoside_relations_file, 'sidetoside_rels_matrix');
+load(sidetoside_relations_file_v2, 'sidetoside_rels_matrix');
 c = struct('first_type', [], 'second_type', [], ...
     'first_side', [], 'second_side', [], 'avg_dist', [], 'frequency', []);
 count = 0;
