@@ -40,7 +40,7 @@ for oid = 1:length(holistic_scene)
     end
     
     if pair.obj_type == get_object_type_bedroom({'room'})
-        pair_type = 56;
+        pair_type = get_object_type_bedroom({'wall'});
     else
         pair_type = pair.obj_type;
         pair_height = pair.corners(4:5,3);
@@ -64,7 +64,7 @@ for oid = 1:length(holistic_scene)
     
     p_satisfied = true;
     
-    if pair_type == 56 %if it's walls, we check for more frequent side
+    if pair_type == get_object_type_bedroom({'wall'}) %if it's walls, we check for more frequent side
         max_freq = 0;
         for rid = 1:length(rows)
             c = constraints(rows(rid));

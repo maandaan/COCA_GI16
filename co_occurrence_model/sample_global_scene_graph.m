@@ -77,8 +77,8 @@ for fid = 1:num_factors
         n = all_present_nodes(multi_instance(i));
         nodelabel = mapping_nodes_names{n};
         nodelabel_split = strsplit(nodelabel, '_');
-        obj_cat_str = nodelabel_split{1};
-        no_instance = str2double(nodelabel_split{2});
+        obj_cat_str = [nodelabel_split{1:end-1}];
+        no_instance = str2double(nodelabel_split{end});
         parent_str = [obj_cat_str '_' num2str(no_instance-1)];
         parent_ind = find(strcmp(mapping_nodes_names, parent_str));
         if isempty(find(all_present_nodes == parent_ind))

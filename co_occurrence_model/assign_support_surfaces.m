@@ -20,7 +20,7 @@ for oid = 1:length(sampled_objects)
     parent = 0;
     name = mapping_nodes_names{obj};
     name_split = strsplit(name, '_');
-    category = name_split{1};
+    category = [name_split{1:end-1}];
 %     if obj > 56
 %         parent = get_object_type_bedroom({category});
 %     end

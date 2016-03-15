@@ -124,8 +124,8 @@ while iter < num_iter
         n = next_present_nodes(multi_instance(i));
         nodelabel = mapping_nodes_names{all_vars(n)};
         nodelabel_split = strsplit(nodelabel, '_');
-        obj_cat_str = nodelabel_split{1};
-        no_instance = str2double(nodelabel_split{2});
+        obj_cat_str = [nodelabel_split{1:end-1}];
+        no_instance = str2double(nodelabel_split{end});
         parent_str = [obj_cat_str '_' num2str(no_instance-1)];
         parent_ind = find(strcmp(mapping_nodes_names, parent_str));
         if isempty(find(all_vars(next_present_nodes) == parent_ind, 1))
@@ -295,7 +295,7 @@ multi_instance = [];
 for vid = 1:length(next_vars)
     node_name = mapping_nodes_names{next_vars(vid)};
     node_split = strsplit(node_name, '_');
-    count = str2double(node_split{2});
+    count = str2double(node_split{end});
     if count > 1
         multi_instance = [multi_instance, vid];
     end

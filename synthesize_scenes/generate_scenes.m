@@ -37,6 +37,8 @@ for sample_id = 22:length(sampled_scenes)
     scene = sampled_scenes(sample_id).scene;
     scene = select_models(modelnames_file, scene);
     scene = prune_models(scene);
+    %prune models manually if you are using the original file for model
+    %names
     fprintf('Finished selecting models for the sample %d!\n', sample_id);
     
     scene = compute_model_BB(scene, models_dir, modelnames_file);

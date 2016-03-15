@@ -12,9 +12,9 @@ temp = {mapping_nodes_names(:)};
 for fid = 1:length(singlevar_factors)
     var = singlevar_factors(fid).var;
     cat_split = strsplit(mapping_nodes_names{var}, '_');
-    category = cat_split{1};
+    category = [cat_split{1:end-1}];
     objtype = get_object_type_bedroom({category});
-    no_instance = cat_split{2};
+    no_instance = cat_split{end};
     
     %possible single instance of the category
     node_name = [category '_1'];

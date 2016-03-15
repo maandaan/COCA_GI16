@@ -76,7 +76,8 @@ for fid = 1:length(updated_focals.subgraphs)
     f.var = variables;
     f.card = repmat(2, 1, length(variables));
     f.factor_type = pedge;
-    f = set_value_proximity_factors(f, fid, updated_focals, SUNRGBDMeta, valid_scene_type_indices);
+    f = set_value_proximity_factors(f, fid, updated_focals, SUNRGBDMeta, ...
+        valid_scene_type_indices, mapping_nodes_names);
     
 %     factor_type = pedge;
 %     cpt_struct = compute_cpt_focals(fid, updated_focals, SUNRGBDMeta, valid_scene_type_indices, variables);

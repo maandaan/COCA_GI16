@@ -9,14 +9,15 @@ c = struct('first_type', [], 'second_type', [], ...
 count = 0;
 cat_count = size(sidetoside_rels_matrix, 1);
 thresh = 50;
+wall_type = get_object_type_bedroom({'wall'});
 
 for i = 1:cat_count - 2
-    if ismember(i, [3,8,13,28])
-        continue
-    end
+%     if ismember(i, [3,8,13,28])
+%         continue
+%     end
     
     %relation with walls
-    walls_rel = sidetoside_rels_matrix(56,i).side_rels;
+    walls_rel = sidetoside_rels_matrix(wall_type,i).side_rels;
     if length(walls_rel) >= thresh
         for side = 1:4
             r = find(walls_rel(:,2) == side);
@@ -25,7 +26,7 @@ for i = 1:cat_count - 2
             end
             
             count = count + 1;
-            c(count).first_type = 56;
+            c(count).first_type = wall_type;
             c(count).second_type = i;
             c(count).first_side = 1;
             c(count).second_side = side;
@@ -37,7 +38,8 @@ for i = 1:cat_count - 2
     %relations with other objects
     for j = i+1:cat_count - 2
         this_rel = sidetoside_rels_matrix(i,j).side_rels;
-        if isempty(this_rel) || ismember(j, [3,8,13,28])
+        if isempty(this_rel) 
+%             || ismember(j, [3,8,13,28])
             continue
         end
         

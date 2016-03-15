@@ -41,6 +41,7 @@ for mid = 2:models_num
     
     if model.support_type == 3 %support from behind
         scene(mid).orientation = [1,0,0];
+        scene(mid).corners(:,3) = scene(mid).corners(:,3) + 0.55 * room_dims_scaled(3);
     else
 %         orient = model.dims(1:2) ./ norm(model.dims(1:2));
         scene(mid).orientation = [0,1,0];

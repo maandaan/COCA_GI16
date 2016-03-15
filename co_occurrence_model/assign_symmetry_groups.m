@@ -61,7 +61,7 @@ for oid = 1:length(scene)
     vars = factors(max_factor_row).var;
     var = vars(end);
     node_split = strsplit(mapping_nodes_names{var}, '_');
-    if node_split{2} > 1
+    if str2num(node_split{end}) > 1
         continue
     end
 %     if vars(end) > 56

@@ -1,4 +1,5 @@
-function f = set_value_proximity_factors( f, fid, updated_focals, SUNRGBDMeta, valid_scene_type_indices )
+function f = set_value_proximity_factors( f, fid, updated_focals, ...
+    SUNRGBDMeta, valid_scene_type_indices, mapping_nodes_names )
 %SET_VALUE_PROXIMITY_FACTORS updated version of compute_pf_focals with
 %Factor graph toolbox.
 
@@ -22,7 +23,11 @@ for i = 1:length(f.val)-1
     
     continue_flag = 0;
     for nid = 2:node_count
-        if node_present(nid) && variables(nid) > 56 && ~node_present(nid-1) %multiple instance of one object category
+        var = variables(nid);
+        node_name = mapping_nodes_names{var};
+        node_split = strsplit(node_name, '_');
+        instance_count = str2num(node_split{end});
+        if node_present(nid) && instance_count > 1 && ~node_present(nid-1) %multiple instance of one object category
             continue_flag = 1;
             break;
         end
@@ -42,12 +47,20 @@ for i = 1:length(f.val)-1
 %             if variables(nid) < 57
 %                 desired_scene = desired_scene && ~xor( node_present(nid), ~isempty(find(obj_types == variables(nid),1)));
 %             else
-                cat_count = 0;
-                while variables(nid - cat_count) > 56
-                    cat_count = cat_count + 1;
+%                 cat_count = 0;
+                node_split = strsplit(mapping_nodes_names{variables(nid)}, '_');
+                cat_count = str2num(node_split{end});
+                category = get_object_type_bedroom({[node_split{1:end-1}]});
+%                 while node_split{2} > 1 && nid > cat_count + 1 %variables(nid - cat_count) > 56
+%                     cat_count = cat_count + 1;
+%                     node_split = strsplit(mapping_nodes_names{variables(nid-cat_count)}, '_');
+%                 end
+                try
+                    desired_scene = desired_scene && ~xor( node_present(nid), ...
+                        length(find(obj_types == category)) >= cat_count); %the exact number of instances of that category
+                catch
+                    fprintf('Oops!!\n')
                 end
-                desired_scene = desired_scene && ~xor( node_present(nid), ...
-                    length(find(obj_types == variables(nid - cat_count))) > cat_count); %the exact number of instances of that category
 %             end
         end
         if desired_scene

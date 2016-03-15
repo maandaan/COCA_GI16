@@ -16,7 +16,7 @@ for cid = 1:cat_count
         end
         
         % cluster x and y
-        e = evalclusters(data(:,1:2), 'kmeans', 'silhouette', 'klist',[1:5]);
+        e = evalclusters(data(:,1:2), 'kmeans', 'silhouette', 'klist',[1:4]);
         %find the optimal number of clusters
         if isempty( find(e.CriterionValues(2:end) >= 0.6, 1))
             num_clust = 1;
@@ -47,7 +47,7 @@ for cid = 1:cat_count
             'distance_to_centroids', d);
         
         %cluster x,y and angle
-        e = evalclusters([data(:,1:2), data(:,4)], 'kmeans', 'silhouette', 'klist',[1:5]);
+        e = evalclusters([data(:,1:2), data(:,4)], 'kmeans', 'silhouette', 'klist',[1:4]);
         %find the optimal number of clusters
         if isempty( find(e.CriterionValues(2:end) >= 0.6, 1))
             num_clust = 1;

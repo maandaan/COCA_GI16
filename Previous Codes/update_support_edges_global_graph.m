@@ -14,7 +14,7 @@ cat_count = size(support_matrix, 1);
 for fid = 1:length(singlevar_factors)
     var = singlevar_factors(fid).variables;
     cat_split = strsplit(mapping_nodes_names{var}, '_');
-    category = cat_split{1};
+    category = [cat_split{1:end-1}];
     objtype = get_object_type_bedroom({category});
     
     continue_flag = 0;

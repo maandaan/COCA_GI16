@@ -48,14 +48,15 @@ support_relations_file_v2 = 'data/training/SUNRGBD/bedroom_support_relations_v2.
 symmetry_relations_file_v2 = 'data/training/SUNRGBD/bedroom_symmetry_relations_v2.mat';
 orientation_relations_file_v2 = 'data/training/SUNRGBD/bedroom_special_orientation_relations_v2.mat';
 global_factor_graph_file_v2 = 'data/training/SUNRGBD/bedroom_global_factor_graph_v2.mat';
+sample_size_fisher_file_v2 = 'data/training/SUNRGBD/bedroom_sample_sizes_fisher_v2.mat';
 
 %scene database directories and files
 % scene_db_dir = 'data/databaseFull_fisher_Stanford/';
 scene_db_dir = 'data/Synthesized Scenes/';
 models_dir = [scene_db_dir 'models/'];
 scenes_dir = [scene_db_dir 'scenes/'];
-% modelnames_file = [scene_db_dir 'fields/models.txt'];
-modelnames_file = [scene_db_dir 'fields/models_pruned_categories.txt'];
+modelnames_file = [scene_db_dir 'fields/models.txt'];
+% modelnames_file = [scene_db_dir 'fields/models_pruned_categories.txt'];
 % modelnames_file = [scene_db_dir 'fields/names.txt'];
 
 % information

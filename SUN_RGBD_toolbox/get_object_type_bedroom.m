@@ -24,9 +24,9 @@ if isa(input, 'cell') && isa(input{1}, 'char')
                 category = 'night_stand';
             case {'television'}
                 category = 'tv';
-            case {'window', 'window_glass'}
+            case {'window', 'window_glass', 'glasswindow'}
                 category = 'glass_window';
-            case {'recliner'}
+            case {'recliner', 'sofachair'}
                 category = 'sofa_chair';
             case {'futon'}
                 category = 'sofa';
@@ -50,9 +50,9 @@ if isa(input, 'cell') && isa(input{1}, 'char')
                 category = 'toy';
             case {'plastic_bottle', 'plastic bottle', 'water_bottle'}
                 category = 'bottle';
-            case {'luggage', 'suitcase','travellingbag', 'travel bag'}
+            case {'luggage', 'suitcase','travellingbag', 'travel bag', 'suitscase'}
                 category = 'suits_case';
-            case {'laundry_rack'}
+            case {'laundry_rack','clothingrack'}
                 category = 'clothing_rack';
             case {'books'}
                 category = 'book';
@@ -66,7 +66,7 @@ if isa(input, 'cell') && isa(input{1}, 'char')
                 category = 'vase';
             case {'floor mat', 'mat', 'rubbermat', 'rubber_mat'}
                 category = 'rug';
-            case {'clock', 'alarm', 'alarm clock'}
+            case {'clock', 'alarm', 'alarm clock','alarmclock'}
                 category = 'alarm_clock';
             case {'plantpot','plant','plants', 'cactus'}
                 category = 'plant_pot';
