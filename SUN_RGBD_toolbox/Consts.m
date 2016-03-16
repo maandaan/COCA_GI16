@@ -50,15 +50,16 @@ orientation_relations_file_v2 = 'data/training/SUNRGBD/bedroom_special_orientati
 global_factor_graph_file_v2 = 'data/training/SUNRGBD/bedroom_global_factor_graph_v2.mat';
 sample_size_fisher_file_v2 = 'data/training/SUNRGBD/bedroom_sample_sizes_fisher_v2.mat';
 sidetoside_constraints_file_v2 = 'data/training/SUNRGBD/bedroom_sidetoside_constraints_v2.mat';
+kmeans_file_v2 = 'data/training/SUNRGBD/bedroom_kmeans_spatial_relations_v2';
 
 %scene database directories and files
 % scene_db_dir = 'data/databaseFull_fisher_Stanford/';
 scene_db_dir = 'data/Synthesized Scenes/';
 models_dir = [scene_db_dir 'models/'];
 scenes_dir = [scene_db_dir 'scenes/'];
-modelnames_file = [scene_db_dir 'fields/models.txt'];
+% modelnames_file = [scene_db_dir 'fields/models.txt'];
 % modelnames_file = [scene_db_dir 'fields/models_pruned_categories.txt'];
-% modelnames_file = [scene_db_dir 'fields/names.txt'];
+modelnames_file = [scene_db_dir 'fields/names.txt'];
 
 % information
 scene_type = 'bedroom';

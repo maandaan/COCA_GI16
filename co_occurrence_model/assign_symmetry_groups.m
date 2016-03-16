@@ -13,7 +13,7 @@ temp = {mapping_nodes_names(:)};
 symm_rows = [structfind(factors, 'factor_type', symm_g), ...
     structfind(factors, 'factor_type', symm_resp)];
 
-for oid = 1:length(scene)
+for oid = 2:length(scene)
     
 %     if ~isempty(scene(oid).symm_group_id)
 %         continue
@@ -28,7 +28,7 @@ for oid = 1:length(scene)
     %check if there's a symmetry factor for this category
     symm_factor_rows = [];
     node_name = [scene(oid).obj_category '_1'];
-    node_ind = find(strcmp(temp{:}, node_name));
+    node_ind = find(strcmp(mapping_nodes_names, node_name));
     for rid = 1:length(symm_rows)
         vars = factors(symm_rows(rid)).var;
         if vars(1) == node_ind

@@ -55,21 +55,29 @@ for oid = 1:length(sampled_objects)
     
     % no support found, assign floor as support
     if max_prob == 0
-        support = length(mapping_nodes_names)-1;
+%         support = length(mapping_nodes_names)-1;
+        support = find(strcmp(mapping_nodes_names, 'floor_1'));
         support_type = suppedge_below;
     end
     
+    support_nodename = mapping_nodes_names{support};
+    support_split = strsplit(support_nodename, '_');
+    supporter_category = [support_split{1:end-1}];
+    supporter_type = get_object_type_bedroom({supporter_category});
+    
     s(oid).obj_type = get_object_type_bedroom({category});
-    s(oid).obj_category = category;
+    obj_category = get_object_type_bedroom(s(oid).obj_type);
+    s(oid).obj_category = obj_category{1};
     s(oid).identifier = [category '_' num2str(randi(1000))];
-    s(oid).supporter = support;
+    s(oid).supporter = supporter_type;
     s(oid).support_type = support_type;
-%     if support == 55
-%         s(oid).supporter_category = 'floor';
-%     elseif support == 56
-%         s(oid).supporter_category = 'wall';
-%     else
-        s(oid).supporter_category = get_object_type_bedroom(support);
+    %     if support == 55
+    %         s(oid).supporter_category = 'floor';
+    %     elseif support == 56
+    %         s(oid).supporter_category = 'wall';
+    %     else
+    supporter_category = get_object_type_bedroom(supporter_type);
+    s(oid).supporter_category = supporter_category{1};
 %     end
 end
 

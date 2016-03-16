@@ -15,7 +15,7 @@ for i = 1:cat_count
 end
 
 room_ind = get_object_type_bedroom({'room'});
-sample_sizes(room_ind).fisherDB_dims = [300, 300, 135];
+% sample_sizes(room_ind).fisherDB_dims = [300, 300, 135];
 
 mid = 0;
 while mid < total_size && ~check_all_sizes(sample_sizes)
@@ -24,6 +24,16 @@ while mid < total_size && ~check_all_sizes(sample_sizes)
     % check for the scene type
     if ~strcmp(map_scene_name_type(mid).sceneType, scene_type)
         continue
+    end
+    
+    if isempty(sample_sizes(room_ind).fisherDB_dims)
+        room_corners = SUNRGBDMeta(:,mid).gtCorner3D;
+        if ~isempty(room_corners)
+            room_dims = [norm(room_corners(:,1) - room_corners(:,2)), ...
+                norm(room_corners(:,2) - room_corners(:,3)), ...
+                abs(room_corners(3,1) - room_corners(3,5))] * 100;
+            sample_sizes(room_ind).fisherDB_dims = room_dims;
+        end
     end
         
     gt3D = SUNRGBDMeta(:,mid).groundtruth3DBB;
@@ -53,7 +63,7 @@ end
 function undefined_sizes = check_all_sizes(sample_sizes)
 undefined_sizes = true;
 for i = 1:length(sample_sizes)
-    undefined_sizes = undefined_sizes && isempty(sample_sizes(i).fisherDB_dims);
+    undefined_sizes = undefined_sizes && ~isempty(sample_sizes(i).fisherDB_dims);
     if ~undefined_sizes
         break
     end

@@ -12,7 +12,7 @@ mapping_file = 'data/training/SUNRGBD/scene_name_type.mat';
 % scene_counts = count_annotated_scene_instances( 'bedroom', mapping_file );
 
 Consts;
-load(sidetoside_constraints_file, 'sidetoside_constraints');
+load(sidetoside_constraints_file_v2, 'sidetoside_constraints');
 temp_scenes = [];
 missed_obj = [];
 

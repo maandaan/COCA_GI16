@@ -6,9 +6,9 @@ function [ all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_
 %to apply the hard constraints after the sampling or not.)
 
 Consts;
-load(kmeans_file, 'kmeans_matrix');
-load(pairwise_locations_file, 'pair_spatial_rels_location');
-load(sidetoside_constraints_file, 'sidetoside_constraints');
+load(kmeans_file_v2, 'kmeans_matrix');
+load(pairwise_locations_file_v2, 'pair_spatial_rels_location');
+load(sidetoside_constraints_file_v2, 'sidetoside_constraints');
 
 obj_type = object.obj_type;
 

@@ -4,14 +4,15 @@ function generate_scenes( objects_num, input_scene_filename, ...
 %necessary functions and saves the results in each step.
 
 Consts;
-load(global_factor_graph_file, 'factors', 'all_vars');
-load(sample_size_fisher_file, 'sample_sizes');
+load(global_factor_graph_file_v2, 'factors', 'all_vars');
+load(sample_size_fisher_file_v2, 'sample_sizes');
 
 objectsets_filename = [scenes_dir, results_filename, '_objectsets.mat'];
+room_type = get_object_type_bedroom({'room'});
 
 % if isempty(input_scene_filename) %start from an empty room
 %     identifier = ['room_' num2str(randi(1000))];
-%     input_scene = struct('identifier', identifier, 'obj_type', 29, 'obj_category', 'room', ...
+%     input_scene = struct('identifier', identifier, 'obj_type', room_type, 'obj_category', 'room', ...
 %         'supporter_id', -1, 'supporter', -1, 'supporter_category', [], 'support_type', -1, ...
 %         'symm_group_id', [], 'symm_ref_id', [], 'orientation_rels', [], 'modelname', [], ...
 %         'BB', [], 'dims', [], 'scale', [], 'children', [], 'corners', [], ...
@@ -25,23 +26,29 @@ objectsets_filename = [scenes_dir, results_filename, '_objectsets.mat'];
 % 
 % [ all_config, all_score, nodes_sets ] = mcmc_optimize_scene_config(...
 %     input_scene, 1000, objects_num, objects_num, 1);
+% % load('temp_samples');
 % [ sample_score, sample_objects ] = choose_mcmc_samples( ...
-%     all_score, nodes_sets, objects_num + pres_obj_count, 30, 1 );
+%     all_score, nodes_sets, objects_num + pres_obj_count, 50, 1 );
 % sampled_scenes = complete_mcmc_samples_to_scenes( input_scene, sample_objects );
 % save(objectsets_filename, 'sampled_scenes');
 % fprintf('Finished MCMC sampling from the factor graph!\n');
 
-load(objectsets_filename, 'sampled_scenes');
+% load(objectsets_filename, 'sampled_scenes');
 
-for sample_id = 22:length(sampled_scenes)
-    scene = sampled_scenes(sample_id).scene;
-    scene = select_models(modelnames_file, scene);
-    scene = prune_models(scene);
-    %prune models manually if you are using the original file for model
-    %names
-    fprintf('Finished selecting models for the sample %d!\n', sample_id);
-    
-    scene = compute_model_BB(scene, models_dir, modelnames_file);
+for sample_id = 33:33%length(sampled_scenes)
+%     scene = sampled_scenes(sample_id).scene;
+%     scene = select_models(modelnames_file, scene);
+%     scene = prune_models(scene);
+%     %prune models manually if you are using the original file for model
+%     %names
+%     fprintf('Finished selecting models for the sample %d!\n', sample_id);
+%     
+    load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
+    for i = 1:length(scene)
+        scene(i).scale = [];
+    end
+      
+%     scene = compute_model_BB(scene, models_dir, modelnames_file);
     scene = scale_models(scene, sample_sizes);
     scene = init_models_to_insert(scene);
     save([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');

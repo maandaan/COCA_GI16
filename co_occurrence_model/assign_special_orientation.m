@@ -13,7 +13,7 @@ orient_rows = [structfind(factors, 'factor_type', perpendicular), ...
     structfind(factors, 'factor_type', facing), ...
     structfind(factors, 'factor_type', same_dir)];
 
-for oid = 1:length(scene)
+for oid = 2:length(scene)
     
 %     if ~isempty(scene(oid).symm_group_id)
 %         continue
@@ -23,7 +23,7 @@ for oid = 1:length(scene)
     node_ind = find(strcmp(temp{:}, node_name));
     orient_rels = [];
     
-    for pid = 1:length(scene)
+    for pid = 2:length(scene)
         if oid == pid
             continue
         end
