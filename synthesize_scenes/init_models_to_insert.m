@@ -41,7 +41,6 @@ for mid = 2:models_num
     
     if model.support_type == 3 %support from behind
         scene(mid).orientation = [1,0,0];
-        scene(mid).corners(:,3) = scene(mid).corners(:,3) + 0.55 * room_dims_scaled(3);
     else
 %         orient = model.dims(1:2) ./ norm(model.dims(1:2));
         scene(mid).orientation = [0,1,0];
@@ -49,8 +48,8 @@ for mid = 2:models_num
 
 end
 
-%correcting z coordinates, ignore the room
-for mid = 2:models_num
+%correcting z coordinates, ignore the room in case of support from below
+for mid = 1:models_num
     children = structfind(scene, 'supporter_id', scene(mid).identifier);
     if isempty(children)
         continue
@@ -64,7 +63,11 @@ for mid = 2:models_num
             continue
         end
         c = scene(children(cid)).corners;
-        c(:,3) = c(:,3) + pheight;
+        if mid == 1 && scene(children(cid)).support_type == 3
+            c(:,3) = c(:,3) + 0.55 * room_dims_scaled(3);
+        elseif mid > 1
+            c(:,3) = c(:,3) + pheight;
+        end
         scene(children(cid)).corners = c;
     end
 end

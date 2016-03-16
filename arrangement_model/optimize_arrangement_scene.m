@@ -291,11 +291,11 @@ while length(final_scene) < length(input_scene)
 %         local_scene = [local_scene; object];
 
         %debug
-%         for i = 1:length(final_scene)
-%             plot(final_scene(i).corners(1:5,1), final_scene(i).corners(1:5,2));
-%             hold on
-%         end
-%         hold off
+        for i = 1:length(final_scene)
+            plot(final_scene(i).corners(1:5,1), final_scene(i).corners(1:5,2));
+            hold on
+        end
+        hold off
         
     end
     
