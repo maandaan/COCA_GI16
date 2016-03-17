@@ -27,9 +27,9 @@ while count < sample_count && sid < length(sorted_nodes_sets) - 1
         continue
     end
     
-%     if ~isempty(find(ismember([3,8,13,26,28,62,63,75:81,84:87], sample))) %door, window, cushion, other in the objects
-%         continue
-%     end
+    if ~isempty(find(ismember([37:46,107:109,218], sample))) %door, window, cushion, other in the objects
+        continue
+    end
     
     if length(sample_objects) > 0 && ...
             ~isempty(structfind(sample_objects, 'nodes', sample)) %sample is already inserted in the scene

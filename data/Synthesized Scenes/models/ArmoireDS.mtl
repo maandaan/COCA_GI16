@@ -1,0 +1,429 @@
+newmtl material_1
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_2
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_3
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_4
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_5
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_6
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_7
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_8
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_9
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_10
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_11
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_12
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_13
+d 1
+Ns 0.573529
+Ni 0
+Ka 0 0 0
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Km 0
+
+newmtl material_14
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_15
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_16
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_17
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_18
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_19
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_20
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_21
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_22
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_23
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_24
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_25
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_26
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_27
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_28
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_29
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_30
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_31
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_32
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_33
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_34
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_35
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_36
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_37
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_38
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_39
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_40
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_41
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_42
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_43
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+
+newmtl material_44
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+map_Kd ../textures/ArmoireBR_mtl15_diffcol.jpg
+

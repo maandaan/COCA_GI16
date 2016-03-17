@@ -2,12 +2,12 @@
 % populated scene loaded from a file, to the point of viewing it with 
 % fisher scene_viewer.
 
-Consts;
+% Consts;
 % load(global_scene_graph_file, 'global_scene_graph');
 % load(size_data_file, 'all_valid_sizes');
 
-load(global_factor_graph_file, 'factors', 'all_vars');
-load(sample_size_fisher_file, 'sample_sizes');
+% load(global_factor_graph_file, 'factors', 'all_vars');
+% load(sample_size_fisher_file, 'sample_sizes');
 
 % new_obj_count = 3;
 % empty_scene = false;
@@ -60,6 +60,6 @@ scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
 % scene3d.objects = scene3d_objects;
 
 % out_file = [scenes_dir 'synth_scene_43_progressive_synthesis.txt'];
-out_file = 'data\Synthesized Scenes\scenes\bedroom_small_00001_33.txt';
+out_file = 'data\Synthesized Scenes\scenes\bedroom_small_000133_46.txt';
 write_scene_to_file( scene3d, out_file )
 

@@ -1739,3 +1739,7 @@ room14|@architecture
 room15|@architecture
 room16|@architecture
 room17|@architecture
+crib|crib
+ArmoireDS|armoire
+armoireLotus|armoire
+crib_exported|crib
