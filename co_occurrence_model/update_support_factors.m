@@ -4,6 +4,7 @@ function extra_factors = update_support_factors( support_matrix, singlevar_facto
 
 Consts;
 factors = supp_factors;
+support_thresh = 0.05 * bedroom_support_scene_size;
 
 cat_count = size(support_matrix, 1);
 support_rels_count = sum(sum(sum(support_matrix)));
@@ -46,7 +47,10 @@ for fid = 1:length(singlevar_factors)
     
     [top_support, top_ind] = sort([support_matrix(objtype,:,1),support_matrix(objtype,:,2)],'descend');
     %detect support type
-    if top_ind(1) > length(support_matrix(objtype,:,1))
+    if top_support < support_thresh
+        supporter = get_object_type_bedroom({'floor'});
+        r = 1;
+    elseif top_ind(1) > length(support_matrix(objtype,:,1))
         supporter = top_ind(1) - length(support_matrix(objtype,:,1));
         r = 2;
     else
