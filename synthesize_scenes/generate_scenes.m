@@ -35,26 +35,26 @@ room_type = get_object_type_bedroom({'room'});
 
 load(objectsets_filename, 'sampled_scenes');
 
-for sample_id = 13:13%length(sampled_scenes) 
-    scene = sampled_scenes(sample_id).scene;
-    scene = select_models(modelnames_file, scene);
-    scene = prune_models(scene);
-    %prune models manually if you are using the original file for model
-    %names
-    fprintf('Finished selecting models for the sample %d!\n', sample_id);
+for sample_id = 4:4%length(sampled_scenes) 
+%     scene = sampled_scenes(sample_id).scene;
+%     scene = select_models(modelnames_file, scene);
+%     scene = prune_models(scene);
+%     %prune models manually if you are using the original file for model
+%     %names
+%     fprintf('Finished selecting models for the sample %d!\n', sample_id);
     
 %     load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
 %     for i = 1:length(scene)
 %         scene(i).scale = [];
 %     end
       
-    scene = compute_model_BB(scene, models_dir, modelnames_file);
-    scene = scale_models(scene, sample_sizes);
-    scene = init_models_to_insert(scene);
-    save([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
-    fprintf('Finished initializing the placement and scaling the sizes for sample %d!\n', sample_id);
+%     scene = compute_model_BB(scene, models_dir, modelnames_file);
+%     scene = scale_models(scene, sample_sizes);
+%     scene = init_models_to_insert(scene);
+%     save([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
+%     fprintf('Finished initializing the placement and scaling the sizes for sample %d!\n', sample_id);
     
-%     load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
+    load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
 %     load([scenes_dir, results_filename, '_final_', num2str(sample_id)], 'final_scene');
 %     scene = final_scene;
     fixed_objects_rows = structfind(scene, 'optimized_location', 1);
