@@ -11,6 +11,7 @@ load(pairwise_locations_file_v2, 'pair_spatial_rels_location');
 load(sidetoside_constraints_file_v2, 'sidetoside_constraints');
 
 obj_type = object.obj_type;
+w = 5; %wall thickness
 
 %choose one pair object to sample
 % pairs_prob = compute_pair_probability(object, pair_objects, pair_spatial_rels_location);
@@ -28,7 +29,7 @@ rng shuffle
 
 parent_id = object.supporter_id;
 parent_row = structfind(pair_objects, 'identifier', parent_id);
-if length(pair_objects) > 1 && ...
+if length(pair_objects) > 1 && strcmp(object.supporter_category, 'floor') && ...
         pair_objects(parent_row).obj_type == get_object_type_bedroom({'room'})
     pair_id = 2;
 else
@@ -57,7 +58,12 @@ support = pair_objects(1);
 support_dims = support.dims .* support.scale;
 
 ref = pair_objects(pair_id);
-ref_dims = pair_objects(pair_id).dims .* pair_objects(pair_id).scale;
+% if strcmp(object.supporter_category, 'wall')
+%     room_dims = pair_objects(pair_id).dims .* pair_objects(pair_id).scale;
+%     ref_dims = [w, room_dims(2:3)];
+% else
+    ref_dims = pair_objects(pair_id).dims .* pair_objects(pair_id).scale;
+% end
 object_dims = object.dims .* object.scale;
 % curr_xy = [-parent_dims(1)/2 + object_dims(1)/2 0];
 % curr_xy = [0,0];
@@ -76,8 +82,19 @@ y = curr_xy(2);
 x = x .* (ref_dims(1) / 2);
 y = y .* (ref_dims(2) / 2);
 z = mean(object.corners(:,3));
-global_xyz = inv_convert_coordinates(-mean(ref.corners), ref.orientation, [x y 0]);
-theta = compute_theta_from_orientation(pair_objects(pair_id).orientation);
+
+% if strcmp(object.supporter_category, 'wall') %special case of objects on the wall
+%     max_x = max(ref.corners(:,1));
+%     new_x = [max_x-w; max_x; max_x; max_x-w; max_x-w; max_x; max_x; max_x-w];
+%     ref_corners = [new_x, ref.corners(:,2:3)];
+%     ref_orientation = [-1,0,0];
+% else
+    ref_corners = ref.corners;
+    ref_orientation = ref.orientation;
+% end
+    
+global_xyz = inv_convert_coordinates(-mean(ref_corners), ref_orientation, [x y 0]);
+theta = compute_theta_from_orientation(ref_orientation);
 
 angle1 = theta + degtorad(curr_angle);
 curr_angle_abs = angle1;
@@ -160,13 +177,44 @@ while iter <= num_iter
     %     next_xy = [next_x, next_y];
     %     next_angle = rand() * 180;
     
+%     if strcmp(object.supporter_category, 'wall') 
+%         if mod(iter, 3) == 1
+%             ref_dims = [w, room_dims(2:3)];
+%         else
+%             ref_dims = [room_dims(1), w, room_dims(3)];
+%         end
+%     end
+    
     x = next_xy(1);
     y = next_xy(2);
     x = x .* (ref_dims(1) / 2);
     y = y .* (ref_dims(2) / 2);
     z = mean(object.corners(:,3));
-    global_xyz = inv_convert_coordinates(-mean(ref.corners), ref.orientation, [x y 0]);
-    theta = compute_theta_from_orientation(pair_objects(next_pair_id).orientation);
+    
+%     if strcmp(object.supporter_category, 'wall') %special case of objects on the wall
+%         if mod(iter, 3) == 1
+%             max_x = max(ref.corners(:,1));
+%             new_x = [max_x-w; max_x; max_x; max_x-w; max_x-w; max_x; max_x; max_x-w];
+%             ref_corners = [new_x, ref.corners(:,2:3)];
+%             ref_orientation = [-1,0,0];
+%         elseif mod(iter, 3) == 0
+%             min_y = 0;
+%             new_y = [min_y; min_y; min_y+w; min_y+w; min_y; min_y; min_y+w; min_y+w];
+%             ref_corners = [ref.corners(:,1), new_y, ref.corners(:,3)];
+%             ref_orientation = [0,1,0];
+%         else
+%             max_y = max(ref.corners(:,2));
+%             new_y = [max_y-w; max_y-w; max_y; max_y; max_y-w; max_y-w; max_y; max_y];
+%             ref_corners = [ref.corners(:,1), new_y, ref.corners(:,3)];
+%             ref_orientation = [0,-1,0];
+%         end
+%     else
+        ref_corners = ref.corners;
+        ref_orientation = ref.orientation;
+%     end
+    
+    global_xyz = inv_convert_coordinates(-mean(ref_corners), ref_orientation, [x y 0]);
+    theta = compute_theta_from_orientation(ref_orientation);
     angle1 = theta + degtorad(next_angle);
     next_angle_abs = angle1;
     object_orient1 = [cos(angle1) sin(angle1) 0];
@@ -179,9 +227,43 @@ while iter <= num_iter
     % %         fprintf('Not available space on the supporting surface!!\n');
     %         continue
     %     end
+    
+    %check for being on the support surface
+    if strcmp(object.supporter_category, 'wall')
+        angle = radtodeg(angle1);
+        
+        if abs(angle - 90) < 45
+            min_y = 0;
+            new_y = [min_y; min_y; min_y+w; min_y+w; min_y; min_y; min_y+w; min_y+w];
+            ref_corners = [support.corners(:,1), new_y, support.corners(:,3)];
+            global_xyz(2) = min_y + object_dims(2)/2;
+            next_xy(2) = -1 + object_dims(2) / ref_dims(2);
+        
+        elseif abs(angle - 180) <= 45
+            max_x = max(support.corners(:,1));
+            new_x = [max_x-w; max_x; max_x; max_x-w; max_x-w; max_x; max_x; max_x-w];
+            ref_corners = [new_x, support.corners(:,2:3)];
+            global_xyz(1) = max_x - object_dims(1)/2;
+            next_xy(1) = 1 - object_dims(1) / ref_dims(1);
+            
+        elseif abs(angle - 270) < 45
+            max_y = max(support.corners(:,2));
+            new_y = [max_y-w; max_y-w; max_y; max_y; max_y-w; max_y-w; max_y; max_y];
+            ref_corners = [support.corners(:,1), new_y, support.corners(:,3)];
+            global_xyz(2) = max_y - object_dims(2)/2;
+            next_xy(2) = 1 - object_dims(2) / ref_dims(2);
+            
+        else
+            continue
+        end
+%         support_bnd = [min(ref_corners), max(ref_corners)];
+    end
+%     else
+        support_bnd = [min(support.corners), max(support.corners)];
+%     end
+    
     x = global_xyz(1);
     y = global_xyz(2);
-    support_bnd = [min(support.corners), max(support.corners)];
     if x - object_dims(1)/2 < support_bnd(1) || x + object_dims(1)/2 > support_bnd(4) ...
             || y - object_dims(2)/2 < support_bnd(2) || y + object_dims(2)/2 > support_bnd(5)
         continue

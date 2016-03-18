@@ -30,8 +30,8 @@ newobj_rect = newobj_corners(1:4,1:2) - thresh;
 epsilon = 0.00001;
 collided = false;
 
-% plot(newobj_corners(1:5,1) - thresh, newobj_corners(1:5,2) - thresh, 'r');
-% hold on
+plot(newobj_corners(1:5,1) - thresh, newobj_corners(1:5,2) - thresh, 'r');
+hold on
 
 for oid = 1:length(scene)
     pair = scene(oid);
@@ -75,8 +75,8 @@ for oid = 1:length(scene)
         abs(z_intersect(1) - z_intersect(2)) > epsilon;
     
     %debug
-%     plot(pair.corners(1:5,1), pair.corners(1:5,2));
-%     hold off
+    plot(pair.corners(1:5,1), pair.corners(1:5,2));
+    hold off
 
     if collided
         break
