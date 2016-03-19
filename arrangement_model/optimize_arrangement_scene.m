@@ -93,19 +93,23 @@ while length(final_scene) < length(input_scene)
                 top_ind = 1;
                 repeat_sampling = 1;
             else
+%                 nonzero_scores = all_score_sorted(nonzero_ind);
+                nonzero_sts = all_sidetoside_constraints(sort_ind(nonzero_ind)); %side-to-side constraints corresponding to nonzero sorted scores
+                [sts_sorted, sts_ind] = sort(nonzero_sts, 'descend');
                 index = 1;
-                top_ind = nonzero_ind(index);
+%                 top_ind = nonzero_ind(index);
+                top_ind = sts_ind(index);
                 if use_hard_constraints %if we didn't check for the constraints while sampling
-                    while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) ...
-                            || ~all_sidetoside_constraints(sort_ind(top_ind)))
+                    while index < length(sts_ind) && (all_collision(sort_ind(nonzero_ind(top_ind)))) 
+%                             || ~all_sidetoside_constraints(sort_ind(top_ind)))
                         index = index + 1;
-                        top_ind = nonzero_ind(index);
+                        top_ind = sts_ind(index);
                     end
                     
                     %none of the samples satisfy the hard constraints
-                    if index == length(nonzero_ind)
-                        if all_collision(sort_ind(top_ind)) ...
-                                || ~all_sidetoside_constraints(sort_ind(top_ind))
+                    if index == length(sts_ind)
+                        if all_collision(sort_ind(nonzero_ind(top_ind))) 
+%                                 || ~all_sidetoside_constraints(sort_ind(top_ind))
                             top_ind = 1;
                             repeat_sampling = 1;
                         else
@@ -131,19 +135,22 @@ while length(final_scene) < length(input_scene)
                     top_ind = 1;
                     repeat_sampling = 1;
                 else
+                    nonzero_sts = all_sidetoside_constraints(sort_ind(nonzero_ind)); %side-to-side constraints corresponding to nonzero sorted scores
+                    [sts_sorted, sts_ind] = sort(nonzero_sts, 'descend');
                     index = 1;
-                    top_ind = nonzero_ind(index);
+%                     top_ind = nonzero_ind(index);
+                    top_ind = sts_ind(index);
                     if use_hard_constraints %if we didn't check for the constraints while sampling
-                        while index < length(nonzero_ind) && (all_collision(sort_ind(top_ind)) ...
-                                || ~all_sidetoside_constraints(sort_ind(top_ind)))
+                        while index < length(nonzero_ind) && (all_collision(sort_ind(nonzero_ind(top_ind)))) 
+%                                 || ~all_sidetoside_constraints(sort_ind(top_ind)))
                             index = index + 1;
-                            top_ind = nonzero_ind(index);
+                            top_ind = sts_ind(index);
                         end
                         
                         %none of the samples satisfy the hard constraints
-                        if index == length(nonzero_ind)
-                            if all_collision(sort_ind(top_ind)) ...
-                                    || ~all_sidetoside_constraints(sort_ind(top_ind))
+                        if index == length(sts_ind)
+                            if all_collision(sort_ind(nonzero_ind(top_ind)))
+                                %                                 || ~all_sidetoside_constraints(sort_ind(top_ind))
                                 top_ind = 1;
                                 repeat_sampling = 1;
                             else
@@ -249,9 +256,9 @@ while length(final_scene) < length(input_scene)
                 return
             end
            
-            top_xy = all_xy(sort_ind(top_ind),:);
-            top_angle = all_angle(sort_ind(top_ind));
-            top_pid = all_pid(sort_ind(top_ind));
+            top_xy = all_xy(sort_ind(nonzero_ind(top_ind)),:);
+            top_angle = all_angle(sort_ind(nonzero_ind(top_ind)));
+            top_pid = all_pid(sort_ind(nonzero_ind(top_ind)));
 %             top_pid = 1;
             
             object_dims = object.dims .* object.scale;
@@ -369,18 +376,26 @@ if ~isempty(input_scene(obj_ind).symm_ref_id) && ...
 end
 
 %orientation relations
+orientations = input_scene(obj_ind).orientation_rels;
+orient_objs = [];
 for sid = 1:length(input_scene(obj_ind).orientation_rels)
-    orientations = input_scene(obj_ind).orientation_rels;
-        
     if ismember(orientations(sid).pair_obj_id, final_ids)
         pair_obj_ind = structfind(final_scene, 'identifier', orientations(sid).pair_obj_id);
         if isempty(pair_obj_ind)
             continue
         end
         if isempty(structfind(local_scene, 'identifier', final_scene(pair_obj_ind).identifier))
-            local_scene = [local_scene; final_scene(pair_obj_ind)];
+            orient_objs = [orient_objs; sid];
         end
     end
+end
+%to give importance to objects with more reliable relations
+probs = [orientations(orient_objs(:)).probability];
+[~, sorted_ind] = sort(probs, 'descend');
+for i = 1:length(sorted_ind)
+    sid = orient_objs(sorted_ind(i));
+    pair_obj_ind = structfind(final_scene, 'identifier', orientations(sid).pair_obj_id);
+    local_scene = [local_scene; final_scene(pair_obj_ind)];
 end
 
 end

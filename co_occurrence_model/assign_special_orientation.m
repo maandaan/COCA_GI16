@@ -53,7 +53,8 @@ for oid = 2:length(scene)
         end
         
         orient_type = factors(max_factor_row).factor_type;
-        orient_ins = struct('pair_obj_id', scene(pid).identifier, 'orient_type', orient_type);
+        orient_ins = struct('pair_obj_id', scene(pid).identifier, ...
+            'orient_type', orient_type, 'probability', max_prob);
         orient_rels = [orient_rels; orient_ins];
     end
     

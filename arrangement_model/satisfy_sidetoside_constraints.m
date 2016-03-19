@@ -34,7 +34,7 @@ object_height = newobj_corners(4:5,3);
 %constraints (if any) are satisfied
 dist_thresh = 3;
 pushing_to_wall = true;
-p_satisfied = false; %for objects other than wall, if only one is satisfied it's ok!
+p_satisfied = 0; %for objects other than wall, if only one is satisfied it's ok!
 for oid = 1:length(holistic_scene)
     pair = holistic_scene(oid);
     if pair.obj_type == object_type
@@ -101,7 +101,7 @@ for oid = 1:length(holistic_scene)
 %         if abs(min_dist - c.avg_dist) > dist_thresh
         if min_dist > c.avg_dist + dist_thresh    
             pushing_to_wall = false;
-            break
+%             break
         end   
     else
         touching_visited = false;
@@ -132,7 +132,7 @@ for oid = 1:length(holistic_scene)
                         touching_visited = true;
                         dist24 = compute_sides_dist(rect1, rect2, 2, 4);
                         dist42 = compute_sides_dist(rect1, rect2, 4, 2);
-                        p_satisfied = p_satisfied || ...
+                        p_satisfied = p_satisfied + ...
                             ((dist24>=0 && dist24 < c.avg_dist + dist_thresh) ...
                             || (dist42>=0 && dist42 < c2.avg_dist + dist_thresh));
 %                         fprintf('dist24: %f, avg_dist24: %f\n', dist24, c.avg_dist);
@@ -147,7 +147,7 @@ for oid = 1:length(holistic_scene)
                 end
                 dist = compute_sides_dist(rect1, rect2, side1, side2);
 %                 p_satisfied = p_satisfied && (abs(dist - c.avg_dist) < dist_thresh);
-                p_satisfied = p_satisfied || (dist >= 0  && dist < c.avg_dist + dist_thresh);
+                p_satisfied = p_satisfied + (dist >= 0  && dist < c.avg_dist + dist_thresh);
             end
         end
 %         if ~p_satisfied
@@ -157,7 +157,7 @@ for oid = 1:length(holistic_scene)
     end
 end
 
-satisfied = ~p_satisfied && pushing_to_wall;
+satisfied = p_satisfied + pushing_to_wall;
 
 end
 
