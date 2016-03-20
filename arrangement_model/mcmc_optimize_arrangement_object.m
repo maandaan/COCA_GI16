@@ -264,8 +264,11 @@ while iter <= num_iter
     
     x = global_xyz(1);
     y = global_xyz(2);
-    if x - object_dims(1)/2 < support_bnd(1) || x + object_dims(1)/2 > support_bnd(4) ...
-            || y - object_dims(2)/2 < support_bnd(2) || y + object_dims(2)/2 > support_bnd(5)
+    %to check that the object is not falling off the supporting surface
+    if (x - object_dims(1)/2 < support_bnd(1) || x + object_dims(1)/2 > support_bnd(4) ...
+            || y - object_dims(2)/2 < support_bnd(2) || y + object_dims(2)/2 > support_bnd(5)) ...
+            && (x - object_dims(2)/2 < support_bnd(1) || x + object_dims(2)/2 > support_bnd(4) ...
+            || y - object_dims(1)/2 < support_bnd(2) || y + object_dims(1)/2 > support_bnd(5))
         continue
     end
     

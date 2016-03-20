@@ -9,7 +9,7 @@ load(sample_size_fisher_file_v2, 'sample_sizes');
 
 objectsets_filename = [scenes_dir, results_filename, '_objectsets.mat'];
 room_type = get_object_type_bedroom({'room'});
-% 
+
 % if isempty(input_scene_filename) %start from an empty room
 %     identifier = ['room_' num2str(randi(1000))];
 %     input_scene = struct('identifier', identifier, 'obj_type', room_type, 'obj_category', 'room', ...
@@ -33,21 +33,21 @@ room_type = get_object_type_bedroom({'room'});
 % save(objectsets_filename, 'sampled_scenes');
 % fprintf('Finished MCMC sampling from the factor graph!\n');
 
-load(objectsets_filename, 'sampled_scenes');
+% load(objectsets_filename, 'sampled_scenes');
 
-for sample_id = 4:4%length(sampled_scenes) 
+for sample_id = 7:7%length(sampled_scenes) 
 %     scene = sampled_scenes(sample_id).scene;
 %     scene = select_models(modelnames_file, scene);
 %     scene = prune_models(scene);
 %     %prune models manually if you are using the original file for model
 %     %names
 %     fprintf('Finished selecting models for the sample %d!\n', sample_id);
-    
-%     load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
-%     for i = 1:length(scene)
-%         scene(i).scale = [];
-%     end
-      
+%     
+% %     load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
+% %     for i = 1:length(scene)
+% %         scene(i).scale = [];
+% %     end
+%       
 %     scene = compute_model_BB(scene, models_dir, modelnames_file);
 %     scene = scale_models(scene, sample_sizes);
 %     scene = init_models_to_insert(scene);
