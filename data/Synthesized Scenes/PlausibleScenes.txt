@@ -5,7 +5,7 @@ synth_scene_39_progressive_synthesis.txt
 synth_scene_40_progressive_synthesis.txt
 synth_scene_41_progressive_synthesis.txt
 synth_scene_43_progressive_synthesis.txt
-bedroom00001_3_adjusted
+bedroom00001_3
 bedroom00001_4
 bedroom00001_6_adjusted
 bedroom00001_7_adjusted

@@ -12,6 +12,12 @@ for nid = 1:length(unique_types)
     obj_type = unique_types(nid);
     obj_cat = get_object_type_bedroom(obj_type);
     
+    %for better visualization, we will always use this 3D model for room
+    if strcmp(obj_cat, 'room')
+        scene(nid).modelname = 'room02';
+        continue
+    end
+    
     % find the model names for the specific category
     h = fopen(modelnames_file);
     line = fgets(h);

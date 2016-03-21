@@ -11,7 +11,7 @@ for oid = 1:objects_num
     scene3d(oid).mid = final_scene(oid).modelname;
     
     % finding the parent
-    if final_scene(oid).obj_type == get_object_type_bedroom({'room'})
+    if strcmp(final_scene(oid).obj_category, 'room')
         scene3d(oid).pindex = -1;
     else
 %         parent_type = final_scene(oid).supporter_category;

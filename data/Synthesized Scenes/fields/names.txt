@@ -1743,3 +1743,5 @@ crib|crib
 ArmoireDS|armoire
 armoireLotus|armoire
 crib_exported|crib
+myroom_4|@architecture
+room02_edited|@architecture

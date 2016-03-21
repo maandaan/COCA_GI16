@@ -17,12 +17,14 @@ for mid = 1:length(scene)
                 '225d37286bed9bb9dbf53b03c847b004', '18d94e539b0ed30d105e720ebc569399', ...
                 '6753572868705eacdd043998582f5fa', '2e22e4ffe7fa6b9998d5fc0473d00a1c', ...
                 '80968124315c8b131f6a5b0146bf3030', 'bfe54fe90c7d99637fffc92abe94e907', ...
-                'myroom_2', 'myroom_3'}
+                '586356e8809b6a678d44b95ca8abc7b2', '86b551bacf67ac442d4ead5a1be351b7', ...
+                '72035b31030524aaa0bb41a7cd462066', 'myroom_2', 'myroom_3'}
             %reverse the orientation
             scene(mid).orientation(1) = -scene(mid).orientation(1);
             scene(mid).orientation(2) = -scene(mid).orientation(2);
             
-        case {'976ac71df97c9cd22bf3161ae4fda942', 'b5787ebfe1c5b31f68661782af60b711'}
+        case {'976ac71df97c9cd22bf3161ae4fda942', 'b5787ebfe1c5b31f68661782af60b711', ...
+              '459e81b89a4b2fd7f29c5890b07f3a65'}
             temp = scene(mid).orientation(1);
             scene(mid).orientation(1) = scene(mid).orientation(2);
             scene(mid).orientation(2) = temp;

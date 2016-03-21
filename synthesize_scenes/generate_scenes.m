@@ -33,9 +33,9 @@ room_type = get_object_type_bedroom({'room'});
 % save(objectsets_filename, 'sampled_scenes');
 % fprintf('Finished MCMC sampling from the factor graph!\n');
 
-% load(objectsets_filename, 'sampled_scenes');
+load(objectsets_filename, 'sampled_scenes');
 
-for sample_id = 7:7%length(sampled_scenes) 
+for sample_id = 2:2%length(sampled_scenes) 
 %     scene = sampled_scenes(sample_id).scene;
 %     scene = select_models(modelnames_file, scene);
 %     scene = prune_models(scene);

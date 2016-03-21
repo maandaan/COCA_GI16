@@ -29,16 +29,16 @@ end
 %%
 %in the case of previously populted scenes, we might need to repeat the
 %optimization for present objects as well (total restart)
-iter = 1;
+% iter = 1;
 temp_scenes_2 = [];
-while isempty(final_scene) && iter <= max_arrangement_opt_iter
-    fprintf('Optimization Failed! Restarting...\n');
-    for object_id = 2:length(scene)
-        scene(object_id).optimized_location = 0;
-    end
-    [final_scene, ~, temp_scenes_2] = optimize_arrangement_scene( scene, '' );
-    iter = iter + 1;
-end
+% while isempty(final_scene) && iter <= max_arrangement_opt_iter
+%     fprintf('Optimization Failed! Restarting...\n');
+%     for object_id = 2:length(scene)
+%         scene(object_id).optimized_location = 0;
+%     end
+%     [final_scene, ~, temp_scenes_2] = optimize_arrangement_scene( scene, '' );
+%     iter = iter + 1;
+% end
 
 %% comparing mcmc sampling with hill climbing in fisher's paper
 %     for tsid = 1:length(temp_scenes_2)
