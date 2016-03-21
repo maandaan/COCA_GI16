@@ -46,3 +46,4 @@ bedroom01311_8 (should be fixed)
 bedroom13113_2
 bedroom13113_3
 bedroom13113_4
+bedroom_small_00001_33
