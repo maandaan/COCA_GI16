@@ -47,3 +47,9 @@ bedroom13113_2
 bedroom13113_3
 bedroom13113_4
 bedroom_small_00001_33
+bedroom_small_000133_46
+bedroom_small_0013346_1
+bedroom_small_0133461_13
+bedroom_small_13346113_4
+bedroom_small_133461134_7
+bedroom_small_1334611347_2

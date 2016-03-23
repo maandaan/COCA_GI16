@@ -4,11 +4,11 @@ function generate_scenes( objects_num, input_scene_filename, ...
 %necessary functions and saves the results in each step.
 
 Consts;
-load(global_factor_graph_file_v2, 'factors', 'all_vars');
-load(sample_size_fisher_file_v2, 'sample_sizes');
+% load(global_factor_graph_file_v2, 'factors', 'all_vars');
+load(sample_size_fisher_file, 'sample_sizes');
 
-objectsets_filename = [scenes_dir, results_filename, '_objectsets.mat'];
-room_type = get_object_type_bedroom({'room'});
+% objectsets_filename = [scenes_dir, results_filename, '_objectsets.mat'];
+% room_type = get_object_type_bedroom({'room'});
 
 % if isempty(input_scene_filename) %start from an empty room
 %     identifier = ['room_' num2str(randi(1000))];
@@ -33,30 +33,46 @@ room_type = get_object_type_bedroom({'room'});
 % save(objectsets_filename, 'sampled_scenes');
 % fprintf('Finished MCMC sampling from the factor graph!\n');
 
-load(objectsets_filename, 'sampled_scenes');
+% load(objectsets_filename, 'sampled_scenes');
 
-for sample_id = 2:2%length(sampled_scenes) 
+for sample_id = 7:7%length(sampled_scenes)
+    
+    load([scenes_dir, results_filename, '_final_', num2str(sample_id)], 'final_scene');
+    scene = final_scene;
+    
+    %symmetry off experiment
+    for i = 1:length(scene)
+        if ~isempty(scene(i).symm_group_id)
+            scene(i).symm_group_id = [];
+            scene(i).symm_ref_id = [];
+            scene(i).modelname = [];
+            scene(i).BB = [];
+            scene(i).dims = [];
+            scene(i).scale = [];
+        end
+    end
 %     scene = sampled_scenes(sample_id).scene;
-%     scene = select_models(modelnames_file, scene);
-%     scene = prune_models(scene);
-%     %prune models manually if you are using the original file for model
-%     %names
-%     fprintf('Finished selecting models for the sample %d!\n', sample_id);
+    scene = select_models(modelnames_file, scene);
+    scene = prune_models(scene);
+    %prune models manually if you are using the original file for model
+    %names
+    fprintf('Finished selecting models for the sample %d!\n', sample_id);
 %     
 % %     load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
 % %     for i = 1:length(scene)
 % %         scene(i).scale = [];
 % %     end
 %       
-%     scene = compute_model_BB(scene, models_dir, modelnames_file);
-%     scene = scale_models(scene, sample_sizes);
-%     scene = init_models_to_insert(scene);
-%     save([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
-%     fprintf('Finished initializing the placement and scaling the sizes for sample %d!\n', sample_id);
+    scene = compute_model_BB(scene, models_dir, modelnames_file);
+    scene = scale_models(scene, sample_sizes);
+    scene = init_models_to_insert(scene);
+    save([scenes_dir, results_filename, '_init_symmetryoff_', num2str(sample_id)], 'scene');
+    fprintf('Finished initializing the placement and scaling the sizes for sample %d!\n', sample_id);
     
-    load([scenes_dir, results_filename, '_init_', num2str(sample_id)], 'scene');
-%     load([scenes_dir, results_filename, '_final_', num2str(sample_id)], 'final_scene');
-%     scene = final_scene;
+%     load([scenes_dir, results_filename, '_init_symmetryoff_', num2str(sample_id)], 'scene');
+    for i = 2:length(scene)
+        scene(i).optimized_location = 0;
+    end
     fixed_objects_rows = structfind(scene, 'optimized_location', 1);
     fixed_objects_num = length(fixed_objects_rows);
     
@@ -83,7 +99,7 @@ for sample_id = 2:2%length(sampled_scenes)
         continue
     end
     
-    save([scenes_dir, results_filename, '_final_', num2str(sample_id)], 'final_scene');
+    save([scenes_dir, results_filename, '_final_symmetryoff_', num2str(sample_id)], 'final_scene');
     fprintf('Finished optimizing the placement for sample %d!\n', sample_id);
     
     %preparing the results for scene_viewer
@@ -93,7 +109,7 @@ for sample_id = 2:2%length(sampled_scenes)
     modelcount = length(scene3d_objects);
     scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
     % scene3d.objects = scene3d_objects;
-    out_file = [scenes_dir, results_filename, '_', num2str(sample_id), '.txt'];
+    out_file = [scenes_dir, results_filename, '_symmetryoff_', num2str(sample_id), '.txt'];
     write_scene_to_file( scene3d, out_file );
     fprintf('Finished preparing the result for scene viewer for sample %d!\n', sample_id);
 end

@@ -1,20 +1,28 @@
 function [ scene ] = select_models(modelnames_file, scene)
 %SELECT_MODELS randomly selects models for each object category
 
-types = [scene(:).obj_type];
-[unique_types, b, c] = unique(types);
+% types = [scene(:).obj_type];
+cats = {scene(:).obj_category};
+[unique_types, b, c] = unique(cats);
 count_uniques = hist(c, length(unique_types));
 
 % model_names = struct('obj_type',[], 'modelname',[]);
 % scene(1).modelname = '';
 % model_count = 1;
 for nid = 1:length(unique_types)
-    obj_type = unique_types(nid);
+    cat = unique_types(nid);
+    %the following lines seem unnecessary, but they're not! To ensure
+    %consistency between old and new versions of mapping between object
+    %categories and types
+    obj_type = get_object_type_bedroom(cat);
     obj_cat = get_object_type_bedroom(obj_type);
+    if strcmp(obj_cat{1}, 'night_stand')
+        obj_cat = {'nightstand'};
+    end
     
     %for better visualization, we will always use this 3D model for room
     if strcmp(obj_cat, 'room')
-        scene(nid).modelname = 'room02';
+        scene(b(nid)).modelname = 'room02';
         continue
     end
     
@@ -26,10 +34,10 @@ for nid = 1:length(unique_types)
     while ischar(line)
         if ~isempty(strfind(line, obj_cat{1}))
             line_parts = strsplit(line, '|');
-            if strcmp(strtrim(line_parts{2}), obj_cat{1}) %look for exact matches
+%             if strcmp(strtrim(line_parts{2}), obj_cat{1}) %look for exact matches
                 count = count + 1;
                 obj_models{count} = line_parts{1};
-            end
+%             end
         end
         line = fgets(h);
     end

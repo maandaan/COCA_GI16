@@ -3,7 +3,7 @@ function kmeans_matrix = cluster_pairwise_spatial_kmeans
 %pairs of object categories using kmeans.
 
 Consts;
-load(pairwise_locations_file_v2, 'pair_spatial_rels_location');
+load(pairwise_locations_file, 'pair_spatial_rels_location');
 cat_count = size(pair_spatial_rels_location,1);
 kmeans_matrix = repmat(struct('kmeans_xy',[], 'kmeans_angle', []), cat_count, cat_count);
 

@@ -37,7 +37,7 @@ for oid = 1:length(scene)
     pair = scene(oid);
 %     pair_BB = [min(pair.corners); max(pair.corners)];
     
-    if pair.obj_type == get_object_type_bedroom({'room'})
+    if strcmp(pair.obj_category, 'room')
         continue
     end
     

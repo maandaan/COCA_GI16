@@ -6,9 +6,9 @@ function [ all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_
 %to apply the hard constraints after the sampling or not.)
 
 Consts;
-load(kmeans_file_v2, 'kmeans_matrix');
-load(pairwise_locations_file_v2, 'pair_spatial_rels_location');
-load(sidetoside_constraints_file_v2, 'sidetoside_constraints');
+load(kmeans_file, 'kmeans_matrix');
+load(pairwise_locations_file, 'pair_spatial_rels_location');
+load(sidetoside_constraints_file, 'sidetoside_constraints');
 
 obj_type = object.obj_type;
 w = 5; %wall thickness
@@ -30,7 +30,7 @@ rng shuffle
 parent_id = object.supporter_id;
 parent_row = structfind(pair_objects, 'identifier', parent_id);
 if length(pair_objects) > 1 && strcmp(object.supporter_category, 'floor') && ...
-        pair_objects(parent_row).obj_type == get_object_type_bedroom({'room'})
+        strcmp(pair_objects(parent_row).obj_category, 'room')
     pair_id = 2;
 else
     pair_id = parent_row;
@@ -69,7 +69,7 @@ object_dims = object.dims .* object.scale;
 % curr_xy = [0,0];
 curr_xy = init_xy;
 % curr_xy = [curr_xy(1)/(parent_dims(1)/2), curr_xy(2)/(parent_dims(2)/2)];
-if ref.obj_type == get_object_type_bedroom({'room'})
+if strcmp(ref.obj_category, 'room')
     curr_angle = 90;
 else
     curr_angle = 0;

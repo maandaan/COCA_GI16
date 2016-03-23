@@ -1,10 +1,12 @@
-function satisfied = satisfy_sidetoside_constraints( centroid, object_dims, ...
+function [satisfied] = satisfy_sidetoside_constraints( centroid, object_dims, ...
     object_orient, object_type, holistic_scene, sidetoside_constraints )
 %SATISFY_SIDETOSIDE_CONSTRAINTS checks whether all the side-to-side
 %constraints can be satisfied for a new placement.
 
+score = true;
 satisfied = true;
 epsilon = 1e-3;
+% object_type = get_object_type_bedroom({object_cat});
 object_rows = [structfind(sidetoside_constraints, 'first_type', object_type), ...
     structfind(sidetoside_constraints, 'second_type', object_type)];
 if isempty(object_rows)
@@ -41,10 +43,15 @@ for oid = 1:length(holistic_scene)
         continue
     end
     
-    if pair.obj_type == get_object_type_bedroom({'room'})
-        pair_type = get_object_type_bedroom({'wall'});
+    if strcmp(pair.obj_category, 'room')
+        if pair.obj_type == 29
+            pair_type = 56;
+        else
+            pair_type = get_object_type_bedroom({'wall'});
+        end
     else
         pair_type = pair.obj_type;
+%         pair_type = get_object_type_bedroom({pair.obj_category});
         pair_height = pair.corners(4:5,3);
         %check whether they are at the same height
         z_intersect = range_intersection(sort(object_height), sort(pair_height));
@@ -64,9 +71,10 @@ for oid = 1:length(holistic_scene)
         continue
     end
     
-%     p_satisfied = true;
+    p_satisfied = true;
     
-    if pair_type == get_object_type_bedroom({'wall'}) %if it's walls, we check for more frequent side
+    if (pair.obj_type == 29 && pair_type == 56) || ...
+            pair_type == get_object_type_bedroom({'wall'}) %if it's walls, we check for more frequent side
         max_freq = 0;
         for rid = 1:length(rows)
             c = constraints(rows(rid));
@@ -101,7 +109,8 @@ for oid = 1:length(holistic_scene)
 %         if abs(min_dist - c.avg_dist) > dist_thresh
         if min_dist > c.avg_dist + dist_thresh    
             pushing_to_wall = false;
-%             break
+            satisfied = false;
+            break
         end   
     else
         touching_visited = false;
@@ -132,7 +141,7 @@ for oid = 1:length(holistic_scene)
                         touching_visited = true;
                         dist24 = compute_sides_dist(rect1, rect2, 2, 4);
                         dist42 = compute_sides_dist(rect1, rect2, 4, 2);
-                        p_satisfied = p_satisfied + ...
+                        p_satisfied = p_satisfied && ...
                             ((dist24>=0 && dist24 < c.avg_dist + dist_thresh) ...
                             || (dist42>=0 && dist42 < c2.avg_dist + dist_thresh));
 %                         fprintf('dist24: %f, avg_dist24: %f\n', dist24, c.avg_dist);
@@ -147,17 +156,17 @@ for oid = 1:length(holistic_scene)
                 end
                 dist = compute_sides_dist(rect1, rect2, side1, side2);
 %                 p_satisfied = p_satisfied && (abs(dist - c.avg_dist) < dist_thresh);
-                p_satisfied = p_satisfied + (dist >= 0  && dist < c.avg_dist + dist_thresh);
+                p_satisfied = p_satisfied && (dist >= 0  && dist < c.avg_dist + dist_thresh);
             end
         end
-%         if ~p_satisfied
-%             satisfied = false;
-%             break
-%         end
+        if ~p_satisfied
+            satisfied = false;
+            break
+        end
     end
 end
 
-satisfied = p_satisfied + pushing_to_wall;
+% score = p_satisfied + pushing_to_wall;
 
 end
 
