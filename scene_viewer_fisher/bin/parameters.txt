@@ -1,7 +1,7 @@
 databaseDirectory=../../data/Synthesized Scenes/
 
-defaultScene=bedroom00013_symmetryoff_7
-textQuery=11705ed6a5b1ed37f83d00225df18677
+defaultScene=bedroom00001_6_fisher_iter10
+extQuery=11705ed6a5b1ed37f83d00225df18677
 
 
 
