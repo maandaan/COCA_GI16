@@ -17,7 +17,7 @@ for oid = 1:length(scene)
 %     obj_score = 0;
     
     obj = scene(oid);
-    if obj.obj_type == get_object_type_bedroom({'room'})
+    if strcmp(obj.obj_category, 'room')
         continue
     end
 %     obj_center = mean(obj.corners);

@@ -8,7 +8,7 @@ load(gmm_location_file_SUNRGBD, 'gmm_matrix');
 
 scene = input_scene;
 max_iter = 100; %for initial sampling
-optimization_maxiter = 200;
+optimization_maxiter = 1000;
 
 %% sorting based on the sizes
 objects_vol = zeros(length(scene),1);
@@ -31,7 +31,7 @@ for oid = 2:length(scene)
         min(parent.corners(:,3)), max(parent.corners(:,3))];
     
     %initializing z
-    if parent.obj_type == get_object_type_bedroom({'room'})
+    if strcmp(parent.obj_category, 'room')
         min_z = parent_bnd(3,1);
     else
         min_z = parent_bnd(3,2);
@@ -120,7 +120,7 @@ for iter = 1:optimization_maxiter
     if new_score > score
         score = new_score;
         scene = new_layout;
-        figure
+%         figure
 %         for oid = 1:length(new_layout)
 %             obj = new_layout(oid);
 %             corners = obj.corners;

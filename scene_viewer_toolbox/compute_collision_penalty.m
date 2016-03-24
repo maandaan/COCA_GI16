@@ -7,7 +7,7 @@ epsilon = 0.00001;
 collided = false;
 
 %special case
-if obj.obj_type == get_object_type_bedroom({'room'})
+if strcmp(obj.obj_category, 'room')
     collision_penalty = 1;
     return
 end
@@ -32,7 +32,7 @@ end
 obj_rect = newobj_corners(1:4,1:2);
 
 for pid = 1:length(scene)
-    if oid == pid || scene(pid).obj_type == get_object_type_bedroom({'room'})
+    if oid == pid || strcmp(scene(pid).obj_category, 'room')
         continue
     end
     

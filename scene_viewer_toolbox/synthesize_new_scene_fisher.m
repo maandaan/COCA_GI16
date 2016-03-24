@@ -6,10 +6,10 @@ out_file = [out_dir, scene_file];
 
 % [30,55,75,90,100]
 init_file = [out_file '_init'];
-[arranged_scenes, scores] = arrange_objects( input_scene, [30,70,100,125,150,170,190,200], init_file );
+[arranged_scenes, scores] = arrange_objects( input_scene, [30,70,100,125,150,170,190,200,1000], init_file );
 save([out_file '.mat'], 'arranged_scenes', 'scores');
 
-for i = 1:length(arranged_scenes)
+for i = 10:length(arranged_scenes)
     arranged_scene = arranged_scenes(i).scene;
     arranged_scene = fix_3D_models(arranged_scene);
     arranged_scene = compute_transform(arranged_scene);
