@@ -54,7 +54,8 @@ end
 % curr_xy = data( xy_cluster_ind( randi( length(xy_cluster_ind))),1:2);
 % curr_angle = data( angle_cluster_ind( randi( length(angle_cluster_ind))),4);
 
-support = pair_objects(1);
+% support = pair_objects(1);
+support = pair_objects(parent_row);
 support_dims = support.dims .* support.scale;
 
 ref = pair_objects(pair_id);

@@ -60,6 +60,6 @@ scene3d = struct('modelcount', modelcount, 'objects', scene3d_objects);
 % scene3d.objects = scene3d_objects;
 
 % out_file = [scenes_dir 'synth_scene_43_progressive_synthesis.txt'];
-out_file = 'data\Synthesized Scenes\scenes\bedroom00013_symmetryoff_7.txt';
+out_file = 'data\Synthesized Scenes\scenes\bedroom0013411_sidetosideoff_10.txt';
 write_scene_to_file( scene3d, out_file )
 
