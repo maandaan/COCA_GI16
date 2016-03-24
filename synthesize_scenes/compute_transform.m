@@ -1,6 +1,8 @@
 function [ final_scene ] = compute_transform( final_scene )
 %COMPUTE_TRANSFORM
 
+epsilon = 0.0001;
+
 for oid = 1:length(final_scene)
 %     if final_scene(oid).obj_type == 29
 %         scale = final_scene(oid).scale;
@@ -33,6 +35,13 @@ for oid = 1:length(final_scene)
     orient = final_scene(oid).orientation;
     cos_theta = orient(2) / norm(orient);
     sin_theta = orient(1) / norm(orient);
+    
+    if abs(cos_theta - 0) < epsilon
+        temp = s(1);
+        s(1) = s(2);
+        s(2) = temp;
+    end
+    
     r = [s(1)*cos_theta s(1)*sin_theta 0;...
         -s(2)*sin_theta s(2)*cos_theta 0;...
         0 0 s(3)];

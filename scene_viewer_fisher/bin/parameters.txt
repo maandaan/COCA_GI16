@@ -1,6 +1,6 @@
 databaseDirectory=../../data/Synthesized Scenes/
 
-defaultScene=bedroom00001_6_fisher_iter10
+defaultScene=bedroom0013411_sidetoside_10
 extQuery=11705ed6a5b1ed37f83d00225df18677
 
 
