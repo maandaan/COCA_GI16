@@ -65,7 +65,9 @@ for oid = 2:length(scene)
 %         fprintf('initialized object %s! :D \n', obj.identifier);
 %     end
     [new_obj, temp_scores, max_score] = generate_initial_samples( scene(1:oid-1), obj, parent, max_iter, gmm_matrix );
-    scene(oid) = new_obj;
+    if ~isempty(new_obj)
+        scene(oid) = new_obj;
+    end
     
     %debug
     hold off

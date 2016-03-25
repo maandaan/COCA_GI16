@@ -2,7 +2,14 @@ function [new_obj, scores, max_score] = generate_initial_samples( scene, obj, pa
 %GENERATE_INITIAL_SAMPLES Summary of this function goes here
 %   Detailed explanation goes here
 
+new_obj = [];
+scores = [];
+max_score = [];
 gmm = gmm_matrix(parent.obj_type, obj.obj_type).gmm;
+if isempty(gmm)
+    return
+end
+
 samples = random(gmm, no_samples);
 
 scores = zeros(no_samples,1);
