@@ -1,6 +1,6 @@
-databaseDirectory=../../data/Synthesized Scenes/
+databaseDirectory=../../data/databaseFull_fisher_Stanford/
 
-defaultScene=bedroom00001_6_fisher_iter10
+defaultScene=synth_scene_38_progressive_synthesis
 textQuery=11705ed6a5b1ed37f83d00225df18677
 
 

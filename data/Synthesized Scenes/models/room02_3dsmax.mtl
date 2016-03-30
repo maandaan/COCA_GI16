@@ -1,0 +1,140 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 29.03.2016 15:09:15
+
+newmtl _room02m0
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\a0f1c2c9dd64a869.jpg
+	map_Kd C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\a0f1c2c9dd64a869.jpg
+
+newmtl _room02m1
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\a0f1c2c9dd64a869.jpg
+	map_Kd C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\a0f1c2c9dd64a869.jpg
+
+newmtl _room02m2
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\7c2831c34cade675.jpg
+	map_Kd C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\7c2831c34cade675.jpg
+
+newmtl _room02m3
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\7c2831c34cade675.jpg
+	map_Kd C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\7c2831c34cade675.jpg
+
+newmtl _room02m4
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\5a088e7235fea4a2.jpg
+	map_Kd C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\5a088e7235fea4a2.jpg
+
+newmtl _room02m5
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\7c2831c34cade675.jpg
+	map_Kd C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\7c2831c34cade675.jpg
+
+newmtl _room02m6
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\91d23fa0c40478c6.jpg
+	map_Kd C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\91d23fa0c40478c6.jpg
+
+newmtl _room02m9
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl _room02m13
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\a0f1c2c9dd64a869.jpg
+	map_Kd C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\a0f1c2c9dd64a869.jpg
+
+newmtl _room02m14
+	Ns 1.0000
+	Ni 1.5000
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\580bbacf9e21ac52.jpg
+	map_Kd C:\Users\zsadeghi\COCA_GI16\data\Synthesized Scenes\textures\580bbacf9e21ac52.jpg

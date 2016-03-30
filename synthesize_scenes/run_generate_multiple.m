@@ -1,11 +1,11 @@
 %This script is to run synthesize on multiple scenes at once...
-max_arrangement_opt_iter = 5;
+max_arrangement_opt_iter = 2;
 objects_num = 0;
 input_scene_filename = '';
 
-input_filenames = {'bedroom00001', 'bedroom01311', 'bedroom0013411'};
+input_filenames = {'bedroom_small_00001', 'bedroom_small_000133'};
 
-sample_ids = [4, 2, 10];
+sample_ids = [33, 46];
 
 for i = 1:length(input_filenames)
     results_filename = input_filenames{i};
