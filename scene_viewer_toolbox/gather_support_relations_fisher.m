@@ -5,7 +5,7 @@ function support_relations = gather_support_relations_fisher
 Consts_fisher;
 load(fisher_scenes_file, 'fisher_scenes');
 
-categories_count = 54; %from get_object_type_bedroom.m
+categories_count = 206; %from get_object_type_bedroom.m
 %the surface descriptor is: surface area and the height above the ground
 support_relations = repmat(struct('descriptor',[]), categories_count, 1);
 

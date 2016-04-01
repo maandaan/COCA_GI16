@@ -24,3 +24,9 @@ gmm_weights_file_SUNRGBD = 'data/training/SUNRGBD/gmm_weights_fisher.mat';
 pairwise_location_file_SUNRGBD = 'data/training/SUNRGBD/bedroom_pairwise_locations.mat';
 gmm_location_file_SUNRGBD = 'data/training/SUNRGBD/gmm_pairwise_location_fisher.mat';
 sample_size_fisher_file = 'data/training/SUNRGBD/bedroom_sample_sizes_fisher.mat';
+
+%smaller objects
+pairwise_location_file_SUNRGBD_v2 = 'data/training/SUNRGBD/bedroom_pairwise_locations_v2.mat';
+gmm_location_file_SUNRGBD_v2 = 'data/training/SUNRGBD/gmm_pairwise_location_fisher_v2.mat';
+gmm_weights_file_SUNRGBD_v2 = 'data/training/SUNRGBD/gmm_weights_fisher_v2.mat';
+sample_size_fisher_file_v2 = 'data/training/SUNRGBD/bedroom_sample_sizes_fisher_v2.mat';

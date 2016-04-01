@@ -6,7 +6,7 @@ Consts_fisher;
 
 % load(pairwise_relations_file, 'pairwise_relations');
 % load(pairwise_relations_file_SUNRGBD, 'pairwise_relations');
-load(pairwise_location_file_SUNRGBD, 'pair_spatial_rels_location');
+load(pairwise_location_file_SUNRGBD_v2, 'pair_spatial_rels_location');
 
 cat_count = size(pair_spatial_rels_location,1);
 % cat_count = size(pairwise_relations,1);
@@ -40,7 +40,7 @@ end
 
 % save(gmm_pairwise_file, 'gmm_matrix');
 % save(gmm_pairwise_file_SUNRGBD, 'gmm_matrix');
-save(gmm_location_file_SUNRGBD, 'gmm_matrix');
+save(gmm_location_file_SUNRGBD_v2, 'gmm_matrix');
 
 end
 

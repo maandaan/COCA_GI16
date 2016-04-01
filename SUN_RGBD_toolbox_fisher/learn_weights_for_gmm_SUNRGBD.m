@@ -8,7 +8,7 @@ total_size = size(map_scene_name_type, 1);
 
 load(sunrgbdmeta_file);
 
-categories_count = 54; %from get_object_type_bedroom.m
+categories_count = 206; %from get_object_type_bedroom.m
 gmm_weights = repmat(struct('frequency', 0, 'weight', 0), categories_count, categories_count);
 
 room_type = get_object_type_bedroom({'room'});
@@ -55,7 +55,7 @@ for i = 1:size(gmm_weights,1)
     end
 end
 
-save(gmm_weights_file_SUNRGBD, 'gmm_weights');
+save(gmm_weights_file_SUNRGBD_v2, 'gmm_weights');
 
 end
 
