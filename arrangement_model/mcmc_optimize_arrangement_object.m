@@ -6,9 +6,9 @@ function [ all_xy, all_angle, all_score, all_pid, all_collision, all_sidetoside_
 %to apply the hard constraints after the sampling or not.)
 
 Consts;
-load(kmeans_file, 'kmeans_matrix');
-load(pairwise_locations_file, 'pair_spatial_rels_location');
-load(sidetoside_constraints_file, 'sidetoside_constraints');
+load(kmeans_file_v2, 'kmeans_matrix');
+load(pairwise_locations_file_v2, 'pair_spatial_rels_location');
+load(sidetoside_constraints_file_v2, 'sidetoside_constraints');
 
 obj_type = object.obj_type;
 w = 5; %wall thickness
@@ -101,31 +101,31 @@ angle1 = theta + degtorad(curr_angle);
 curr_angle_abs = angle1;
 object_orient1 = [cos(angle1) sin(angle1) 0];
 collided1 = check_collision( [global_xyz(1:2) z], object_dims, object_orient1, holistic_scene );
-sidetoside_satisfied1 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
-    object_orient1, obj_type, siblings, sidetoside_constraints);
+% sidetoside_satisfied1 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+%     object_orient1, obj_type, siblings, sidetoside_constraints);
 
-if collided1 || ~sidetoside_satisfied1
+if collided1 %|| ~sidetoside_satisfied1
     angle2 = theta - degtorad(curr_angle);
     curr_angle_abs = angle2;
     object_orient2 = [cos(angle2) sin(angle2) 0];
     collided2 = check_collision( [global_xyz(1:2) z], object_dims, object_orient2, holistic_scene );
-    sidetoside_satisfied2 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
-        object_orient2, obj_type, siblings, sidetoside_constraints);
+%     sidetoside_satisfied2 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+%         object_orient2, obj_type, siblings, sidetoside_constraints);
     
     curr_collision = collided2;
-    curr_sidetoside_constraints = sidetoside_satisfied2;
+%     curr_sidetoside_constraints = sidetoside_satisfied2;
     
 else
     curr_collision = collided1;
-    curr_sidetoside_constraints = sidetoside_satisfied1;
+%     curr_sidetoside_constraints = sidetoside_satisfied1;
 end
 
 if ~use_hard_constraints
     
-    curr_score1 = curr_score * ~collided1 * sidetoside_satisfied1;
+    curr_score1 = curr_score * ~collided1; %* sidetoside_satisfied1;
     
-    if collided1 || ~sidetoside_satisfied1
-        curr_score2 = curr_score * ~collided2 * sidetoside_satisfied2;
+    if collided1 %|| ~sidetoside_satisfied1
+        curr_score2 = curr_score * ~collided2; %* sidetoside_satisfied2;
         curr_score = curr_score2;
     else
         curr_score = curr_score1;
@@ -146,7 +146,7 @@ all_angle(1) = curr_angle_abs;
 all_score(1) = curr_score;
 all_pid(1) = pair_id;
 all_collision(1) = curr_collision;
-all_sidetoside_constraints(1) = curr_sidetoside_constraints;
+% all_sidetoside_constraints(1) = curr_sidetoside_constraints;
 
 iter = 2;
 % collision_count = 0;
@@ -288,8 +288,8 @@ while iter <= num_iter
     %     collision_count = 0;
     
     %check for side-to-side constraints
-    sidetoside_satisfied1 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
-        object_orient1, obj_type, siblings, sidetoside_constraints);
+%     sidetoside_satisfied1 = satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
+%         object_orient1, obj_type, siblings, sidetoside_constraints);
     %     if ~satisfy_sidetoside_constraints ([global_xyz(1:2) z], object_dims, ...
     %             object_orient, obj_type, holistic_scene, sidetoside_constraints)
     % %         fprintf('Side-to-side constraints are not satisfied for this placement!!\n');
@@ -302,30 +302,30 @@ while iter <= num_iter
     %add the relative angle to the reference object orientation and another
     %solution is to subtract it, check for the second solution is the first
     %one does not lead to a plausible arrangement
-    if collided1 || ~sidetoside_satisfied1
+    if collided1 %|| ~sidetoside_satisfied1
         angle2 = theta - degtorad(next_angle);
         next_angle_abs = angle2;
         object_orient2 = [cos(angle2) sin(angle2) 0];
         collided2 = check_collision( [global_xyz(1:2) z], object_dims, ...
             object_orient2, holistic_scene );
-        sidetoside_satisfied2 = satisfy_sidetoside_constraints (...
-            [global_xyz(1:2) z], object_dims, object_orient2, ...
-            obj_type, siblings, sidetoside_constraints);
+%         sidetoside_satisfied2 = satisfy_sidetoside_constraints (...
+%             [global_xyz(1:2) z], object_dims, object_orient2, ...
+%             obj_type, siblings, sidetoside_constraints);
         
         next_collision = collided2;
-        next_sidetoside_constraints = sidetoside_satisfied2;
+%         next_sidetoside_constraints = sidetoside_satisfied2;
     else
         next_collision = collided1;
-        next_sidetoside_constraints = sidetoside_satisfied1;
+%         next_sidetoside_constraints = sidetoside_satisfied1;
     end
     
     
     if use_hard_constraints
         next_score = next_score_kmeans;
     else
-        next_score = next_score_kmeans * ~collided1 * sidetoside_satisfied1;
-        if collided1 || ~sidetoside_satisfied1
-            next_score = next_score_kmeans * ~collided2 * sidetoside_satisfied2;
+        next_score = next_score_kmeans * ~collided1;% * sidetoside_satisfied1;
+        if collided1 %|| ~sidetoside_satisfied1
+            next_score = next_score_kmeans * ~collided2;% * sidetoside_satisfied2;
         end
     end
     
@@ -349,14 +349,14 @@ while iter <= num_iter
         curr_score = next_score;
         pair_id = next_pair_id;
         curr_collision = next_collision;
-        curr_sidetoside_constraints = next_sidetoside_constraints;
+%         curr_sidetoside_constraints = next_sidetoside_constraints;
     end
     all_xy(iter, :) = curr_xy;
     all_angle(iter) = curr_angle_abs;
     all_score(iter) = curr_score;
     all_pid(iter) = pair_id;
     all_collision(iter) = curr_collision;
-    all_sidetoside_constraints(iter) = curr_sidetoside_constraints;
+%     all_sidetoside_constraints(iter) = curr_sidetoside_constraints;
     
 %     fprintf('iteration %d finished, curr_score: %f, next_score: %f, alpha: %f, u: %f\n',...
 %         iter, curr_score, next_score, alpha, u);

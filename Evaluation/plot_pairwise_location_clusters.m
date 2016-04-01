@@ -16,7 +16,7 @@ colors = {'r','b','g','c','k'};
 
 figure
 for pid = 1:pairs_num
-    scatter(data(pid,1),data(pid,2),25,colors{pairs_ind(pid)},'filled');
+    scatter(data(pid,1),data(pid,2),25,colors{pairs_ind(1)},'filled');
     hold on
 end
 
@@ -26,23 +26,23 @@ sample_size = sample_sizes(cat1).fisherDB_dims;
 aspect_ratio = sample_size(2) / sample_size(1);
         
 base_corners = [-.5 -.5; .5 -.5; .5 .5; -.5 .5; -.5 -.5].*2;
-corners = base_corners .* repmat([1 aspect_ratio].* .9, 5, 1);
-plot(corners(:,1),corners(:,2));
-hold on
-
-corners = base_corners .* repmat([1 aspect_ratio].* .8, 5, 1);
-plot(corners(:,1),corners(:,2));
-hold on
+% corners = base_corners .* repmat([1 aspect_ratio].* .9, 5, 1);
+% plot(corners(:,1),corners(:,2));
+% hold on
+% 
+% corners = base_corners .* repmat([1 aspect_ratio].* .8, 5, 1);
+% plot(corners(:,1),corners(:,2));
+% hold on
 
 corners = base_corners .* repmat([1 aspect_ratio], 5, 1);
-plot(corners(:,1),corners(:,2));
+plot(corners(:,1),corners(:,2),'LineWidth',3.5);
 % axis equal
 axis([-10 10 -10 10],'equal')
 
-cat1_str = get_object_type_bedroom(cat1);
-cat2_str = get_object_type_bedroom(cat2);
-title(sprintf('K-means clustering for locations of %s in %s frame', ...
-    cat2_str{1}, cat1_str{1}));
+% cat1_str = get_object_type_bedroom(cat1);
+% cat2_str = get_object_type_bedroom(cat2);
+% title(sprintf('K-means clustering for locations of %s in %s frame', ...
+%     cat2_str{1}, cat1_str{1}));
 
 end
 

@@ -5,7 +5,7 @@ function generate_scenes( objects_num, input_scene_filename, ...
 
 Consts;
 % load(global_factor_graph_file_v2, 'factors', 'all_vars');
-load(sample_size_fisher_file, 'sample_sizes');
+load(sample_size_fisher_file_v2, 'sample_sizes');
 
 % objectsets_filename = [scenes_dir, results_filename, '_objectsets.mat'];
 % room_type = get_object_type_bedroom({'room'});
@@ -51,8 +51,8 @@ for sample_id = sid:sid%length(sampled_scenes)
 %             scene(i).scale = [];
 %         end
 %     end
-% 
-%     %orientation off experiment
+
+    %orientation off experiment
 %     for i = 1:length(scene)
 %         scene(i).orientation_rels = [];
 %     end

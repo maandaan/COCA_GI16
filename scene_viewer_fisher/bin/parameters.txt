@@ -1,7 +1,7 @@
-databaseDirectory=../../data/Synthesized Scenes/
+databaseDirectory=../../data/databaseFull_fisher_Stanford/
 
-defaultScene=bedroom0013411_sidetoside_10
-extQuery=11705ed6a5b1ed37f83d00225df18677
+defaultScene=synth_scene_38_progressive_synthesis
+textQuery=11705ed6a5b1ed37f83d00225df18677
 
 
 
