@@ -1,6 +1,6 @@
 databaseDirectory=../../data/Synthesized Scenes/
 
-defaultScene=bedroom0013411_10
+defaultScene=bedroom_small_00001_sidetosideoff_33
 textQuery=11705ed6a5b1ed37f83d00225df18677
 
 
