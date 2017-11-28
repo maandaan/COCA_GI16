@@ -1,3 +1,8 @@
+This code can't be used for any commercial purpose.
+
+For research purposes, if you're using this code, please cite this paper: Learning 3D Scene Synthesis from Annotated RGB-D Images (http://onlinelibrary.wiley.com/doi/10.1111/cgf.12976/abstract)
+
+
 Implementation details (started from Oct 13, 2015)
 SUN_RGBD_toolbox:
 Notice: These are all for bedrooms, update for each scene type.
